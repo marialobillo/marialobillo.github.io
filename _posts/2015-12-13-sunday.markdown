@@ -1,6 +1,0 @@
----
-layout: post
-title:  "Sunday"
-date:   2015-12-13 20:07:13 +0100
-categories: jekyll update
----
