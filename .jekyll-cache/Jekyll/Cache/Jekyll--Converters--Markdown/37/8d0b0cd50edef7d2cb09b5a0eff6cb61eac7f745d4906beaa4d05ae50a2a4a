@@ -1,0 +1,13 @@
+I"G<div class="row">
+    <h1>Blog Posts</h1>
+    <ul class="col-md-10">
+        
+            <li>
+                <span></span> &raquo;
+                <a href="/jekyll/update/2020/01/19/welcome-to-jekyll.html">Welcome to Jekyll!</a>
+            </li>
+        
+    </ul>
+    <p>Check out my <a href="/about/">About</a></p>
+</div>
+:ET

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>About Me</title>
+  <title>{{ page.title }}</title>
   <link rel="stylesheet" href="../../css/bootstrap.min.css">
 </head>
 <body>
@@ -18,13 +18,11 @@
     </header>
     <div class="row">
         <div class="col-md-10">
-            <h2>About Me</h2>
-            <p class="meta"></p>
+            <h2>{{ page.title }}</h2>
+            <p class="meta">{{ page.date | date_to_string }}</p>
         
             <div class="post">
-            <p>Hi, my name is Maria I am a Full Stack Developer passionate for Javascript and clean code. I have experience with Node.js, React.js, Php, and .Net.</p>
-
-
+            {{ content }}
             </div>
         </div>
     </div>
