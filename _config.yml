@@ -28,8 +28,10 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: malobillo
 github_username:  marialobillo
 
-pygments: true
-permalink: pretty
+Rouge: true
+#permalink: pretty
+permalink: /:year-:month-:day/:title
+paginate: 5
 # Build settings
 theme: minima
 plugins:
