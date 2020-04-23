@@ -1,6 +1,7 @@
 ---
-layout: default
+layout: page
 title: Welcome to my website
+permalink: /index/
 ---
 
 <div class="row">
