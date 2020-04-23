@@ -2,3 +2,8 @@
     width: 200px;
     border-radius: 250px;
 }
+
+.masthead-avatar{
+  width: 200px;
+  border-radius: 40%;
+}
