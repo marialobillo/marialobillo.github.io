@@ -8,10 +8,10 @@
   <link rel="stylesheet" href="../../css/bootstrap.min.css">
 </head>
 <body>
-  <div class="container">
+  <div class="">
     <header>
      <!-- Menu -->
-  
+
      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="sideNav">
       <a class="navbar-brand" href="/">
         Maria Lobillo-Santos
@@ -35,17 +35,19 @@
         </ul>
       </div>
     </nav>
-  
+
     <!-- Menu -->
     </header>
-    <div class="row">
-        <div class="col-md-10">
-            <h2>{{ page.title }}</h2>
-            <p class="meta">{{ page.date | date_to_string }}</p>
-        
-            <div class="post">
-            {{ content }}
-            </div>
+    <div class="container">
+        <div class="row">
+          <div class="col-md-10">
+              <h2>{{ page.title }}</h2>
+              <p class="meta">{{ page.date | date_to_string }}</p>
+
+              <div class="post">
+              {{ content }}
+              </div>
+          </div>
         </div>
     </div>
 
@@ -55,4 +57,3 @@
   </div>
 </body>
 </html>
-
