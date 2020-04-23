@@ -3,4 +3,6 @@ layout: default
 title: Welcome to my website
 ---
 
-Hello
+<div class="container">
+<h1>Hola</h1>
+</div>
