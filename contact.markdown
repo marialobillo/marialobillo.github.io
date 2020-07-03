@@ -4,16 +4,25 @@ title: Contact Me
 permalink: /contact/
 ---
 
-Feel free to contact me!
+Feel free to contact me! You can email me at 'maria.lobillo.santos' at 'gmail.com' or use the next form.
 
 <form action="https://getform.io/f/8e552d0b-e358-4098-9794-5f6783c85c04" method="POST" class="form">
 
     <div class="form-group">
-        <input type="text" name="name"/>
+        <span>Name: </span>
+        <input type="text" name="name" class="control-form"/>
+    </div>
+
+    <div class="form-group">
+        <span>Email: </span>
+        <input type="email" name="email" class="control-form"/>
+    </div>
+    <div class="form-group">
+        <span>Message: </span>
+        <textarea name="message" class="control-form"></textarea>
     </div>
   
-  <input type="email" name="email" />
-  <input type="text" name="message"/>
-  <button type="submit" class="btn btn-primary">Send a message</button>
+  
+  <button type="submit" class="btn btn-primary btn-block">Send a message</button>
 
 </form>
