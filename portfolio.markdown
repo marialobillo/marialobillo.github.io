@@ -18,26 +18,25 @@ permalink: /portfolio/
 
     <div class="row">
         <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
-            <div class="card-header">App</div>
+            <h5 class="card-header">Stock Trade App</h5>
             <div class="card-body">
-            <h4 class="card-title">Stock_trade()</h4>
-            <p class="card-text">Application for management your inverstments with Node.js, React.js.
-                <a class="btn btn-info btn-sm" href="https://github.com/marialobillo/stock-trade-v4">Code</a>
-                <a class="btn btn-primary btn-sm" href="https://fant4sy-stock-trade.herokuapp.com/">Demo</a>
-            </p>
+                <p class="card-text">Application for management your inverstments with Node.js, React.js.</p>
+                <p>
+                    <a class="btn btn-info btn-sm" href="https://github.com/marialobillo/stock-trade-v4">Code</a>
+                    <a class="btn btn-primary btn-sm" href="https://fant4sy-stock-trade.herokuapp.com/">Demo</a>
+                </p>
+            </div>
         </div>
-    </div>
-<div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
-  <div class="card-header">App</div>
-  <div class="card-body">
-    <h4 class="card-title">Twitter_Showcase()</h4>
-    <p class="card-text">Look for tweets by topic or randon tweets from some accounts.</p>
-    <p>
-        <a class="btn btn-info btn-sm" href="https://github.com/marialobillo/twitter-showcase">Code</a>
-        <a class="btn btn-primary btn-sm" href="https://glacial-badlands-68918.herokuapp.com/">Demo</a>
-    </p>
-  </div>
-</div>
+        <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+            <h5 class="card-title">Twitter Showcase App</h5>
+            <div class="card-body">
+                <p class="card-text">Look for tweets by topic or randon tweets from some accounts.</p>
+                <p>
+                    <a class="btn btn-info btn-sm" href="https://github.com/marialobillo/twitter-showcase">Code</a>
+                    <a class="btn btn-primary btn-sm" href="https://glacial-badlands-68918.herokuapp.com/">Demo</a>
+                </p>
+            </div>
+        </div>
     </div>
 
     <div class="row">
