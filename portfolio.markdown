@@ -18,17 +18,20 @@ permalink: /portfolio/
 
     <div class="row">
         <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
-  <div class="card-header">Header</div>
-  <div class="card-body">
-    <h4 class="card-title">Primary card title</h4>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  </div>
-</div>
+            <div class="card-header">App</div>
+            <div class="card-body">
+            <h4 class="card-title">Stock_trade()</h4>
+            <p class="card-text">Application for management your inverstments with Node.js, React.js mainly.
+                <a class="btn btn-info btn-sm" href="https://github.com/marialobillo/stock-trade-v4">Code</a>
+                <a class="btn btn-secondary btn-sm" href="https://fant4sy-stock-trade.herokuapp.com/">Demo</a>
+            </p>
+        </div>
+    </div>
 <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
-  <div class="card-header">Header</div>
+  <div class="card-header">App</div>
   <div class="card-body">
-    <h4 class="card-title">Secondary card title</h4>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <h4 class="card-title">Twitter_Showcase(</h4>
+    <p class="card-text">Look for tweets by topic or randon tweets from some accounts.</p>
   </div>
 </div>
     </div>
@@ -37,7 +40,7 @@ permalink: /portfolio/
         <ul>
             <li>
                 <span class="app-title">Stock_Trade()</span>
-                <div class="description">Building an application for management your inverstments with Node.js, React.js mainly.</div>
+                <div class="description">Application for management your inverstments with Node.js, React.js mainly.</div>
                 <a class="btn btn-info" href="https://github.com/marialobillo/stock-trade-v4">Code</a>
                 <a class="btn btn-secondary" href="https://fant4sy-stock-trade.herokuapp.com/">Demo</a>
             </li>
