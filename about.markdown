@@ -32,5 +32,12 @@ permalink: /about/
 
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-8">
+            <p>
+                <img src="../images/me.jpg" atl="Maria" class="image-maria" />
+            </p>
+        </div>
+    </div>
 </div>
 
