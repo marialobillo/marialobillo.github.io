@@ -12,7 +12,7 @@ permalink: /portfolio/
 
     <div class="row">
     <p class="text-center">
-                Here are some of my last projects. You also can check out my github account <a href="https://github.com/marialobillo">here</a>
+                Here are some of my last projects. You also can check out my github account <a href="https://github.com/marialobillo" target="_blank">here</a>
             </p>
     </div>
 
@@ -22,8 +22,8 @@ permalink: /portfolio/
             <div class="card-body">
                 <p class="card-text">Application for management your inverstments with Node.js, React.js.</p>
                 <p>
-                    <a class="btn btn-info btn-sm" href="https://github.com/marialobillo/stock-trade-v4">Code</a>
-                    <a class="btn btn-primary btn-sm" href="https://fant4sy-stock-trade.herokuapp.com/">Demo</a>
+                    <a class="btn btn-info btn-sm" href="https://github.com/marialobillo/stock-trade-v4" target="_blank">Code</a>
+                    <a class="btn btn-primary btn-sm" href="https://fant4sy-stock-trade.herokuapp.com/" target="_blank">Demo</a>
                 </p>
             </div>
         </div>
@@ -32,8 +32,8 @@ permalink: /portfolio/
             <div class="card-body">
                 <p class="card-text">Look for tweets by topic or randon tweets from some accounts.</p>
                 <p>
-                    <a class="btn btn-info btn-sm" href="https://github.com/marialobillo/twitter-showcase">Code</a>
-                    <a class="btn btn-primary btn-sm" href="https://glacial-badlands-68918.herokuapp.com/">Demo</a>
+                    <a class="btn btn-info btn-sm" href="https://github.com/marialobillo/twitter-showcase" target="_blank">Code</a>
+                    <a class="btn btn-primary btn-sm" href="https://glacial-badlands-68918.herokuapp.com/" target="_blank">Demo</a>
                 </p>
             </div>
         </div>
@@ -45,8 +45,8 @@ permalink: /portfolio/
             <div class="card-body">
                 <p class="card-text">You can search on Stars Wars API characters.</p>
                 <p>
-                    <a class="btn btn-info btn-sm" href="https://github.com/marialobillo/starwars-app">Code</a>
-                    <a class="btn btn-primary btn-sm" href="https://hidden-anchorage-11194.herokuapp.com/">Demo</a>
+                    <a class="btn btn-info btn-sm" href="https://github.com/marialobillo/starwars-app" target="_blank">Code</a>
+                    <a class="btn btn-primary btn-sm" href="https://hidden-anchorage-11194.herokuapp.com/" target="_blank">Demo</a>
                 </p>
             </div>
         </div>
@@ -55,7 +55,7 @@ permalink: /portfolio/
             <div class="card-body">
                 <p class="card-text">A Chat Application using React Hooks instead of Redux.</p>
                 <p>
-                    <a class="btn btn-info btn-sm" href="https://github.com/marialobillo/chat-flask">Code</a>
+                    <a class="btn btn-info btn-sm" href="https://github.com/marialobillo/chat-flask" target="_blank">Code</a>
                 </p>
             </div>
         </div>

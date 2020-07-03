@@ -3,6 +3,23 @@ layout: page
 title: About Me
 permalink: /about/
 ---
+
+<div class="clearfix"></div>
+<div class="row">
+    <br/>
+    <div class="jumbotron">
+    <h2 class="display-3">About me</h2>
+    <p class="lead">
+        Hi, my name is Maria I am a Full Stack Developer passionate 
+        for Javascript and clean code. I have experience with Node.js, 
+        React.js, mysql, postgresql and Jest.
+    </p>
+    <hr class="my-4">
+    <p>Feel free to see my last projects on my Portfolio section.</p>
+    <p class="lead">
+        <a class="btn btn-primary btn-lg" href="/portfolio/" role="button">Porfolio</a>
+    </p>
+</div>
 <div class="row">
     <h2 class="text-center">About me</h2>
 </div>
