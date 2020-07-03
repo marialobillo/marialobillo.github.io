@@ -4,8 +4,6 @@ title: Blog
 permalink: /blog/
 ---
 
-Here are my posts!!
-
 
 <div class="row">
     <h1>Blog Posts</h1>
@@ -20,6 +18,6 @@ Here are my posts!!
     </ul>
     <p>Check out my <a href="/about/">About</a></p>
     <p>
-        <img src="images/me.jpg" atl="Maria" class="image-maria" />
+        <img src="../images/me.jpg" atl="Maria" class="image-maria" />
     </p>
 </div>
