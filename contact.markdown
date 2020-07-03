@@ -4,9 +4,15 @@ title: Contact Me
 permalink: /contact/
 ---
 
-Feel free to contact me! You can email me at 'maria.lobillo.santos' at 'gmail.com' or use the next form.
+<div class="row">
+    <div class="col-md-8">
+        Feel free to contact me! You can email me at 'maria.lobillo.santos' at 'gmail.com' or 
+        use the next form.
+    </div>
+</div>
 
-<form action="https://getform.io/f/8e552d0b-e358-4098-9794-5f6783c85c04" method="POST" class="form col-md-8">
+<div class="row">
+    <form action="https://getform.io/f/8e552d0b-e358-4098-9794-5f6783c85c04" method="POST" class="form col-md-8">
 
     <div class="form-group">
         <span>Name: </span>
@@ -26,3 +32,5 @@ Feel free to contact me! You can email me at 'maria.lobillo.santos' at 'gmail.co
   <button type="submit" class="btn btn-primary btn-block">Send a message</button>
 
 </form>
+
+</div>
