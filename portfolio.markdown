@@ -45,8 +45,8 @@ permalink: /portfolio/
             <div class="card-body">
                 <p class="card-text">You can search on Stars Wars API characters.</p>
                 <p>
-                    <a class="btn btn-info" href="https://github.com/marialobillo/starwars-app">Code</a>
-                    <a class="btn btn-primary" href="https://hidden-anchorage-11194.herokuapp.com/">Demo</a>
+                    <a class="btn btn-info btn-sm" href="https://github.com/marialobillo/starwars-app">Code</a>
+                    <a class="btn btn-primary btn-sm" href="https://hidden-anchorage-11194.herokuapp.com/">Demo</a>
                 </p>
             </div>
         </div>
@@ -55,7 +55,7 @@ permalink: /portfolio/
             <div class="card-body">
                 <p class="card-text">A Chat Application using React Hooks instead of Redux.</p>
                 <p>
-                    <a class="btn btn-info" href="https://github.com/marialobillo/chat-flask">Code</a>
+                    <a class="btn btn-info btn-sm" href="https://github.com/marialobillo/chat-flask">Code</a>
                 </p>
             </div>
         </div>
