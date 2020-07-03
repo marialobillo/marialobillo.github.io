@@ -15,7 +15,6 @@ permalink: /blog/
             <span>{{post.date | date_to_string }}
             </span> &raquo;
             <a href="{{post.url}}">{{post.title}}</a>
-            <div class="card border-info mb-3" style="max-width: 20rem;">
         </p>
     {% endfor %}
 
