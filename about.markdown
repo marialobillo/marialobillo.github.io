@@ -14,12 +14,12 @@ permalink: /about/
         for Javascript and clean code. I have experience with Node.js, 
         React.js, mysql, postgresql and Jest.
     </p>
-    <p>
+    <p class="lead">
     I love building things. I really enjoy making applications and 
     websites, as I love doing sports and search new healthy recipes, 
     as easier as better.
     </p>
-    <p>
+    <p class="lead">
     When I write code I like listen music like 
     <a href="https://www.youtube.com/watch?v=uqLEI_ht_fY" target="_blank">this</a>,
     because let me to concentrate on what I'm doing and not in all 
