@@ -20,11 +20,7 @@ title: Welcome to my website
             <a class="btn btn-info" href="https://github.com/marialobillo/stock-trade-v4">Code</a>
             <a class="btn btn-secondary" href="https://fant4sy-stock-trade.herokuapp.com/">Demo</a>
         </li>
-        <li>
-            <span class="app-title">Chat()</span>
-            <div class="description">A Chat Application using React Hooks instead of Redux.</div>
-            <a class="btn btn-info" href="https://github.com/marialobillo/chat-flask">Code</a>
-        </li>
+       
         <li>
             <span class="app-title">Twitter_Showcase()</span>
             <div class="description">Look for tweets by topic or randon tweets from some accounts.</div>
@@ -36,6 +32,11 @@ title: Welcome to my website
             <div class="description">You can search on Stars Wars API characters.</div>
             <a class="btn btn-info" href="https://github.com/marialobillo/starwars-app">Code</a>
             <a class="btn btn-secondary" href="https://hidden-anchorage-11194.herokuapp.com/">Demo</a>
+        </li>
+         <li>
+            <span class="app-title">Chat()</span>
+            <div class="description">A Chat Application using React Hooks instead of Redux.</div>
+            <a class="btn btn-info" href="https://github.com/marialobillo/chat-flask">Code</a>
         </li>
       
     </ul>
