@@ -12,7 +12,7 @@ permalink: /portfolio/
 
     <div class="row">
     <p class="text-center">
-                I'm a Full Stack Developer and passionate of blockchain. Here are some of my last projects. 
+                Here are some of my last projects. You also can check out my github account <a href="https://github.com/marialobillo">here</a>
             </p>
     </div>
 

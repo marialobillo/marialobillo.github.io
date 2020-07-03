@@ -4,7 +4,7 @@ title: Welcome to my website
 ---
 
 
-
+<div class="clearfix"></div>
 <div class="row">
     <br/>
     <div class="jumbotron">
