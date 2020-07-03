@@ -22,7 +22,7 @@ permalink: /about/
             </p>
             <p>
             When I write code I like listen music like 
-            <a href="https://www.youtube.com/watch?v=uqLEI_ht_fY">this</a>,
+            <a href="https://www.youtube.com/watch?v=uqLEI_ht_fY" target="_blank">this</a>,
             because let me to concentrate on what I'm doing and not in all 
             noises around.
             </p>
