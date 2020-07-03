@@ -40,32 +40,26 @@ permalink: /portfolio/
     </div>
 
     <div class="row">
-        <ul>
-            <li>
-                <span class="app-title">Stock_Trade()</span>
-                <div class="description">Application for management your inverstments with Node.js, React.js mainly.</div>
-                <a class="btn btn-info" href="https://github.com/marialobillo/stock-trade-v4">Code</a>
-                <a class="btn btn-secondary" href="https://fant4sy-stock-trade.herokuapp.com/">Demo</a>
-            </li>
-            
-            <li>
-                <span class="app-title">Twitter_Showcase()</span>
-                <div class="description">Look for tweets by topic or randon tweets from some accounts.</div>
-                <a class="btn btn-info" href="https://github.com/marialobillo/twitter-showcase">Code</a>
-                <a class="btn btn-secondary" href="https://glacial-badlands-68918.herokuapp.com/">Demo</a>
-            </li>
-            <li>
-                <span class="app-title">Star_Wars()</span>
-                <div class="description">You can search on Stars Wars API characters.</div>
-                <a class="btn btn-info" href="https://github.com/marialobillo/starwars-app">Code</a>
-                <a class="btn btn-secondary" href="https://hidden-anchorage-11194.herokuapp.com/">Demo</a>
-            </li>
-            <li>
-                <span class="app-title">Chat()</span>
-                <div class="description">A Chat Application using React Hooks instead of Redux.</div>
-                <a class="btn btn-info" href="https://github.com/marialobillo/chat-flask">Code</a>
-            </li>
-        
-        </ul>
+        <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+            <h5 class="card-header">Star Wars App</h5>
+            <div class="card-body">
+                <p class="card-text">You can search on Stars Wars API characters.</p>
+                <p>
+                    <a class="btn btn-info" href="https://github.com/marialobillo/starwars-app">Code</a>
+                    <a class="btn btn-secondary" href="https://hidden-anchorage-11194.herokuapp.com/">Demo</a>
+                </p>
+            </div>
+        </div>
+        <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+            <h5 class="card-header">Chat App</h5>
+            <div class="card-body">
+                <p class="card-text">A Chat Application using React Hooks instead of Redux.</p>
+                <p>
+                    <a class="btn btn-info" href="https://github.com/marialobillo/chat-flask">Code</a>
+                </p>
+            </div>
+        </div>
     </div>
+
+    
 </div>
