@@ -6,7 +6,7 @@ title: Welcome to my website
 
 
 <div class="row">
-        <h1 class="text-center">Hello, my name is Maria ;)</h1>
+        <h2 class="text-center">Hello, my name is Maria ;)</h2>
         <p class="text-center">
             I'm a Full Stack Developer and passionate of blockchain. Here are some of my last projects. 
         </p>
