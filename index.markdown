@@ -27,13 +27,13 @@ title: Welcome to my website
         </li>
         <li>
             <span class="app-title">Twitter_Showcase()</span>
-            <div class="description">Building an application for managen your inverstments with Node.js, React.js mainly.</div>
+            <div class="description">Look for tweets by topic or randon tweets from some accounts.</div>
             <a class="btn btn-info" href="https://github.com/marialobillo/twitter-showcase">Code</a>
             <a class="btn btn-secondary" href="https://glacial-badlands-68918.herokuapp.com/">Demo</a>
         </li>
         <li>
             <span class="app-title">Star_Wars()</span>
-            <div class="description">Building an application for managen your inverstments with Node.js, React.js mainly.</div>
+            <div class="description">You can search on Stars Wars API characters.</div>
             <a class="btn btn-info" href="https://github.com/marialobillo/starwars-app">Code</a>
             <a class="btn btn-secondary" href="https://hidden-anchorage-11194.herokuapp.com/">Demo</a>
         </li>
