@@ -28,7 +28,7 @@ permalink: /portfolio/
             </div>
         </div>
         <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
-            <h5 class="card-title">Twitter Showcase App</h5>
+            <h5 class="card-header">Twitter Showcase App</h5>
             <div class="card-body">
                 <p class="card-text">Look for tweets by topic or randon tweets from some accounts.</p>
                 <p>
