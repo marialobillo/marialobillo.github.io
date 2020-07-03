@@ -3,6 +3,7 @@ layout: page
 title: Blog
 permalink: /blog/
 ---
+<div class="clearfix"></div>
 
 <div class="container">
     <div class="row">
