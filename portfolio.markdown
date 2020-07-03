@@ -46,7 +46,7 @@ permalink: /portfolio/
                 <p class="card-text">You can search on Stars Wars API characters.</p>
                 <p>
                     <a class="btn btn-info" href="https://github.com/marialobillo/starwars-app">Code</a>
-                    <a class="btn btn-secondary" href="https://hidden-anchorage-11194.herokuapp.com/">Demo</a>
+                    <a class="btn btn-primary" href="https://hidden-anchorage-11194.herokuapp.com/">Demo</a>
                 </p>
             </div>
         </div>
