@@ -9,7 +9,7 @@ title: Welcome to my website
     <div class="jumbotron">
         <h1>Hello, my name is Maria ;)</h1>
         <p class="text-center">
-            I'm a Full Stack Developer with experience in Javascript and Python, React.js and Express.js with an eye on style and details. I love building things, here are some on my last project. Feel free to contact.
+            I'm a Full Stack Developer and passionate of blockchain. Here are some of my last projects. 
         </p>
     </div>
 </div>
