@@ -20,16 +20,16 @@ permalink: /contact/
     <form action="https://getform.io/f/8e552d0b-e358-4098-9794-5f6783c85c04" method="POST" class="form col-md-8">
 
     <div class="form-group">
-        <span>Name: </span>
+        <span>Name </span>
         <input type="text" name="name" class="form-control"/>
     </div>
 
     <div class="form-group">
-        <span>Email: </span>
+        <span>Email </span>
         <input type="email" name="email" class="form-control"/>
     </div>
     <div class="form-group">
-        <span>Message: </span>
+        <span>Message </span>
         <textarea name="message" class="form-control"></textarea>
     </div>
   
