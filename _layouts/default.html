@@ -1,64 +1,249 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>{{ page.title }}</title>
-  <!-- Font Awesome icons (free version)-->
-  <script src="https://use.fontawesome.com/releases/v5.12.1/js/all.js" crossorigin="anonymous"></script>
-  <!-- Google fonts-->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-  <!-- Core theme CSS (includes Bootstrap)-->
-  <link rel="stylesheet" href="./css/bootstrap.min.css">
-  <link rel="stylesheet" href="./css/custom.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maria Lobillo-Santos | Fullstack Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;700&display=swap" 
+    rel="stylesheet">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="custom.css">
 </head>
 <body>
-  <div class="">
-
-      <!-- Menu -->
-      <!-- navbar navbar-expand-lg navbar-dark bg-dark -->
-      <nav class="navbar navbar-expand-lg navbar-dark bg-primary" id="sideNav">
-        <a class="navbar-brand" href="/">
-          Maria Lobillo-Santos
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse w-100 order-3 dual-collapse">
-          <ul class="navbar-nav ml-auto">
-            
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="/portfolio">Portfolio</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="/about/">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="/blog">Blog</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="/contact">Contact</a>
-          </ul>
-        </div>
-      </nav>
-      <!-- Menu -->
-
-     
-
     <div class="container">
-      {{ content }}
+
+        <div class="row">
+            <div class="ml-auto p-2">
+                <a 
+                target="_blank"
+                href="https://github.com/marialobillo">
+                <img 
+                    class="github-link"
+                    src="./images/github.png" />
+            </a>
+            <a href="mailto:maria.lobillo.santos@gmail.com">
+                <img 
+                    class="email-link"
+                    src="./images/email-1.jpg" />
+            </a>
+            </div>
+        </div>
+        <div class="row">
+            <h1 class="display-3 hello">Hello! </h1>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 justify-content-end">
+                <h4 class="display-4 intro">
+                    I'm <strong>Maria</strong>, a full stack develope
+                    focused on simplicity and passionate of blockchain. 
+                </h4>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
     </div>
 
+    <!-- Email-->
+    <div class="row">
+        <div class="col display-5 email">
+            Email me -> <span class="address">maria.lobillo.santos@gmail.com</span>
+        </div>
+
+    </div> 
+    <!-- Email-->
+
+    <div class="container">        
+
+        <div class="row">
+            <div class="project-container">
+                <h3 class="display-4 title">Last Projects</h3>
+
+                    <!-- 1st project-->
+                    <div class="row">
+                        <div class="col-md-7 project">
+                            <h4 class="project-title">Stock Tracker App</h4>
+                            <p class="project-description">
+                                Stock investment tracker using fantasy money from IEX Cloud API.
+                            </p>
+                            <p class="col-md-6">
+                                <ul class="project-tech list-group-flush">
+                                    <li class="list-group-item">Node.js</li>
+                                    <li class="list-group-item">Express.js</li>
+                                    <li class="list-group-item">Jest</li>
+                                    <li class="list-group-item">Postgresql</li>
+                                    <li class="list-group-item">React.js</li>
+                                </ul>
+                            </p>
+                            <p>
+                                <a class="project-demo btn btn-warning"
+                                    href="https://fant4sy-stock-trade.herokuapp.com/"
+                                    target="_blank"
+                                >Visit Site</a>
+                                <a 
+                                    href="https://github.com/marialobillo/stock-trade-v4"
+                                    target="_blank"
+                                    >
+                                    <img 
+                                    class="project-code"
+                                    src="./images/github.png" alt="Code on Github" />
+                                </a>
+                            </p>
+                        </div>
+                        <div class="col-md-5">
+                            <img class="project-img" src="../images/demo-fst.png" />
+                        </div>
+                        
+                    </div>
+
+
+                    <!--2nd project-->
+                    <div class="row">
+                        <div class="col-md-7 project">
+                            <h4 class="project-title">Twitter Showcase App</h4>
+                            <p class="project-description">
+                                Search twetts about any topic. Using: Node.js, Express.js, React.js, and Twitter API.
+                            </p>
+                            <p>
+                                <ul class="project-tech list-group-flush">
+                                    <li class="list-group-item">Node.js</li>
+                                    <li class="list-group-item">Express.js</li>
+                                    <li class="list-group-item">React.js</li>
+                                    <li class="list-group-item">Twitter API</li>
+                                </ul>
+                            </p>
+                            <p>
+                                <a class="project-demo btn btn-warning"
+                                    href="https://glacial-badlands-68918.herokuapp.com/"
+                                    target="_blank"
+                                >Visit Site</a>
+                                <a 
+                                    href="https://github.com/marialobillo/twitter-showcase"
+                                    target="_blank"
+                                    >
+                                    <img 
+                                    class="project-code"
+                                    src="./images/github.png" alt="Code on Github" />
+                                </a>
+                            </p>
+                        </div>
+                        <div class="col-md-5">
+                            <img class="project-img" src="../images/demo-tsc.png" />
+                        </div>
+                    </div>
+
+
+                    <!--3th project-->
+                    <div class="row">
+                        <div class="col-md-7 project">
+                            <h4 class="project-title">Star Wars App</h4>
+                            <p class="project-description">
+                                Star Wars API using React.js.
+                            </p>
+                            <p>
+                                <ul class="project-tech list-group-flush">
+                                    <li class="list-group-item">React.js</li>
+                                    <li class="list-group-item">Star Wars API</li>
+                                </ul>
+                            </p>
+                            <p>
+                                <a class="project-demo btn btn-warning"
+                                    href="https://hidden-anchorage-11194.herokuapp.com/"
+                                    target="_blank"
+                                >Visit Site</a>
+                                <a 
+                                    href="https://github.com/marialobillo/starwars-app"
+                                    target="_blank"
+                                    >
+                                    <img 
+                                    class="project-code"
+                                    src="./images/github.png" alt="Code on Github" />
+                                </a>
+                            </p>
+                        </div>
+                        <div class="col-md-5">
+                            <img class="project-img" src="../images/demo-sw.png" />
+                        </div>
+                    </div>
+
+
+                    <!--4th project -->
+                    <div class="row">
+                        <div class="col-md-7 project">
+                            <h4 class="project-title">Chat App</h4>
+                            <p class="project-description">
+                                Chat Application using React Hooks and Flask for the backend.
+                            </p>
+                            <p>
+                                <ul class="project-tech list-group-flush">
+                                    <li class="list-group-item">Python / Flask</li>
+                                    <li class="list-group-item">Postgresql</li>
+                                    <li class="list-group-item">API</li>
+                                    <li class="list-group-item">React.js</li>
+                                </ul>
+                            </p>
+                            <p>
+                                <a 
+                                    href="https://github.com/marialobillo/chat-flask"
+                                    target="_blank"
+                                    >
+                                    <img 
+                                    class="project-code"
+                                    src="./images/github.png" alt="Code on Github" />
+                                </a>
+                            </p>
+                        </div>
+                        <div class="col-md-5">
+                            <img class="project-img" src="../images/demo-cht.png" />
+                        </div>
+                    </div>
+                        
+
+
+                        
+
+
+
+            </div>
+            
+        </div>
     
-  </div>
 
+        <div class="row">
+            
+            <div class="about-me">
+                <h3 class="display-4 title">About me</h3>
+            </div>
 
-  <!-- Bootstrap core JS-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-  <!-- Third party plugin JS-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        </div>
+        <div class="row about-content">
+                <div>
+    
+                    I am a Full Stack Web Developer, with an eye on details and 
+                    style who loves to problem-solve with clean, 
+                    semantic code while always learning and improving my skills.
+                </div>
+                <div>   
+                    My work is something I do with lot of honesty, appetite and
+                    commitment. 
+    
+                    I'm really into React.js, Hooks, blockchain, and 
+                    how to build Dapps using React.js and Express.js, security and testing.
+                </div>
+                <div>
+                    Sometimes I write posts here.
+                </div>
+
+                
+        </div>
+
+        <div class="row">
+            <div class="resume">
+                <h3 class="display-4 title">Resume</h3>
+            </div>
+        </div>
+    
 </body>
 </html>
