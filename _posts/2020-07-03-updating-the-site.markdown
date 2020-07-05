@@ -12,3 +12,6 @@ first changes, so the index page is not bad. It's clear, white
 background. It's nice, everything has its own space and is 
 telling things. So, always it could be better, but it's alright for now.
 
+The Posts section is not clear where it should be, so there is a link at 
+the bottom index. It's not a good idea, I know. And I have to change the 
+style and make it as the index page.
