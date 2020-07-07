@@ -78,6 +78,7 @@ html, body{
 
 .posts-link{
     width:20px;
+    max-width: 40px;
 }
 
 .about-content{
