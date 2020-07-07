@@ -37,15 +37,18 @@
             </div>
         </div>
         <div class="row">
-            <h1 class="display-3 hello">Posts</h1>
+            <h1 class="display-3 hello">{{ page.title }}</h1>
 
         </div>
 
         <div class="row">
             <div class="col-md-8 justify-content-end">
-                <h4 class="display-4 intro">
+                <span class="display-5">
+                  {{ page.date | date_to_string }}
+                </span>
+                <h5 class="display-5 intro">
                    {{content}} 
-                </h4>
+                </h5>
             </div>
 
         </div>
@@ -56,8 +59,7 @@
     
 
     <div class="container">        
-        The Container
-        
+      
                 
     </div>
 
