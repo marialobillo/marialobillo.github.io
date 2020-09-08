@@ -22,8 +22,9 @@ permalink: /portfolio/
             <div class="card-body">
                 <p class="card-text">Application for management your inverstments with Node.js, React.js.</p>
                 <p>
-                    <a class="btn btn-info btn-sm" href="https://github.com/marialobillo/stock-trade-v4" target="_blank">Code</a>
-                    <a class="btn btn-primary btn-sm" href="https://fant4sy-stock-trade.herokuapp.com/" target="_blank">Demo</a>
+                    <a class="btn btn-info btn-sm" href="https://github.com/marialobillo/stock-trade-v4" 
+                        target="_blank">Code</a>
+                    <a class="btn btn-primary btn-sm" href="https://f4nt4sy-stock-trade-v5.herokuapp.com/"                     target="_blank">Demo</a>
                 </p>
             </div>
         </div>
