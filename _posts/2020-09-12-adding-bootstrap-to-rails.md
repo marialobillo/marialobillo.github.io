@@ -63,3 +63,7 @@ I recommend go to https://rubygems.org/ and pick up the current versions.
 rails s
 </code>
 </pre>
+
+If you prefer video format, there is a great resource on Youtube.
+Here the <a href="https://www.youtube.com/watch?v=BIxd501hP-g&ab_channel=ChrisLam">
+link</a>.
