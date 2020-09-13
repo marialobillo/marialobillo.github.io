@@ -6,7 +6,7 @@ categories: bootstrap rails
 permalink: /i-love-bootstrap-rails
 ---
 
-One of my favourites backend frameworks is Ruby on Rail. Because is simple, is powderfull, and on version 6 you can add your Javascript dependencies using yarn. So, so excited about it.
+One of my favourites backend frameworks is Ruby on Rails. Because is simple, is powderfull, and on version 6 you can add your Javascript dependencies using yarn. So, so excited about it.
 
 These are the notes for adding Bootstrap to Rails project:
 
