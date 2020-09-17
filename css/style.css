@@ -87,5 +87,6 @@ div > .about-content{
 }
 
 .language-Go{
-    background-color: #bbb;
+    background-color: #eee;
+    padding: 3px;
 }
