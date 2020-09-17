@@ -89,4 +89,5 @@ div > .about-content{
 .language-Go{
     background-color: #eee;
     padding: 3px;
+    border-radius: 3px;
 }
