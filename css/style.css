@@ -85,3 +85,7 @@ div > .about-content{
     margin-bottom: 10px;
     line-height: 2em;
 }
+
+.language-Go{
+    background-color: #bbb;
+}
