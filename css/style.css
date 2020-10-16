@@ -91,3 +91,21 @@ div > .about-content{
     padding: 3px;
     border-radius: 3px;
 }
+
+.top-menu{
+    color: black;
+    
+}
+
+.top-menu a {
+    margin: auto 10px;
+}
+
+.top-menu a:hover{
+    color: black;
+    text-decoration: underline;
+}
+
+.top-menu a:visited{
+    color: black;
+}
