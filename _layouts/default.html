@@ -29,7 +29,7 @@
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">Portfolio</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#resume">Resume</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/blog">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#blog">Blog</a></li>
                     </ul>
                 </div>
             </div>
@@ -163,6 +163,39 @@
                 </div>
             </div>
         </section>
+
+        <!-- Blog -->
+        <div id="blog">
+            <!-- <div class="container">
+                <h2 class="text-center mt-0">Resume</h2>
+                <hr class="divider my-4" />
+            </div> -->
+
+            <!-- Call to action -->
+            <section class="page-section bg-dark text-white">
+                <div class="container">
+                    <h2 class="text-center mt-0">Blog</h2>
+                    <hr class="divider my-4" />
+                </div>
+                <div class="container text-center">
+                    <div>
+                        {% for post in site.posts %}
+                            {% assign currentdate = post.date | date: "%B %Y" %}
+                            {% if currentdate != date %}
+                                <p id="y{{currentdate}}">{{ currentdate }}</p>
+                                {% assign date = currentdate %} 
+                            {% endif %}
+                                <p>
+                                    <a href="{{ post.url }}">
+                                        {{ post.title }}
+                                    </a>
+                                </p>
+                        {% endfor %}
+                        </div>
+
+                </div>
+            </section>
+        </div> 
         <!-- Footer-->
         <footer class="bg-light py-5">
             <div class="container"><div class="small text-center text-muted">Copyright © 2020 - Start Bootstrap</div></div>
