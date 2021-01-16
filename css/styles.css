@@ -10164,3 +10164,8 @@ header.masthead h1 {
 .text-white-75 {
   color: rgba(255, 255, 255, 0.75);
 }
+
+.project-description{
+  font-size: 0.75rem;
+  color:#4e555b;
+}
