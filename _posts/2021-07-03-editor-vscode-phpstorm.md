@@ -6,4 +6,6 @@ categories: php github php
 permalink: /switching-editor
 ---
 
-Which one to choose and for what. 
+Which one to choose and for what. I am on Ubuntu, and using a standard spanish keyboard, and shortcuts are no working well. So I have to reconfigured mostly or all or the shortcuts on PHPStorm. The commond task is the next, I remove an old shortcut and them I assigned it to a new function, which is fun because is working.
+
+[ Will Continue... ]
