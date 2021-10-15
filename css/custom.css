@@ -56,7 +56,11 @@ figure{text-align:center}.wrapper{display:flex;flex-direction:column;min-height:
 
 img.emoji{height:1em;width:1em;margin:0 .05em 0 .1em;vertical-align:-.1em}
 
-.content{flex:1;display:flex;margin-top:1.6rem;margin-bottom:3.2rem}
+.content{
+    /* flex:1; */
+    /* display:flex; */
+    margin-top:1.6rem;
+    margin-bottom:3.2rem}
 
 .content article header{margin-top:6.4rem;margin-bottom:3.2rem}
 
@@ -94,7 +98,10 @@ img.emoji{height:1em;width:1em;margin:0 .05em 0 .1em;vertical-align:-.1em}
 
 @media only screen and (min-width:768.1px){.list ul:not(.pagination) li{display:flex}}
 
-.centered{display:flex;align-items:center;justify-content:center}
+.centered{
+    /* display:flex; */
+    align-items:center;
+    justify-content:center}
 
 .centered .about{text-align:center}
 
@@ -179,6 +186,7 @@ ul.social{
     width: 100%;
     text-justify: center;
     text-align: center;
+    margin-bottom: 20px;
 }
 ul.social li{
     display: inline;
@@ -196,6 +204,6 @@ ul.social li i:hover{
     text-decoration: none;
 }
 
-.hello{
+.text-center{
     text-align: center;
 }
