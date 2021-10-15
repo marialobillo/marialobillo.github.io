@@ -4,8 +4,8 @@ html{box-sizing:border-box;font-size:62.5%}
 body{
     color:#6d6d6e;
     background-color:#fdfdfd;
-    font-family:Merriweather,
-    Georgia,serif;font-size:1.8em;
+    font-family: Merriweather, Georgia,serif;
+    font-size:1.8em;
     font-weight:300;
     line-height:1.8em}
 @media only screen and (max-width:768px)
@@ -15,7 +15,8 @@ a:focus,a:hover{text-decoration:underline}p{margin:2rem 0}
 
 h1,h2,h3,h4,h5,h6{
     font-family:Lato,Helvetica,sans-serif;
-    font-weight:700;color:#6d6d6e;
+    font-weight:700;
+    color:#6d6d6e;
     margin:6.4rem 0 3.2rem}
 
 h1{font-size:3.2rem;line-height:3.6rem}@media only screen and (max-width:768px){h1{
@@ -65,6 +66,8 @@ img.emoji{height:1em;width:1em;margin:0 .05em 0 .1em;vertical-align:-.1em}
 .content{
     /* flex:1; */
     /* display:flex; */
+    width: 90%;
+    font-size: 1.9rem;
     margin-top:1.6rem;
     margin-bottom:3.2rem}
 
