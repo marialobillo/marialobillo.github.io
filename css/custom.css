@@ -1,7 +1,13 @@
 *,*:after,*:before{box-sizing:inherit}
 html{box-sizing:border-box;font-size:62.5%}
 
-body{color:#6d6d6e;background-color:#fdfdfd;font-family:Merriweather,Georgia,serif;font-size:1.6em;font-weight:300;line-height:1.8em}
+body{
+    color:#6d6d6e;
+    background-color:#fdfdfd;
+    font-family:Merriweather,
+    Georgia,serif;font-size:1.8em;
+    font-weight:300;
+    line-height:1.8em}
 @media only screen and (max-width:768px)
 {body{font-size:1.6em;line-height:1.6em}}a{font-weight:300;color:#db30b6;text-decoration:none;transition:all .25s ease-in}
 
