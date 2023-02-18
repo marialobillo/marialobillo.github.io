@@ -43,7 +43,7 @@
           </div>
         </div>
       </nav>
-    
+
 
 
     <div class="container">
@@ -51,22 +51,22 @@
 
     <section class="about" id="about">
         <div class="">
-            
+
             <h2 class="text-center hello">
                 Hello! I'm Maria</h2>
             <div style="text-align: justify">
-                <p class="description">I'm a fullstack developer with experience in Javascript and PHP. I love to share what I do, or what I'm learning. 
+                <p class="description">I'm a fullstack developer with experience in Javascript and PHP. I love to share what I do, or what I'm learning.
                 If you have any suggestions or whatever, please text me.</p>
-        
+
             </div>
-            
+
             <ul class="nav social">
                 <li>
                     <a href="https://github.com/marialobillo/" aria-label="Github" target="_blank">
                     <i class="fa fa-github" aria-hidden="true"></i>
                     </a>
                 </li>
-                
+
                 <li>
                     <a href="https://twitter.com/malobillo/" aria-label="Twitter" target="_blank">
                     <i class="fa fa-twitter" aria-hidden="true"></i>
@@ -78,7 +78,7 @@
                     </a>
                 </li>
             </ul>
-            
+
         </div>
     </section> <!-- about -->
 
@@ -124,16 +124,16 @@
                     A Slack clone built using Reactjs/Flask.
                 </div>
             </div>
-            
-            
-            
+
+
+
         </div>
     </div>
     </section><!-- projects section end -->
 
 
     <section id="resume" class="resume">
-      
+
         <!-- Call to action -->
         <div class="page-section" >
             <div class="container">
@@ -144,7 +144,7 @@
                 <a class="btn btn-light btn-xl" href="./files/Resume.pdf">Download</a>
             </div>
         </div>
-    </section><!-- end of resume section --> 
+    </section><!-- end of resume section -->
 
 
      <!-- Contact-->
@@ -153,24 +153,7 @@
             <div class="">
                 <div class="col">
                     <h2 class="mt-0">Contact</h2>
-                    <p class="">Please, send me an email at maria.lobillo.santos at gmail dot com or you can use the form.</p>
-                </div>
-            </div>
-            
-            <div class="row justify-content-center">
-                <div class="col-10 mr-auto">
-                    <form action="https://formspree.io/f/xbjpqnzn" method="POST" class="form">
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" name="_replyto" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label class="from-control">Message</label>
-                            <textarea name="message" class="form-control"></textarea>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary btn-block">Send Messsage</button>
-                    </form>
+                    <p class="">Please, send me an email at maria.lobillo.santos at gmail dot com.</p>
                 </div>
             </div>
         </div>
@@ -196,7 +179,7 @@
                         {% assign currentdate = post.date | date: "%B %Y" %}
                         {% if currentdate != date %}
                             <p id="y{{currentdate}}">{{ currentdate }}</p>
-                            {% assign date = currentdate %} 
+                            {% assign date = currentdate %}
                         {% endif %}
                             <p>
                                 <a href="{{ post.url }}">
@@ -208,16 +191,16 @@
 
             </div>
         </div>
-    </section><!-- End of blog/posts section --> 
+    </section><!-- End of blog/posts section -->
 
     </div>
 
     </div> <!-- container-->
 
 
-   
-          
-      
+
+
+
 
       <script src="./js/bootstrap.bundle.min.js"></script>
       <script src="./js/bootstrap.min.js"></script>
