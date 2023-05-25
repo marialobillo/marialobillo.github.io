@@ -8,7 +8,7 @@ permalink: /bookmark-tailwind-css
 
 
 I was facing the frontend challenge from Fontend Mentor, white it was building a 
-website using TailwindCSS and Javascript. I thought I was good with my CSS skills, but I was using Boostrap probably too much. So it was great moment for a CSS refresher.
+website using TailwindCSS and Javascript. I thought I was good with my CSS skills, but I've bern using Boostrap probably too much. So it was great moment for a CSS refresher.
 
 So, at firt point I wanted to have FlexBox clear, and for that I found this website: [Flexbox Froggy](https://flexboxfroggy.com/). It was a great way to remember how to use Flexbox, and I really enjoyed it.
 
