@@ -13,7 +13,7 @@ TypeScript was released to the public in October 2012, since there the interest 
 
 <img src="./../images/posts/typescript-over-time.png" alt="..." class="img-fluid"">
 
-![Typescript by Google Trends](./../images/posts/typescript-over-time.png)
+![Typescript by Google Trends](./../images/posts/typescript-over-time.png =250x250)
 
 
 
