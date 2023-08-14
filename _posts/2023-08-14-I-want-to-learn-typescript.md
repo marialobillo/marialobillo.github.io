@@ -9,13 +9,19 @@ permalink: /i-want-to-learn-typescript
 
 TypeScript was released to the public in October 2012, since there the interest is been growing. Here you can see what I could found on Google Trends:
 
+
+
 <img src="./../images/posts/typescript-over-time.png" alt="..." class="img-fluid"">
+
+
 
 
 Ok, now we know we want to learn typescript, but what is typescript? According to the official [website](https://www.typescriptlang.org/): "typescript is a strongly typed programming language".
 
 
 Here is a great article on Free Code Camp about getting started with typescript: [The Ultimate Beginners Guide](https://www.freecodecamp.org/news/learn-typescript-beginners-guide/)
+
+
 
 
 I like to learn by doing, so what kind of resources are out there to learn typescript by doing? There are a ton but one of them is [Execute Program](https://www.executeprogram.com/) which is a platform to learn by doing. I've been using it for a while and I really like it.

@@ -15,6 +15,8 @@ condition' happening in your project. The reason for this is because we are usin
 
 I found two articles about race condition on Nodejs that I found very interesting and I wanted to share with you. One of them is the Luciano Mammino [article](https://www.nodejsdesignpatterns.com/blog/node-js-race-conditions/), which is very well explained, giving us an idea about race condition on nodejs could be posible, picturing the way that 2 transactions could go, a beautiful example about olives and grapes which one solution could be forcing to the second process to wait for the frist one to finish.
 
+
+
 ```javascript
 // source  -> https://www.nodejsdesignpatterns.com/blog/node-js-race-conditions/
 async function main () {
@@ -26,6 +28,8 @@ async function main () {
 }
 
 ```
+
+
 
 The second one is about a real case described Matilde Duboille [here](https://blog.theodo.com/2019/09/handle-race-conditions-in-nodejs-using-mutex/), talking how she solved a race condition problem using mutex. In the article is defining race condition, and putting us in context about the problem that she was facing. 
 
