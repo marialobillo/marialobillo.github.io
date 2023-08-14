@@ -7,16 +7,7 @@ permalink: /i-want-to-learn-typescript
 ---
 
 
-TypeScript was released to the public in October 2012, since there the interest is been growing. Here you can see what I could found on Google Trends:
-
-
-
-<img src="./../images/posts/typescript-over-time.png" alt="..." class="img-fluid"">
-
-![Typescript by Google Trends](./../images/posts/typescript-over-time.png =250x250)
-
-
-
+TypeScript was released to the public in October 2012, since there the interest is been growing. You can check here on [Google Trends](https://trends.google.com/trends/explore?date=today%205-y&q=typescript&hl=en) how the interest is growing.
 
 Ok, now we know we want to learn typescript, but what is typescript? According to the official [website](https://www.typescriptlang.org/): "typescript is a strongly typed programming language".
 
