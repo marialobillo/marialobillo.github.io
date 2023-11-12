@@ -26,6 +26,7 @@ I found some resources helping how to contribute to Open Source, there is an art
 
 And another resource that I found and I think is very useful is this one, is a youtube video which is an interview to Michael Dawson, [here](https://www.youtube.com/watch?v=5WtkRoGtbx4). There is a lot resource out there, but I think this is a good start.
 
+Acording to Michael Dawson, a good place to start is checking out the [calendar](https://nodejs.org/calendar). This way we can know what is going on. And also, we can check the [Youtube Nodejs Lives](https://www.youtube.com/@nodejs-foundation/streams) in order to find old meetings what we could interested in.
 
 
 
