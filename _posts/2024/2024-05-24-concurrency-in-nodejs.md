@@ -10,9 +10,11 @@ In my latest exploration of Node.js, I delved into how this popular runtime hand
 
 Even though Node.js operates on a single thread, its event-driven, non-blocking I/O model allows it to handle multiple operations simultaneously. This is achieved through several mechanisms:
 
-1. **Event Loop**: The event loop is the core of Node.js's concurrency model. It continuously checks the call stack and the callback queue for tasks to execute. When the call stack is empty, the event loop moves tasks from the callback queue to the call stack.
+## **Event Loop**: 
+The event loop is the core of Node.js's concurrency model. It continuously checks the call stack and the callback queue for tasks to execute. When the call stack is empty, the event loop moves tasks from the callback queue to the call stack.
 
-2. **Callbacks**: These are functions provided as arguments to other functions and executed when an asynchronous operation completes. This approach has been the traditional way to manage asynchronous operations in Node.js.
+## **Callbacks**: 
+These are functions provided as arguments to other functions and executed when an asynchronous operation completes. This approach has been the traditional way to manage asynchronous operations in Node.js.
 
 '''
 const fs = require('fs');
@@ -26,7 +28,8 @@ fs.readFile('file.txt', 'utf8', (err, data) => {
 });
 '''
 
-3. **Promises**: These modern constructs provide a cleaner and more manageable way to handle asynchronous code, making it easier to write and understand.
+## **Promises**: 
+These modern constructs provide a cleaner and more manageable way to handle asynchronous code, making it easier to write and understand.
 
 '''
 const fs = require('fs').promises;
@@ -43,7 +46,8 @@ async function readFile() {
 readFile();
 '''
 
-4. ***Worker Threads***: For tasks that are CPU-intensive and might block the event loop, the worker_threads module allows you to run code in parallel threads, thereby avoiding bottlenecks.
+## ***Worker Threads***: 
+For tasks that are CPU-intensive and might block the event loop, the worker_threads module allows you to run code in parallel threads, thereby avoiding bottlenecks.
 
 '''
 const { Worker } = require('worker_threads');
@@ -57,7 +61,8 @@ worker.on('message', (message) => {
 worker.postMessage('Start');
 '''
 
-5. **Cluster**: To take advantage of multi-core processors, Node.js provides the cluster module, which enables you to create multiple processes that can share the same port, thus improving performance and scalability.
+## **Cluster**: 
+To take advantage of multi-core processors, Node.js provides the cluster module, which enables you to create multiple processes that can share the same port, thus improving performance and scalability.
 
 '''
 const cluster = require('cluster');
