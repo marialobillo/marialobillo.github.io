@@ -21,8 +21,7 @@
 title: Maria Lobillo-Santos
 email: maria.lobillo.santos@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  My name is Maria Lobillo-Santos, I am a Full Stack Developer with experience on
-  Javascript as Frontend and Backend, specially using React.js, Node.js and Express.js.
+  My name is Maria Lobillo-Santos, I am a Full Stack Developer, I do like Javascript, Typescript, and Python.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: malobillo
