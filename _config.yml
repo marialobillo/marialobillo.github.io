@@ -21,19 +21,15 @@
 title: Maria Lobillo-Santos
 email: maria.lobillo.santos@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  My name is Maria Lobillo-Santos, I am a Full Stack Developer, I do like Javascript, Typescript, and Python.
+  My name is Maria Lobillo-Santos, I am a Full Stack Developer.I love sharing the insights and skills I pick up along the way.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: malobillo
+twitter_username: maria_lobillo
 github_username:  marialobillo
 
 Rouge: true
-collections:
-  posts:
-    output: true
-    permalink: /:year/:month/:day/:title.html
 #permalink: pretty
-permalink: /:year/:month/:day/:title.html
+permalink: /:year-:month-:day/:title
 paginate: 5
 # Build settings
 theme: minima
