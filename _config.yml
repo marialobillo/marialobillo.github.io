@@ -29,8 +29,12 @@ twitter_username: malobillo
 github_username:  marialobillo
 
 Rouge: true
+collections:
+  posts:
+    output: true
+    permalink: /:year/:month/:day/:title.html
 #permalink: pretty
-permalink: /:year-:month-:day/:title
+permalink: /:year/:month/:day/:title.html
 paginate: 5
 # Build settings
 theme: minima
