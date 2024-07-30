@@ -87,6 +87,8 @@ a.portfolio-box project-name:hover{
     display: flex;
     justify-content: space-between;
     margin-left: 1.5em;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
 }
 
 .post-title {
@@ -95,4 +97,5 @@ a.portfolio-box project-name:hover{
 
 .post-date {
     color: gray;
+    margin-left: auto;
 }
