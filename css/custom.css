@@ -73,3 +73,26 @@ a.project-name, a.portfolio-box{
 a.portfolio-box project-name:hover{
     cursor:pointer;
 }
+
+.container {
+    text-align: left;
+}
+
+.year-header {
+    font-size: 1em;
+    margin-left: 0;
+}
+
+.post-item {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 1.5em;
+}
+
+.post-title {
+    font-weight: bold;
+}
+
+.post-date {
+    color: gray;
+}
