@@ -1,71 +1,170 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css" integrity="sha256-gsmEoJAws/Kd3CjuOQzLie5Q3yshhvmo7YNtBG7aaEY=" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous">
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ page.title }} | Maria Lobillo</title>
+    <meta name="description" content="{{ page.excerpt | strip_html | truncatewords: 30 }}" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Typography for blog posts */
+      .prose {
+        max-width: 65ch;
+        color: #e5e7eb;
+      }
+      .prose h1 {
+        font-size: 2.25rem;
+        font-weight: 700;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #f9fafb;
+      }
+      .prose h2 {
+        font-size: 1.875rem;
+        font-weight: 600;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #f9fafb;
+      }
+      .prose h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+        color: #f3f4f6;
+      }
+      .prose p {
+        margin-bottom: 1.25rem;
+        line-height: 1.75;
+      }
+      .prose strong {
+        font-weight: 600;
+        color: #f9fafb;
+      }
+      .prose a {
+        color: #60a5fa;
+        text-decoration: none;
+      }
+      .prose a:hover {
+        text-decoration: underline;
+      }
+      .prose ul, .prose ol {
+        margin: 1.25rem 0;
+        padding-left: 1.5rem;
+      }
+      .prose li {
+        margin-bottom: 0.5rem;
+      }
+      .prose code {
+        background: #1f2937;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-size: 0.875rem;
+        color: #f472b6;
+      }
+      .prose pre {
+        background: #1f2937;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        margin: 1.5rem 0;
+      }
+      .prose pre code {
+        background: transparent;
+        padding: 0;
+        color: #e5e7eb;
+      }
+      .prose blockquote {
+        border-left: 4px solid #3b82f6;
+        padding-left: 1rem;
+        margin: 1.5rem 0;
+        color: #9ca3af;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-900 text-gray-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="border-b border-gray-800">
+      <div class="max-w-4xl mx-auto px-4 py-6">
+        <div class="flex justify-between items-center">
+          <a href="/" class="text-xl font-semibold hover:text-blue-400 transition-colors">
+            Maria Lobillo
+          </a>
+          
+          <div class="hidden sm:flex space-x-6 text-sm">
+            <a href="/" class="hover:text-blue-400 transition-colors">Home</a>
+            <a href="/blog" class="hover:text-blue-400 transition-colors">Blog</a>
+            <a href="/about" class="hover:text-blue-400 transition-colors">About</a>
+          </div>
 
-    <title>Welcome Maria's Portfolio</title>
-    <link rel="stylesheet" href="./css/bootstrap-grid.min.css">
-    <link rel="stylesheet" href="./css/bootstrap-utilities.min.css">
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/custom.css">
-</head>
-<body id="page-top">
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="/">Maria Lobillo-Santos</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="collapse navbar-collapse" id="navbarNav">
-
-            <ul class="nav justify-content-end top-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="/#about">About</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/#projects">Projects</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/#blog">Blog</a>
-                </li>
-              </ul>
-
+          <div class="sm:hidden flex space-x-4 text-sm">
+            <a href="/" class="hover:text-blue-400">Home</a>
+            <a href="/blog" class="hover:text-blue-400">Blog</a>
+            <a href="/about" class="hover:text-blue-400">About</a>
           </div>
         </div>
+      </div>
     </nav>
 
-
-    <div class="container">
-
-        <div class="row">
-            <h1 class="display-3 hello">{{ page.title }}</h1>
-
-        </div>
-
-        <div class="row">
-            <div class="col-md-8 justify-content-end">
-                <span class="">
-                  {{ page.date | date_to_string }}
-                </span>
-                <p class="intro">
-                   {{content}} 
-                </p>
-            </div>
-
-        </div>
-
-        <div class="clearfix"></div>
-    </div>
-
-
+    <!-- Post Header -->
+    <article class="max-w-4xl mx-auto px-4 py-12">
+      <header class="mb-8 pb-8 border-b border-gray-800">
+        <h1 class="text-4xl sm:text-5xl font-bold mb-4 leading-tight">
+          {{ page.title }}
+        </h1>
         
-    
-</body>
+        <div class="flex items-center space-x-4 text-sm text-gray-400">
+          <time datetime="{{ page.date | date_to_xmlschema }}">
+            {{ page.date | date: "%B %d, %Y" }}
+          </time>
+          
+          {% if page.tags %}
+          <span>•</span>
+          <div class="flex flex-wrap gap-2">
+            {% for tag in page.tags %}
+              <span class="text-blue-400">#{{ tag }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </header>
+
+      <!-- Post Content -->
+      <div class="prose">
+        {{ content }}
+      </div>
+
+      <!-- Post Footer -->
+      <footer class="mt-12 pt-8 border-t border-gray-800">
+        <div class="flex justify-between items-center">
+          <a href="/blog" class="text-blue-400 hover:underline text-sm">
+            ← Back to Blog
+          </a>
+          
+          <div class="flex space-x-4 text-sm">
+            <a href="https://www.linkedin.com/in/maria-lobillo/" 
+               class="text-gray-400 hover:text-blue-400 transition-colors"
+               target="_blank" 
+               rel="noopener">
+              Share on LinkedIn
+            </a>
+            <a href="https://github.com/marialobillo" 
+               class="text-gray-400 hover:text-blue-400 transition-colors"
+               target="_blank" 
+               rel="noopener">
+              GitHub
+            </a>
+          </div>
+        </div>
+      </footer>
+    </article>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 mt-20">
+      <div class="max-w-4xl mx-auto px-4 py-8 text-center text-sm text-gray-500">
+        <p>© {{ 'now' | date: "%Y" }} Maria Lobillo. Senior Software Engineer.</p>
+      </div>
+    </footer>
+  </body>
 </html>
