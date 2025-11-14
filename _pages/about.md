@@ -9,7 +9,7 @@ permalink: /about/
   <div class="mb-12">
     <h1 class="text-4xl font-bold mb-4">About Me</h1>
     <p class="text-xl text-gray-400">
-      Senior Software Engineer with 9+ years building scalable, production-ready systems. Currently focused on backend architecture, event-driven systems, and distributed applications with Node.js and TypeScript.
+      Senior Backend Engineer with 9+ years building scalable, production-ready systems. Specialized in backend architecture, event-driven systems, and distributed applications with Node.js and TypeScript.
     </p>
   </div>
 
@@ -17,44 +17,8 @@ permalink: /about/
   <div class="mb-12 pb-12 border-b border-gray-800">
     <h2 class="text-2xl font-semibold mb-4">Current Work</h2>
     <p class="text-gray-300">
-      <strong class="text-blue-400">Software Architect</strong> - Leading development of competitive intelligence platforms, implementing Domain-Driven Design patterns and microservices architecture with NestJS, Kafka, PostgreSQL, and AWS.
+      <strong class="text-blue-400">Senior Backend Engineer</strong> - Building competitive intelligence platforms with focus on backend architecture and distributed systems. Working with NestJS, Kafka, PostgreSQL, and AWS to implement scalable, event-driven solutions.
     </p>
-  </div>
-
-  <!-- Experience Highlights -->
-  <div class="mb-12 pb-12 border-b border-gray-800">
-    <h2 class="text-2xl font-semibold mb-6">Experience Highlights</h2>
-    <p class="text-gray-400 mb-6">Throughout my career, I've worked on high-scale distributed systems across various industries:</p>
-    
-    <div class="space-y-6">
-      <div>
-        <h3 class="text-lg font-semibold text-blue-400 mb-2">Event-Driven Systems</h3>
-        <p class="text-gray-300">
-          Re-architected tournament registration system using Redis + RabbitMQ, achieving 99.999% uptime handling €3M+ daily transactions for a large-scale iGaming platform (300k+ daily active users)
-        </p>
-      </div>
-
-      <div>
-        <h3 class="text-lg font-semibold text-blue-400 mb-2">Performance Optimization</h3>
-        <p class="text-gray-300">
-          Reduced critical API response times from 20s to 3s through query optimization and caching strategies
-        </p>
-      </div>
-
-      <div>
-        <h3 class="text-lg font-semibold text-blue-400 mb-2">System Reliability</h3>
-        <p class="text-gray-300">
-          Implemented circuit breaker patterns and retry mechanisms, preventing €15-20k losses per incident
-        </p>
-      </div>
-
-      <div>
-        <h3 class="text-lg font-semibold text-blue-400 mb-2">Team Leadership</h3>
-        <p class="text-gray-300">
-          Currently managing development teams, conducting code reviews, and establishing architectural patterns
-        </p>
-      </div>
-    </div>
   </div>
 
   <!-- Technical Expertise -->
@@ -137,10 +101,4 @@ permalink: /about/
     </div>
   </div>
 
-  <!-- Footer CTA -->
-  <div class="text-center bg-gray-800 p-8 rounded-lg border border-gray-700">
-    <p class="text-gray-300 text-lg">
-      Open to <strong class="text-blue-400">Senior Backend Engineer</strong> and <strong class="text-blue-400">Software Architect</strong> opportunities.
-    </p>
-  </div>
 </div>
