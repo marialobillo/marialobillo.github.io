@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "I want to learn Typescript"
-date:   2023-08-14 17:44:00 +0100
+date:   2021-10-14 20:00:00 +0100
 categories: programming typescript javascript nodejs 
 permalink: /i-want-to-learn-typescript
 ---
