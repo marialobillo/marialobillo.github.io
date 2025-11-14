@@ -3,51 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Maria | Fullstack Engineer</title>
+    <title>{{ page.title | default: "Maria Lobillo | Senior Software Engineer" }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
   </head>
-  <body class="bg-gray-900 text-gray-100 transition-colors duration-300">
-    <div class="min-h-screen flex flex-col items-center justify-center p-4 space-y-6">
-    
-      <!-- Profile Picture -->
-      <img src="./images/picture.jpg" alt="my photo" class="rounded-full w-32 h-32 object-cover shadow-lg" />
-
-      <!-- Links -->
-      <div class="flex space-x-6 border-top-white">
-        <a href="https://www.linkedin.com/in/maria-lobillo/" class="text-blue-100 hover:underline">LinkedIn</a>
-        <a href="https://github.com/marialobillo" class="text-blue-100 hover:underline">GitHub</a>
-      </div>
-
-      <!-- About Me -->
-      <div class="max-w-2xl space-y-5 text-lg py-10 sm:text-base">
-        <h2 class="text-4xl">Hi there 👋</h2>
-
-        <p>👨‍💻 <strong>About Me:</strong> 
-          Fullstack Developer with 9+ years of experience building scalable web applications and services. Expert in JavaScript,
-TypeScript, Node.js, and React.js. One of my key achievements is that I re-architected the event-driven service using Redis and
-RabbitMQ for one of the largest iGaming platforms (10,000+ daily users), achieving 99.999% availability in line with SLA
-targets. Focused on clean architecture, system reliability, and scalability.
-        </p>
-
-        <p>🛠️ I’ve spent the last few years shipping production-ready code across the stack, working closely with product and design teams. 
-          I care about clean code, fast delivery, and building things people actually enjoy using.</p>
-
-        <p>🚀 <strong>My motto:</strong> “Code should tell a story.”</p>
-
-        <p>💻 <strong>Programming Languages:</strong> JavaScript, TypeScript<br/>
-        🔧 <strong>Technologies & Tools:</strong> React, Node.js, Next.js, Jest, Webpack, Git, REST APIs<br/>
-        ☁️ <strong>Cloud:</strong> AWS, Docker, CI/CD pipelines<br/>
-        📊 <strong>Methodologies:</strong> SCRUM, Agile, TDD</p>
-
-        <p>🌐 <strong>Interests:</strong> Fullstack Development, Serverless, React Ecosystem, Microservices, Design Patterns, Clean Code</p>
-      </div>
-
-      <!-- <div>
-        <div class="flex space-x-6 border-top-white">
-          <a href="#" class="text-blue-100 hover:underline">Blog</a>
+  <body class="bg-gray-900 text-gray-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="border-b border-gray-800">
+      <div class="max-w-4xl mx-auto px-4 py-6">
+        <div class="flex justify-between items-center">
+          <!-- Logo/Name -->
+          <a href="/" class="text-xl font-semibold hover:text-blue-400 transition-colors">
+            Maria Lobillo
+          </a>
+          
+          <!-- Menu -->
+          <div class="flex space-x-6 text-sm">
+            <a href="/" class="hover:text-blue-400 transition-colors">Home</a>
+            <a href="/blog" class="hover:text-blue-400 transition-colors">Blog</a>
+            <a href="/about" class="hover:text-blue-400 transition-colors">About</a>
+          </div>
         </div>
-      </div> -->
-    </div>
+      </div>
+    </nav>
+
+    <!-- Content -->
+    <main class="max-w-4xl mx-auto px-4 py-12">
+      {{ content }}
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 mt-20">
+      <div class="max-w-4xl mx-auto px-4 py-8 text-center text-sm text-gray-500">
+        <div class="flex justify-center space-x-6 mb-4">
+          <a href="https://www.linkedin.com/in/maria-lobillo/" class="hover:text-blue-400 transition-colors">LinkedIn</a>
+          <a href="https://github.com/marialobillo" class="hover:text-blue-400 transition-colors">GitHub</a>
+        </div>
+        <p>© {{ 'now' | date: "%Y" }} Maria Lobillo. Senior Software Engineer.</p>
+      </div>
+    </footer>
   </body>
 </html>
