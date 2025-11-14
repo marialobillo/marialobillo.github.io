@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Shared Packages in Monorepos: Implementation"
-date:   2025-10-29 10:07:00 +0100
+date:   2025-04-19 20:00:00 +0100
 categories: monorepos microservices packages shared  
 permalink: /shared-packages-implementation
 ---
