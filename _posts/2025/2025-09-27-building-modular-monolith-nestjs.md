@@ -160,7 +160,3 @@ Start with the simplest thing that could work, but build in seams so you can evo
 ---
 
 **Building something similar? I'd love to hear how you approached the architecture decision.** Connect with me on [LinkedIn](https://www.linkedin.com/in/maria-lobillo/).
-
----
-
-*This is part of a series on building scalable backend systems. Next up: implementing bounded contexts with NestJS and handling domain events with Kafka.*
