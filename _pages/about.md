@@ -80,7 +80,7 @@ permalink: /about/
 
   <!-- Let's Connect -->
   <div class="mb-12">
-    <h2 class="text-2xl font-semibold mb-6">Let's Connect</h2>
+    <h2 class="text-2xl font-semibold mb-6">Say hi!</h2>
     <div class="flex flex-wrap gap-4">
       <a href="https://www.linkedin.com/in/maria-lobillo/" 
          class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"

@@ -29,8 +29,8 @@ permalink: /
     <p class="text-blue-400 italic text-xl">"Code should tell a story."</p>
     
     <div class="text-left space-y-2 text-base bg-gray-800 p-6 rounded-lg">
-      <p>💻 <strong>Languages:</strong> JavaScript, TypeScript</p>
-      <p>🔧 <strong>Stack:</strong> Node.js, React, Next.js, NestJS</p>
+      <p>💻 <strong>Languages:</strong> JavaScript, TypeScript, Python</p>
+      <p>🔧 <strong>Stack:</strong> Node.js, React, Next.js, NestJS, Expressjs</p>
       <p>☁️ <strong>Cloud & Tools:</strong> AWS, Docker, CI/CD, Git</p>
       <p>🏗️ <strong>Focus:</strong> Microservices, Event-Driven Architecture, DDD, Clean Code</p>
       <p>📊 <strong>Methodologies:</strong> Agile, SCRUM, TDD</p>
