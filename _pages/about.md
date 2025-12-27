@@ -30,7 +30,7 @@ permalink: /about/
       <div class="bg-gray-800 p-6 rounded-lg">
         <h3 class="text-lg font-semibold mb-3 text-blue-400">Primary Stack</h3>
         <ul class="space-y-2 text-gray-300">
-          <li>• JavaScript, TypeScript (9+ years)</li>
+          <li>• JavaScript/TypeScript</li>
           <li>• Node.js, NestJS, Express</li>
           <li>• React.js, Next.js</li>
         </ul>
@@ -41,9 +41,9 @@ permalink: /about/
         <h3 class="text-lg font-semibold mb-3 text-blue-400">Architecture & Patterns</h3>
         <ul class="space-y-2 text-gray-300">
           <li>• Microservices, Event-Driven</li>
-          <li>• Domain-Driven Design (DDD)</li>
           <li>• Clean Architecture, SOLID</li>
           <li>• Message queues (Kafka, RabbitMQ)</li>
+          <li>• REST APIs, Authentication (OAuth, JWT)</li>
         </ul>
       </div>
 
@@ -62,12 +62,11 @@ permalink: /about/
       <div class="bg-gray-800 p-6 rounded-lg border-2 border-blue-500/30">
         <h3 class="text-lg font-semibold mb-3 text-blue-400">Currently Learning</h3>
         <ul class="space-y-2 text-gray-300">
-          <li>• Python, FastAPI</li>
-          <li>• Advanced RAG systems</li>
-          <li>• Vector databases</li>
+          <li>• Python & Go</li>
+          <li>• Advanced Kafka patterns</li>
+          <li>• System Design at scale</li>
         </ul>
       </div>
-    </div>
   </div>
 
   <!-- Technical Writing -->
