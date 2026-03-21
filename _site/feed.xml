@@ -1,4 +1,115 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2026-03-21T13:40:41+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Maria Lobillo-Santos</title><subtitle>My name is Maria Lobillo-Santos, I am a Full Stack Developer.I love sharing the insights and skills I pick up along the way.</subtitle><entry><title type="html">Authorization in NestJS: Dynamic Permissions with CASL</title><link href="http://localhost:4000/2025-12-20/authorizatin-nestjs" rel="alternate" type="text/html" title="Authorization in NestJS: Dynamic Permissions with CASL" /><published>2025-12-20T10:00:00+01:00</published><updated>2025-12-20T10:00:00+01:00</updated><id>http://localhost:4000/2025-12-20/authorizatin-nestjs</id><content type="html" xml:base="http://localhost:4000/2025-12-20/authorizatin-nestjs"><![CDATA[<p>Last year I was working on an application that needed an auth system with role-based access control (RBAC). You know, the typical scenario: you have an app and you want to put it in production, so you need login/register and different user roles.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2026-03-21T17:49:59+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Maria Lobillo-Santos</title><subtitle>My name is Maria Lobillo-Santos, I am a Full Stack Developer.I love sharing the insights and skills I pick up along the way.</subtitle><entry><title type="html">JWT Refresh Tokens with Redis Blacklist in NestJS</title><link href="http://localhost:4000/2026-01-07/jwt-refresh-tokens-redis-blacklist-nestjs" rel="alternate" type="text/html" title="JWT Refresh Tokens with Redis Blacklist in NestJS" /><published>2026-01-07T00:00:00+01:00</published><updated>2026-01-07T00:00:00+01:00</updated><id>http://localhost:4000/2026-01-07/jwt-refresh-tokens-redis-blacklist-nestjs</id><content type="html" xml:base="http://localhost:4000/2026-01-07/jwt-refresh-tokens-redis-blacklist-nestjs"><![CDATA[<p>While building the auth layer for a document management platform I was working on, 
+I ran into a question that sounds simple 
+but isn’t: what actually happens when a user logs out?</p>
+
+<p>With basic JWT, the answer is uncomfortable: not much. You delete 
+the token from the client, sure. But the token itself is still valid. 
+If someone grabbed it before you logged out, they can keep using it 
+until it expires. That could be hours.</p>
+
+<p>That didn’t feel right. So I started thinking about how to actually 
+invalidate a token on logout.</p>
+
+<h2 id="the-approach-two-tokens--a-blacklist">The approach: two tokens + a blacklist</h2>
+
+<p>The solution I landed on uses two tokens instead of one:</p>
+
+<ul>
+  <li><strong>Access token</strong> — lives for 15 minutes, sent on every request</li>
+  <li><strong>Refresh token</strong> — lives for 7 days, only used to get a new access token</li>
+</ul>
+
+<p>Short-lived access tokens limit the damage if one gets stolen. 
+And when the user logs out, the refresh token goes into a Redis 
+blacklist — so even if someone has it, they can’t use it to get 
+new access tokens.</p>
+
+<h2 id="implementing-it-in-nestjs">Implementing it in NestJS</h2>
+
+<h3 id="generating-both-tokens-on-login">Generating both tokens on login</h3>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">private</span> <span class="nx">generateTokens</span><span class="p">(</span><span class="nx">user</span><span class="p">:</span> <span class="nx">UserDocument</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">payload</span> <span class="o">=</span> <span class="p">{</span> <span class="na">sub</span><span class="p">:</span> <span class="nx">user</span><span class="p">.</span><span class="nx">_id</span><span class="p">,</span> <span class="na">email</span><span class="p">:</span> <span class="nx">user</span><span class="p">.</span><span class="nx">email</span><span class="p">,</span> <span class="na">role</span><span class="p">:</span> <span class="nx">user</span><span class="p">.</span><span class="nx">role</span> <span class="p">};</span>
+
+  <span class="kd">const</span> <span class="nx">accessToken</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">jwtService</span><span class="p">.</span><span class="nx">sign</span><span class="p">(</span><span class="nx">payload</span><span class="p">);</span>
+
+  <span class="kd">const</span> <span class="nx">refreshToken</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">jwtService</span><span class="p">.</span><span class="nx">sign</span><span class="p">(</span><span class="nx">payload</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">secret</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">JWT_REFRESH_SECRET</span><span class="dl">'</span><span class="p">),</span>
+    <span class="na">expiresIn</span><span class="p">:</span> <span class="dl">'</span><span class="s1">7d</span><span class="dl">'</span><span class="p">,</span>
+  <span class="p">});</span>
+
+  <span class="k">return</span> <span class="p">{</span> <span class="nx">accessToken</span><span class="p">,</span> <span class="nx">refreshToken</span> <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Two secrets, two expiries. The refresh token uses a different 
+secret so you can validate them independently.</p>
+
+<h3 id="logout--with-a-detail-that-matters">Logout — with a detail that matters</h3>
+
+<p>The obvious approach is to store the refresh token in Redis with 
+a fixed 7-day TTL. But I noticed a problem: if the user logs out 
+on day 6, you’re storing a token that has 1 day left as if it had 
+seven. Small thing, but at scale it adds up — you’re keeping tokens 
+in Redis longer than necessary.</p>
+
+<p>So instead, I calculate the remaining TTL dynamically from the 
+token’s own expiry:</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="nx">logout</span><span class="p">(</span><span class="nx">refreshToken</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">payload</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">jwtService</span><span class="p">.</span><span class="nx">decode</span><span class="p">(</span><span class="nx">refreshToken</span><span class="p">)</span> <span class="k">as</span> <span class="kr">any</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">ttl</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">exp</span> <span class="o">-</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">);</span>
+  
+  <span class="k">if</span> <span class="p">(</span><span class="nx">ttl</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">cacheManager</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="nx">refreshToken</span><span class="p">,</span> <span class="dl">'</span><span class="s1">blacklisted</span><span class="dl">'</span><span class="p">,</span> <span class="nx">ttl</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
+  <span class="p">}</span>
+  
+  <span class="k">return</span> <span class="p">{</span> <span class="na">message</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Logged out successfully</span><span class="dl">'</span> <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The token expires in Redis exactly when it would have expired 
+anyway. No cleanup needed, no wasted memory.</p>
+
+<h3 id="checking-the-blacklist-on-refresh">Checking the blacklist on refresh</h3>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="nx">refresh</span><span class="p">(</span><span class="nx">refreshToken</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">isBlacklisted</span> <span class="o">=</span> <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">cacheManager</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">refreshToken</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">isBlacklisted</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nx">UnauthorizedException</span><span class="p">(</span><span class="dl">'</span><span class="s1">Token revoked</span><span class="dl">'</span><span class="p">);</span>
+
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">payload</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">jwtService</span><span class="p">.</span><span class="nx">verify</span><span class="p">(</span><span class="nx">refreshToken</span><span class="p">,</span> <span class="p">{</span>
+      <span class="na">secret</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">JWT_REFRESH_SECRET</span><span class="dl">'</span><span class="p">),</span>
+    <span class="p">});</span>
+
+    <span class="kd">const</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">userModel</span><span class="p">.</span><span class="nx">findById</span><span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">sub</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">user</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nx">UnauthorizedException</span><span class="p">(</span><span class="dl">'</span><span class="s1">User not found</span><span class="dl">'</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">generateTokens</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nx">UnauthorizedException</span><span class="p">(</span><span class="dl">'</span><span class="s1">Invalid refresh token</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Before doing anything with the refresh token, we check Redis. 
+If it’s there — 401, token revoked. Fast, simple, works.</p>
+
+<h2 id="what-we-ended-up-with">What we ended up with</h2>
+
+<p>The full flow looks like this:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /auth/register  →  { accessToken (15min), refreshToken (7d) }
+POST /auth/login     →  { accessToken (15min), refreshToken (7d) }
+
+Every API request    →  Authorization: Bearer &lt;accessToken&gt;
+Access token expires →  POST /auth/refresh  →  new tokens
+POST /auth/logout    →  refreshToken added to Redis with dynamic TTL
+Blacklisted refresh  →  401 Token revoked
+</code></pre></div></div>
+
+<p>Logout actually works now. The token is gone from the client 
+and invalid on the server. If someone had grabbed it — tough luck.</p>
+
+<p>The dynamic TTL was a small thing to add but it felt like the 
+right call. Redis memory is cheap, but there’s no reason to 
+store something longer than you need to.</p>]]></content><author><name></name></author><category term="nestjs" /><category term="security" /><category term="redis" /><category term="backend" /><category term="jwt" /><category term="redis" /><category term="nestjs" /><category term="auth" /><category term="backend" /><category term="typescript" /><summary type="html"><![CDATA[While building the auth layer for a document management platform I was working on, I ran into a question that sounds simple but isn’t: what actually happens when a user logs out?]]></summary></entry><entry><title type="html">Authorization in NestJS: Dynamic Permissions with CASL</title><link href="http://localhost:4000/2025-12-20/authorization-nestjs" rel="alternate" type="text/html" title="Authorization in NestJS: Dynamic Permissions with CASL" /><published>2025-12-20T10:00:00+01:00</published><updated>2025-12-20T10:00:00+01:00</updated><id>http://localhost:4000/2025-12-20/authorization-nestjs</id><content type="html" xml:base="http://localhost:4000/2025-12-20/authorization-nestjs"><![CDATA[<p>Last year I was working on an application that needed an auth system with role-based access control (RBAC). You know, the typical scenario: you have an app and you want to put it in production, so you need login/register and different user roles.</p>
 
 <p>We needed three types of users: admins (full access to everything), operators (who could add and manage products and details), and customers (who could only buy stuff). Before implementing this, we basically had nothing—no auth, no way to control who could do what.</p>
 
@@ -2040,23 +2151,4 @@ if (cluster.isMaster) {
 
 <p>So, here is the link of the project, for now there is only a couple end points, but I’m going to add more in the future:</p>
 
-<p><a href="https://github.com/marialobillo/stock-trade-api-bun-elysia/tree/main">Stock-Trade API with Bun.sh and Elysia</a></p>]]></content><author><name></name></author><category term="programming" /><category term="api" /><category term="typescript" /><category term="bun" /><category term="bun.sh" /><category term="elysia" /><category term="mongodb" /><summary type="html"><![CDATA[I love go for a walk in the morning and listening some podcasts. And I remember how excited I was listening Ryan Dahl talking about Deno on this podcast by ChangeLog:]]></summary></entry><entry><title type="html">Refactoring API from Javascript to Typescript</title><link href="http://localhost:4000/refactoring-api-from-js-to-ts" rel="alternate" type="text/html" title="Refactoring API from Javascript to Typescript" /><published>2023-08-31T19:30:00+02:00</published><updated>2023-08-31T19:30:00+02:00</updated><id>http://localhost:4000/refactor-api-from-js-to-ty</id><content type="html" xml:base="http://localhost:4000/refactoring-api-from-js-to-ts"><![CDATA[<p>I’ve been refactoring my old project <a href="https://github.com/marialobillo/stock-trade">stock-trade</a> ( this is the 2nd time refactoring this project ) the first version of the project was written in Javascript, and using Postgresql as database. For the second version I decided to use a better structure (lib and resources folders), and I also decided to use mongodb as database, that was a huge change.</p>
-
-<p>For this time I wanted to make the refactor more clear to work with it, so I decided to use Typescript, and I’m really happy with the result. I’m going to explain the structure of the project, and how I’ve been working with it.</p>
-
-<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code>├── src
-│   ├── controller
-│   ├── interfaces
-│   ├── middleware
-│   ├── models
-│   ├── routes
-│   ├── services
-│   ├── utils
-└──-├──app.js
-</code></pre></div></div>
-
-<p>The project is in the src folder, and the app.ts is the entry point of the project. We could start with interfaces that define all the types and attributes that we are going to use in the project. That interfaces are used on the model, and from there we implement the services that we are going to use on the controllers, and later define the routes. That is basically the structure of the project.</p>
-
-<p>It is a really big change using typescript instead of javascript because at least for me everything seems to be more organized, and I can see the types of the variables, and the attributes of the objects. I think that is a really good way to learn more about typescript, and how to use it in a project while you refactor an old project.</p>
-
-<p>I’m going to leave the link of the project here, and I hope you can find it useful. If you have any question, or you want to talk about it, you can contact me on <a href="https://twitter.com/maria_lobillo">twitter</a>.</p>]]></content><author><name></name></author><category term="programming" /><category term="typescript" /><category term="javascript" /><category term="nodejs" /><category term="refactoring" /><summary type="html"><![CDATA[I’ve been refactoring my old project stock-trade ( this is the 2nd time refactoring this project ) the first version of the project was written in Javascript, and using Postgresql as database. For the second version I decided to use a better structure (lib and resources folders), and I also decided to use mongodb as database, that was a huge change.]]></summary></entry></feed>
+<p><a href="https://github.com/marialobillo/stock-trade-api-bun-elysia/tree/main">Stock-Trade API with Bun.sh and Elysia</a></p>]]></content><author><name></name></author><category term="programming" /><category term="api" /><category term="typescript" /><category term="bun" /><category term="bun.sh" /><category term="elysia" /><category term="mongodb" /><summary type="html"><![CDATA[I love go for a walk in the morning and listening some podcasts. And I remember how excited I was listening Ryan Dahl talking about Deno on this podcast by ChangeLog:]]></summary></entry></feed>

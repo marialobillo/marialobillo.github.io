@@ -1,4 +1,4 @@
-I"<div class="clearfix"></div>
+I"a<div class="clearfix"></div>
 <div class="row">
     <br />
     <div class="jumbotron">
@@ -8,11 +8,22 @@
         
             
             
+                <p id="yJanuary 2026">January 2026</p>
+                 
+            
+                <p>
+                    <a href="/2026-01-07/jwt-refresh-tokens-redis-blacklist-nestjs">
+                        JWT Refresh Tokens with Redis Blacklist in NestJS
+                    </a>
+                </p>
+        
+            
+            
                 <p id="yDecember 2025">December 2025</p>
                  
             
                 <p>
-                    <a href="/2025-12-20/authorizatin-nestjs">
+                    <a href="/2025-12-20/authorization-nestjs">
                         Authorization in NestJS: Dynamic Permissions with CASL
                     </a>
                 </p>
