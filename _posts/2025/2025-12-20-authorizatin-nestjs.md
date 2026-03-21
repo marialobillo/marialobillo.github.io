@@ -1,0 +1,15 @@
+---
+layout: post
+title: "Authorization in NestJS: Dynamic Permissions with CASL"
+date: 2025-12-20 10:00:00 +0100
+tags: [architecture, nodejs, nestjs, casl, authorization, permissions]
+---
+
+Last year I was working on an application that needed an auth system with role-based access control (RBAC). You know, the typical scenario: you have an app and you want to put it in production, so you need login/register and different user roles.
+
+We needed three types of users: admins (full access to everything), operators (who could add and manage products and details), and customers (who could only buy stuff). Before implementing this, we basically had nothing—no auth, no way to control who could do what.
+
+I'd done this before in Laravel using the Spatie permissions package, which works great. But this time I was working with NestJS, and I wanted to understand how to build this properly from scratch. I also wanted something that didn't require redeploying the app every time we needed to add a new permission.
+
+In this post I'll show you how I implemented dynamic permissions using CASL in NestJS. The permissions live in the database, so you can change them without touching code. And it's flexible enough to handle complex stuff later, like "users can only edit their own posts."
+

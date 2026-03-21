@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Concurrency in Node.js: Understanding and Implementing | Maria Lobillo</title>
+    <meta name="description" content="In my latest exploration of Node.js, I delved into how this popular runtime handles concurrency. Building scalable APIs with Node.js has been an enlightening journey, and understanding concurrency is a..." />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Typography for blog posts */
+      .prose {
+        max-width: 65ch;
+        color: #e5e7eb;
+      }
+      .prose h1 {
+        font-size: 2.25rem;
+        font-weight: 700;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #f9fafb;
+      }
+      .prose h2 {
+        font-size: 1.875rem;
+        font-weight: 600;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #f9fafb;
+      }
+      .prose h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+        color: #f3f4f6;
+      }
+      .prose p {
+        margin-bottom: 1.25rem;
+        line-height: 1.75;
+      }
+      .prose strong {
+        font-weight: 600;
+        color: #f9fafb;
+      }
+      .prose a {
+        color: #60a5fa;
+        text-decoration: none;
+      }
+      .prose a:hover {
+        text-decoration: underline;
+      }
+      .prose ul, .prose ol {
+        margin: 1.25rem 0;
+        padding-left: 1.5rem;
+      }
+      .prose li {
+        margin-bottom: 0.5rem;
+      }
+      .prose code {
+        background: #1f2937;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-size: 0.875rem;
+        color: #f472b6;
+      }
+      .prose pre {
+        background: #1f2937;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        margin: 1.5rem 0;
+      }
+      .prose pre code {
+        background: transparent;
+        padding: 0;
+        color: #e5e7eb;
+      }
+      .prose blockquote {
+        border-left: 4px solid #3b82f6;
+        padding-left: 1rem;
+        margin: 1.5rem 0;
+        color: #9ca3af;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-900 text-gray-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="border-b border-gray-800">
+      <div class="max-w-4xl mx-auto px-4 py-6">
+        <div class="flex justify-between items-center">
+          <a href="/" class="text-xl font-semibold hover:text-blue-400 transition-colors">
+            Maria Lobillo
+          </a>
+          
+          <div class="hidden sm:flex space-x-6 text-sm">
+            <a href="/" class="hover:text-blue-400 transition-colors">Home</a>
+            <a href="/blog" class="hover:text-blue-400 transition-colors">Blog</a>
+            <a href="/about" class="hover:text-blue-400 transition-colors">About</a>
+          </div>
+
+          <div class="sm:hidden flex space-x-4 text-sm">
+            <a href="/" class="hover:text-blue-400">Home</a>
+            <a href="/blog" class="hover:text-blue-400">Blog</a>
+            <a href="/about" class="hover:text-blue-400">About</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Post Header -->
+    <article class="max-w-4xl mx-auto px-4 py-12">
+      <header class="mb-8 pb-8 border-b border-gray-800">
+        <h1 class="text-4xl sm:text-5xl font-bold mb-4 leading-tight">
+          Concurrency in Node.js: Understanding and Implementing
+        </h1>
+        
+        <div class="flex items-center space-x-4 text-sm text-gray-400">
+          <time datetime="2024-07-27T13:18:00+02:00">
+            July 27, 2024
+          </time>
+          
+          
+          <span>•</span>
+          <div class="flex flex-wrap gap-2">
+            
+          </div>
+          
+        </div>
+      </header>
+
+      <!-- Post Content -->
+      <div class="prose">
+        <p>In my latest exploration of Node.js, I delved into how this popular runtime handles concurrency. Building scalable APIs with Node.js has been an enlightening journey, and understanding concurrency is a crucial part of making your applications efficient and responsive.</p>
+
+<p>Even though Node.js operates on a single thread, its event-driven, non-blocking I/O model allows it to handle multiple operations simultaneously. This is achieved through several mechanisms:</p>
+
+<h2 id="event-loop">Event Loop</h2>
+<p>The event loop is the core of Node.js’s concurrency model. It continuously checks the call stack and the callback queue for tasks to execute. When the call stack is empty, the event loop moves tasks from the callback queue to the call stack.</p>
+
+<h2 id="callbacks">Callbacks</h2>
+<p>These are functions provided as arguments to other functions and executed when an asynchronous operation completes. This approach has been the traditional way to manage asynchronous operations in Node.js.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const fs = require('fs');
+
+fs.readFile('file.txt', 'utf8', (err, data) =&gt; {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  console.log(data);
+});
+</code></pre></div></div>
+
+<h2 id="promises">Promises</h2>
+<p>These modern constructs provide a cleaner and more manageable way to handle asynchronous code, making it easier to write and understand.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="no">fs</span> <span class="o">=</span> <span class="k">require</span><span class="p">(</span><span class="s1">'fs'</span><span class="p">)</span><span class="mf">.</span><span class="n">promises</span><span class="p">;</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="n">readFile</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="k">const</span> <span class="no">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">fs</span><span class="mf">.</span><span class="nb">readFile</span><span class="p">(</span><span class="s1">'file.txt'</span><span class="p">,</span> <span class="s1">'utf8'</span><span class="p">);</span>
+    <span class="n">console</span><span class="mf">.</span><span class="nb">log</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">console</span><span class="mf">.</span><span class="nf">error</span><span class="p">(</span><span class="n">err</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nb">readFile</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h2 id="worker-threads">Worker Threads</h2>
+<p>For tasks that are CPU-intensive and might block the event loop, the worker_threads module allows you to run code in parallel threads, thereby avoiding bottlenecks.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const { Worker } = require('worker_threads');
+
+const worker = new Worker('./worker.js');
+
+worker.on('message', (message) =&gt; {
+  console.log('Message from worker:', message);
+});
+
+worker.postMessage('Start');
+</code></pre></div></div>
+
+<h2 id="cluster">Cluster</h2>
+<p>To take advantage of multi-core processors, Node.js provides the cluster module, which enables you to create multiple processes that can share the same port, thus improving performance and scalability.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const cluster = require('cluster');
+const http = require('http');
+const numCPUs = require('os').cpus().length;
+
+if (cluster.isMaster) {
+  for (let i = 0; i &lt; numCPUs; i++) {
+    cluster.fork();
+  }
+
+  cluster.on('exit', (worker, code, signal) =&gt; {
+    console.log(`Worker ${worker.process.pid} died`);
+  });
+} else {
+  http.createServer((req, res) =&gt; {
+    res.writeHead(200);
+    res.end('hello world\n');
+  }).listen(8000);
+}
+</code></pre></div></div>
+
+      </div>
+
+      <!-- Post Footer -->
+      <footer class="mt-12 pt-8 border-t border-gray-800">
+        <div class="flex justify-between items-center">
+          <a href="/blog" class="text-blue-400 hover:underline text-sm">
+            ← Back to Blog
+          </a>
+          
+          <div class="flex space-x-4 text-sm">
+            <a href="https://www.linkedin.com/in/maria-lobillo/" 
+               class="text-gray-400 hover:text-blue-400 transition-colors"
+               target="_blank" 
+               rel="noopener">
+              Share on LinkedIn
+            </a>
+            <a href="https://github.com/marialobillo" 
+               class="text-gray-400 hover:text-blue-400 transition-colors"
+               target="_blank" 
+               rel="noopener">
+              GitHub
+            </a>
+          </div>
+        </div>
+      </footer>
+    </article>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 mt-20">
+      <div class="max-w-4xl mx-auto px-4 py-8 text-center text-sm text-gray-500">
+        <p>© 2026 Maria Lobillo. Senior Software Engineer.</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shared Packages in Monorepos: Patterns | Maria Lobillo</title>
+    <meta name="description" content="Shared Packages Best Practices: Lessons from Production
+" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Typography for blog posts */
+      .prose {
+        max-width: 65ch;
+        color: #e5e7eb;
+      }
+      .prose h1 {
+        font-size: 2.25rem;
+        font-weight: 700;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #f9fafb;
+      }
+      .prose h2 {
+        font-size: 1.875rem;
+        font-weight: 600;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #f9fafb;
+      }
+      .prose h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+        color: #f3f4f6;
+      }
+      .prose p {
+        margin-bottom: 1.25rem;
+        line-height: 1.75;
+      }
+      .prose strong {
+        font-weight: 600;
+        color: #f9fafb;
+      }
+      .prose a {
+        color: #60a5fa;
+        text-decoration: none;
+      }
+      .prose a:hover {
+        text-decoration: underline;
+      }
+      .prose ul, .prose ol {
+        margin: 1.25rem 0;
+        padding-left: 1.5rem;
+      }
+      .prose li {
+        margin-bottom: 0.5rem;
+      }
+      .prose code {
+        background: #1f2937;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-size: 0.875rem;
+        color: #f472b6;
+      }
+      .prose pre {
+        background: #1f2937;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        margin: 1.5rem 0;
+      }
+      .prose pre code {
+        background: transparent;
+        padding: 0;
+        color: #e5e7eb;
+      }
+      .prose blockquote {
+        border-left: 4px solid #3b82f6;
+        padding-left: 1rem;
+        margin: 1.5rem 0;
+        color: #9ca3af;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-900 text-gray-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="border-b border-gray-800">
+      <div class="max-w-4xl mx-auto px-4 py-6">
+        <div class="flex justify-between items-center">
+          <a href="/" class="text-xl font-semibold hover:text-blue-400 transition-colors">
+            Maria Lobillo
+          </a>
+          
+          <div class="hidden sm:flex space-x-6 text-sm">
+            <a href="/" class="hover:text-blue-400 transition-colors">Home</a>
+            <a href="/blog" class="hover:text-blue-400 transition-colors">Blog</a>
+            <a href="/about" class="hover:text-blue-400 transition-colors">About</a>
+          </div>
+
+          <div class="sm:hidden flex space-x-4 text-sm">
+            <a href="/" class="hover:text-blue-400">Home</a>
+            <a href="/blog" class="hover:text-blue-400">Blog</a>
+            <a href="/about" class="hover:text-blue-400">About</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Post Header -->
+    <article class="max-w-4xl mx-auto px-4 py-12">
+      <header class="mb-8 pb-8 border-b border-gray-800">
+        <h1 class="text-4xl sm:text-5xl font-bold mb-4 leading-tight">
+          Shared Packages in Monorepos: Patterns
+        </h1>
+        
+        <div class="flex items-center space-x-4 text-sm text-gray-400">
+          <time datetime="2025-05-17T21:00:00+02:00">
+            May 17, 2025
+          </time>
+          
+          
+          <span>•</span>
+          <div class="flex flex-wrap gap-2">
+            
+          </div>
+          
+        </div>
+      </header>
+
+      <!-- Post Content -->
+      <div class="prose">
+        <h1 id="shared-packages-best-practices-lessons-from-production">Shared Packages Best Practices: Lessons from Production</h1>
+
+<h2 id="the-full-journey">The Full Journey</h2>
+
+<p>In this series, we’ve covered:</p>
+
+<ul>
+  <li><strong><a href="link">Part 1</a>:</strong> The nightmare of code duplication across microservices</li>
+  <li><strong><a href="link">Part 2</a>:</strong> How to build shared packages in a monorepo</li>
+</ul>
+
+<p>Today, I’m sharing the hard-earned lessons from 6 months of using shared packages in production. These are the rules that saved us from disaster, and the mistakes we made so you don’t have to.</p>
+
+<hr />
+
+<h2 id="the-golden-rule-of-shared-packages">The Golden Rule of Shared Packages</h2>
+
+<p>After 6 months and countless discussions, our team converged on one principle:</p>
+
+<blockquote>
+  <p><strong>“Extract infrastructure, not business logic.”</strong></p>
+</blockquote>
+
+<p>Let me explain why this matters.</p>
+
+<h3 id="-good-candidates-for-shared-packages">✅ Good Candidates for Shared Packages</h3>
+
+<p><strong>1. Infrastructure Code</strong> (technology wrappers)</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// @radarkit/logger - Logging wrapper</span>
+<span class="c1">// @radarkit/kafka-client - Event bus wrapper</span>
+<span class="c1">// @radarkit/database - Prisma utilities</span>
+<span class="c1">// @radarkit/redis - Cache wrapper</span>
+<span class="c1">// @radarkit/monitoring - Metrics and tracing</span>
+</code></pre></div></div>
+
+<p><strong>Why:</strong> These are <strong>how</strong> you do things. Every service logs, publishes events, and queries databases. One implementation ensures consistency.</p>
+
+<p><strong>2. Type Definitions</strong> (contracts between services)</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// @radarkit/types</span>
+<span class="k">export</span> <span class="kr">interface</span> <span class="nx">DomainEvent</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+<span class="k">export</span> <span class="kr">interface</span> <span class="nx">User</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+<span class="k">export</span> <span class="kr">interface</span> <span class="nx">Source</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Why:</strong> Types define contracts. When services communicate, they must speak the same language.</p>
+
+<p><strong>3. Cross-cutting Utilities</strong> (used everywhere)</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// @radarkit/validation</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">isValidUrl</span> <span class="o">=</span> <span class="p">(</span><span class="nx">url</span><span class="p">:</span> <span class="kr">string</span><span class="p">):</span> <span class="nx">boolean</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">isValidEmail</span> <span class="o">=</span> <span class="p">(</span><span class="nx">email</span><span class="p">:</span> <span class="kr">string</span><span class="p">):</span> <span class="nx">boolean</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Why:</strong> Pure functions with no business logic. URL validation is URL validation, regardless of domain.</p>
+
+<h3 id="-bad-candidates-keep-these-local">❌ Bad Candidates (Keep These Local)</h3>
+
+<p><strong>1. Business Logic</strong> (domain-specific)</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ❌ DON'T extract</span>
+<span class="c1">// @radarkit/subscription-calculator</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">calculatePrice</span> <span class="o">=</span> <span class="p">(</span><span class="nx">user</span><span class="p">:</span> <span class="nx">User</span><span class="p">,</span> <span class="nx">plan</span><span class="p">:</span> <span class="nx">Plan</span><span class="p">):</span> <span class="kr">number</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// Complex business rules specific to your domain</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Why:</strong> Business logic changes frequently and is domain-specific. Sharing it creates tight coupling.</p>
+
+<p><strong>2. Service-Specific Implementation</strong></p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ❌ DON'T extract</span>
+<span class="c1">// @radarkit/auth-strategies</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">JwtStrategy</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">OAuthStrategy</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Why:</strong> Only auth-service needs this. Extracting creates unnecessary complexity.</p>
+
+<p><strong>3. Experimental Code</strong></p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ❌ DON'T extract (yet)</span>
+<span class="c1">// New ML-based ranking algorithm</span>
+<span class="c1">// Wait until stable and used by 2+ services</span>
+</code></pre></div></div>
+
+<p><strong>Why:</strong> Premature extraction creates maintenance burden. Wait until patterns emerge.</p>
+
+<hr />
+
+<h2 id="the-rule-of-three">The Rule of Three</h2>
+
+<p>This is my #1 decision framework:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Code used in 1 place → Keep it local
+Code used in 2 places → Start discussing extraction
+Code used in 3+ places → MUST extract to package
+</code></pre></div></div>
+
+<h3 id="real-example-from-radarkit">Real Example from RadarKit</h3>
+
+<p><strong>Month 1:</strong> Only auth-service needs JWT validation</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// auth-service/src/auth/jwt.validator.ts</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">validateJwt</span> <span class="o">=</span> <span class="p">(</span><span class="nx">token</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+</code></pre></div></div>
+<p><strong>Decision: Keep local</strong> ✅</p>
+
+<p><strong>Month 2:</strong> sources-service also needs JWT validation (protecting APIs)</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// sources-service/src/middleware/auth.middleware.ts</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">validateJwt</span> <span class="o">=</span> <span class="p">(</span><span class="nx">token</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>  <span class="c1">// Copy-pasted</span>
+</code></pre></div></div>
+<p><strong>Decision: Start discussion</strong> ⚠️</p>
+
+<p><strong>Month 3:</strong> scraper-service needs it too (authenticated scraping)</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// scraper-service/src/auth/validator.ts</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">validateJwt</span> <span class="o">=</span> <span class="p">(</span><span class="nx">token</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>  <span class="c1">// Third copy!</span>
+</code></pre></div></div>
+<p><strong>Decision: EXTRACT NOW</strong> 🚨</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// packages/auth-utils/src/jwt.ts</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">validateJwt</span> <span class="o">=</span> <span class="p">(</span><span class="nx">token</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="versioning-strategy-the-non-negotiable-rules">Versioning Strategy: The Non-Negotiable Rules</h2>
+
+<p>Semantic versioning isn’t optional. It’s what prevents 3 AM production incidents.</p>
+
+<h3 id="semantic-versioning-101">Semantic Versioning 101</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MAJOR.MINOR.PATCH
+  |     |     |
+  |     |     └─ Bug fixes (backward compatible)
+  |     └─────── New features (backward compatible)
+  └───────────── Breaking changes
+</code></pre></div></div>
+
+<h3 id="real-world-examples">Real-World Examples</h3>
+
+<h4 id="patch-100--101">PATCH (1.0.0 → 1.0.1)</h4>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Before (buggy)</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">createLogger</span> <span class="o">=</span> <span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">winston</span><span class="p">.</span><span class="nx">createLogger</span><span class="p">({</span>
+    <span class="na">level</span><span class="p">:</span> <span class="dl">'</span><span class="s1">info</span><span class="dl">'</span><span class="p">,</span>  <span class="c1">// 🐛 Hardcoded, ignores env var</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="c1">// After (fixed)</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">createLogger</span> <span class="o">=</span> <span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">winston</span><span class="p">.</span><span class="nx">createLogger</span><span class="p">({</span>
+    <span class="na">level</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">LOG_LEVEL</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">info</span><span class="dl">'</span><span class="p">,</span>  <span class="c1">// ✅ Fixed</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Impact:</strong> All services can upgrade immediately. No code changes needed.</p>
+
+<h4 id="minor-101--110">MINOR (1.0.1 → 1.1.0)</h4>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Before</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">createLogger</span> <span class="o">=</span> <span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+
+<span class="c1">// After - ADD new optional parameter</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">createLogger</span> <span class="o">=</span> <span class="p">(</span>
+  <span class="nx">name</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> 
+  <span class="nx">options</span><span class="p">?:</span> <span class="p">{</span> <span class="nx">level</span><span class="p">?:</span> <span class="kr">string</span> <span class="p">}</span>  <span class="c1">// ✅ New, but optional</span>
+<span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Impact:</strong> Existing code still works. New feature available if needed.</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Old code - still works</span>
+<span class="kd">const</span> <span class="nx">logger</span> <span class="o">=</span> <span class="nx">createLogger</span><span class="p">(</span><span class="dl">'</span><span class="s1">auth-service</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="c1">// New code - uses new feature</span>
+<span class="kd">const</span> <span class="nx">logger</span> <span class="o">=</span> <span class="nx">createLogger</span><span class="p">(</span><span class="dl">'</span><span class="s1">auth-service</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">level</span><span class="p">:</span> <span class="dl">'</span><span class="s1">debug</span><span class="dl">'</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<h4 id="major-110--200">MAJOR (1.1.0 → 2.0.0)</h4>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Before (1.x)</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">createLogger</span> <span class="o">=</span> <span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+
+<span class="c1">// After (2.0.0) - BREAKING: required parameter</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">createLogger</span> <span class="o">=</span> <span class="p">(</span>
+  <span class="nx">name</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> 
+  <span class="nx">environment</span><span class="p">:</span> <span class="kr">string</span>  <span class="c1">// ⚠️ Now REQUIRED</span>
+<span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Impact:</strong> All services must update their code:</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Before</span>
+<span class="kd">const</span> <span class="nx">logger</span> <span class="o">=</span> <span class="nx">createLogger</span><span class="p">(</span><span class="dl">'</span><span class="s1">auth-service</span><span class="dl">'</span><span class="p">);</span>  <span class="c1">// ❌ Breaks with 2.0.0</span>
+
+<span class="c1">// After</span>
+<span class="kd">const</span> <span class="nx">logger</span> <span class="o">=</span> <span class="nx">createLogger</span><span class="p">(</span><span class="dl">'</span><span class="s1">auth-service</span><span class="dl">'</span><span class="p">,</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span><span class="p">);</span>  <span class="c1">// ✅</span>
+</code></pre></div></div>
+
+<h3 id="migration-strategy-for-breaking-changes">Migration Strategy for Breaking Changes</h3>
+
+<p>When we released <code class="highlighter-rouge">@radarkit/logger@2.0.0</code>:</p>
+
+<p><strong>Step 1: Announce the change</strong></p>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gu">## @radarkit/logger 2.0.0 - BREAKING CHANGES</span>
+
+<span class="gu">### What Changed</span>
+<span class="p">-</span> <span class="sb">`createLogger()`</span> now requires <span class="sb">`environment`</span> parameter
+<span class="p">-</span> Removed deprecated <span class="sb">`Logger`</span> class
+
+<span class="gu">### Migration Guide</span>
+<span class="p">```</span><span class="nl">typescript
+</span><span class="c1">// Before (1.x)</span>
+<span class="kd">const</span> <span class="nx">logger</span> <span class="o">=</span> <span class="nx">createLogger</span><span class="p">(</span><span class="dl">'</span><span class="s1">service-name</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="c1">// After (2.0.0)</span>
+<span class="kd">const</span> <span class="nx">logger</span> <span class="o">=</span> <span class="nx">createLogger</span><span class="p">(</span><span class="dl">'</span><span class="s1">service-name</span><span class="dl">'</span><span class="p">,</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span><span class="p">);</span>
+<span class="p">```</span>
+
+<span class="gu">### Why This Change</span>
+<span class="p">-</span> Better environment-specific logging
+<span class="p">-</span> Clearer configuration
+
+<span class="gu">### Timeline</span>
+<span class="p">-</span> April 1: v2.0.0 released
+<span class="p">-</span> April 1-15: Both v1.x and v2.x supported
+<span class="p">-</span> April 15: v1.x deprecated
+<span class="p">-</span> May 1: v1.x support ends
+</code></pre></div></div>
+
+<p><strong>Step 2: Gradual migration</strong></p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">//</span><span class="w"> </span><span class="err">Some</span><span class="w"> </span><span class="err">services</span><span class="w"> </span><span class="err">still</span><span class="w"> </span><span class="err">on</span><span class="w"> </span><span class="mi">1</span><span class="err">.x</span><span class="w">
+</span><span class="nl">"@radarkit/logger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^1.2.0"</span><span class="w">
+
+</span><span class="err">//</span><span class="w"> </span><span class="err">Others</span><span class="w"> </span><span class="err">adopt</span><span class="w"> </span><span class="mi">2</span><span class="err">.x</span><span class="w"> </span><span class="err">when</span><span class="w"> </span><span class="err">ready</span><span class="w">
+</span><span class="nl">"@radarkit/logger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^2.0.0"</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>Step 3: Support period</strong></p>
+<ul>
+  <li>v1.x receives critical bug fixes for 1 month</li>
+  <li>Team has time to migrate without pressure</li>
+  <li>No forced upgrade</li>
+</ul>
+
+<hr />
+
+<h2 id="package-organization-patterns">Package Organization Patterns</h2>
+
+<h3 id="pattern-1-single-purpose-packages-recommended">Pattern 1: Single-Purpose Packages (Recommended)</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>packages/
+├── logger/              ← Just logging
+├── kafka-client/        ← Just Kafka
+├── redis-client/        ← Just Redis
+├── monitoring/          ← Just metrics/tracing
+└── validation/          ← Just validation utils
+</code></pre></div></div>
+
+<p><strong>Pros:</strong></p>
+<ul>
+  <li>✅ Clear responsibility</li>
+  <li>✅ Easy to understand</li>
+  <li>✅ Version independently</li>
+  <li>✅ Small bundle size</li>
+</ul>
+
+<h3 id="pattern-2-domain-packages-sometimes">Pattern 2: Domain Packages (Sometimes)</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>packages/
+├── infrastructure/      ← All infrastructure (logger, kafka, redis)
+├── types/              ← All types
+└── utils/              ← All utilities
+</code></pre></div></div>
+
+<p><strong>Pros:</strong></p>
+<ul>
+  <li>✅ Fewer packages to manage</li>
+  <li>✅ Easier for small teams</li>
+</ul>
+
+<p><strong>Cons:</strong></p>
+<ul>
+  <li>❌ Large dependencies</li>
+  <li>❌ Version changes affect everyone</li>
+  <li>❌ Unclear responsibility</li>
+</ul>
+
+<p><strong>My recommendation:</strong> Start with Pattern 1. It scales better.</p>
+
+<h3 id="pattern-3-layered-packages-advanced">Pattern 3: Layered Packages (Advanced)</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>packages/
+├── core/               ← Base utilities (no dependencies)
+│   ├── types/
+│   └── constants/
+│
+├── infrastructure/     ← Depends on core
+│   ├── logger/        (uses @radarkit/types)
+│   ├── kafka/         (uses @radarkit/types)
+│   └── database/      (uses @radarkit/types)
+│
+└── domain/            ← Depends on infrastructure
+    ├── auth/          (uses @radarkit/logger)
+    └── validation/    (uses @radarkit/logger)
+</code></pre></div></div>
+
+<p><strong>Dependency flow:</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>core → infrastructure → domain → services
+</code></pre></div></div>
+
+<p><strong>When to use:</strong> Large organizations with 20+ services.</p>
+
+<hr />
+
+<h2 id="testing-strategies">Testing Strategies</h2>
+
+<h3 id="test-packages-in-isolation">Test Packages in Isolation</h3>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// packages/logger/__tests__/logger.test.ts</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">createLogger</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">../src</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">describe</span><span class="p">(</span><span class="dl">'</span><span class="s1">Logger</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">beforeEach</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// Reset environment</span>
+    <span class="k">delete</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">LOG_LEVEL</span><span class="p">;</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="dl">'</span><span class="s1">should use default log level</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">logger</span> <span class="o">=</span> <span class="nx">createLogger</span><span class="p">(</span><span class="dl">'</span><span class="s1">test</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">logger</span><span class="p">.</span><span class="nx">level</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="dl">'</span><span class="s1">info</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="dl">'</span><span class="s1">should respect LOG_LEVEL env var</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">LOG_LEVEL</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">debug</span><span class="dl">'</span><span class="p">;</span>
+    <span class="kd">const</span> <span class="nx">logger</span> <span class="o">=</span> <span class="nx">createLogger</span><span class="p">(</span><span class="dl">'</span><span class="s1">test</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">logger</span><span class="p">.</span><span class="nx">level</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="dl">'</span><span class="s1">debug</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="dl">'</span><span class="s1">should include service name in metadata</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">logger</span> <span class="o">=</span> <span class="nx">createLogger</span><span class="p">(</span><span class="dl">'</span><span class="s1">my-service</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">logger</span><span class="p">.</span><span class="nx">defaultMeta</span><span class="p">.</span><span class="nx">service</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="dl">'</span><span class="s1">my-service</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="dl">'</span><span class="s1">should handle errors gracefully</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">logger</span> <span class="o">=</span> <span class="nx">createLogger</span><span class="p">(</span><span class="dl">'</span><span class="s1">test</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">logger</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Test error</span><span class="dl">'</span><span class="p">,</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Something failed</span><span class="dl">'</span><span class="p">));</span>
+    <span class="p">}).</span><span class="nx">not</span><span class="p">.</span><span class="nx">toThrow</span><span class="p">();</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="integration-tests-in-services">Integration Tests in Services</h3>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// services/auth-service/__tests__/integration/logging.test.ts</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">createLogger</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@radarkit/logger</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">describe</span><span class="p">(</span><span class="dl">'</span><span class="s1">Logging Integration</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">it</span><span class="p">(</span><span class="dl">'</span><span class="s1">should log with correct service name</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">logger</span> <span class="o">=</span> <span class="nx">createLogger</span><span class="p">(</span><span class="dl">'</span><span class="s1">auth-service</span><span class="dl">'</span><span class="p">);</span>
+    
+    <span class="c1">// Capture console output</span>
+    <span class="kd">const</span> <span class="nx">consoleSpy</span> <span class="o">=</span> <span class="nx">jest</span><span class="p">.</span><span class="nx">spyOn</span><span class="p">(</span><span class="nx">console</span><span class="p">,</span> <span class="dl">'</span><span class="s1">log</span><span class="dl">'</span><span class="p">);</span>
+    
+    <span class="nx">logger</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="dl">'</span><span class="s1">Test message</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">userId</span><span class="p">:</span> <span class="dl">'</span><span class="s1">123</span><span class="dl">'</span> <span class="p">});</span>
+    
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">consoleSpy</span><span class="p">).</span><span class="nx">toHaveBeenCalledWith</span><span class="p">(</span>
+      <span class="nx">expect</span><span class="p">.</span><span class="nx">stringContaining</span><span class="p">(</span><span class="dl">'</span><span class="s1">auth-service</span><span class="dl">'</span><span class="p">)</span>
+    <span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">consoleSpy</span><span class="p">).</span><span class="nx">toHaveBeenCalledWith</span><span class="p">(</span>
+      <span class="nx">expect</span><span class="p">.</span><span class="nx">stringContaining</span><span class="p">(</span><span class="dl">'</span><span class="s1">userId</span><span class="dl">'</span><span class="p">)</span>
+    <span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="e2e-tests-across-services">E2E Tests Across Services</h3>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// __tests__/e2e/event-flow.test.ts</span>
+<span class="nx">describe</span><span class="p">(</span><span class="dl">'</span><span class="s1">Event Flow E2E</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">it</span><span class="p">(</span><span class="dl">'</span><span class="s1">should publish and consume events with correct types</span><span class="dl">'</span><span class="p">,</span> <span class="k">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// Start services</span>
+    <span class="kd">const</span> <span class="nx">authService</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">startService</span><span class="p">(</span><span class="dl">'</span><span class="s1">auth</span><span class="dl">'</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">sourcesService</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">startService</span><span class="p">(</span><span class="dl">'</span><span class="s1">sources</span><span class="dl">'</span><span class="p">);</span>
+    
+    <span class="c1">// Publish event from auth</span>
+    <span class="k">await</span> <span class="nx">authService</span><span class="p">.</span><span class="nx">createUser</span><span class="p">({</span> <span class="na">email</span><span class="p">:</span> <span class="dl">'</span><span class="s1">test@example.com</span><span class="dl">'</span> <span class="p">});</span>
+    
+    <span class="c1">// Verify sources received it</span>
+    <span class="k">await</span> <span class="nx">eventually</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">user</span> <span class="o">=</span> <span class="nx">sourcesService</span><span class="p">.</span><span class="nx">findUser</span><span class="p">(</span><span class="dl">'</span><span class="s1">test@example.com</span><span class="dl">'</span><span class="p">);</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">user</span><span class="p">).</span><span class="nx">toBeDefined</span><span class="p">();</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="documentation-make-packages-easy-to-use">Documentation: Make Packages Easy to Use</h2>
+
+<h3 id="every-package-needs-a-readme">Every Package Needs a README</h3>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gh"># @radarkit/logger</span>
+
+Structured logging for RadarKit microservices.
+
+<span class="gu">## Installation</span>
+<span class="p">```</span><span class="nl">bash
+</span>npm <span class="nb">install</span> @radarkit/logger
+<span class="p">```</span>
+
+<span class="gu">## Quick Start</span>
+<span class="p">```</span><span class="nl">typescript
+</span><span class="k">import</span> <span class="p">{</span> <span class="nx">createLogger</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@radarkit/logger</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">logger</span> <span class="o">=</span> <span class="nx">createLogger</span><span class="p">(</span><span class="dl">'</span><span class="s1">my-service</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">logger</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="dl">'</span><span class="s1">User logged in</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">userId</span><span class="p">:</span> <span class="dl">'</span><span class="s1">123</span><span class="dl">'</span> <span class="p">});</span>
+<span class="nx">logger</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Operation failed</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">error</span><span class="p">:</span> <span class="nx">err</span><span class="p">.</span><span class="nx">message</span> <span class="p">});</span>
+<span class="p">```</span>
+
+<span class="gu">## API</span>
+
+<span class="gu">### createLogger(serviceName, options?)</span>
+
+Creates a Winston logger instance.
+
+<span class="gs">**Parameters:**</span>
+<span class="p">-</span> <span class="sb">`serviceName`</span> (string): Name of your service
+<span class="p">-</span> <span class="sb">`options.level`</span> (string, optional): Log level. Default: <span class="sb">`process.env.LOG_LEVEL || 'info'`</span>
+<span class="p">-</span> <span class="sb">`options.environment`</span> (string, optional): Environment. Default: <span class="sb">`process.env.NODE_ENV`</span>
+
+<span class="gs">**Returns:**</span> Winston Logger instance
+
+<span class="gs">**Example:**</span>
+<span class="p">```</span><span class="nl">typescript
+</span><span class="kd">const</span> <span class="nx">logger</span> <span class="o">=</span> <span class="nx">createLogger</span><span class="p">(</span><span class="dl">'</span><span class="s1">auth-service</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">level</span><span class="p">:</span> <span class="dl">'</span><span class="s1">debug</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">environment</span><span class="p">:</span> <span class="dl">'</span><span class="s1">development</span><span class="dl">'</span>
+<span class="p">});</span>
+<span class="p">```</span>
+
+<span class="gu">## Environment Variables</span>
+<span class="p">
+-</span> <span class="sb">`LOG_LEVEL`</span>: Set log level (<span class="sb">`debug`</span>, <span class="sb">`info`</span>, <span class="sb">`warn`</span>, <span class="sb">`error`</span>)
+<span class="p">-</span> <span class="sb">`NODE_ENV`</span>: Environment (<span class="sb">`development`</span>, <span class="sb">`production`</span>)
+
+<span class="gu">## Log Format</span>
+
+<span class="gs">**Development:**</span>
+</code></pre></div></div>
+<p>10:23:45 [auth-service] info: User logged in
+{
+  “userId”: “123”
+}</p>
+
+      </div>
+
+      <!-- Post Footer -->
+      <footer class="mt-12 pt-8 border-t border-gray-800">
+        <div class="flex justify-between items-center">
+          <a href="/blog" class="text-blue-400 hover:underline text-sm">
+            ← Back to Blog
+          </a>
+          
+          <div class="flex space-x-4 text-sm">
+            <a href="https://www.linkedin.com/in/maria-lobillo/" 
+               class="text-gray-400 hover:text-blue-400 transition-colors"
+               target="_blank" 
+               rel="noopener">
+              Share on LinkedIn
+            </a>
+            <a href="https://github.com/marialobillo" 
+               class="text-gray-400 hover:text-blue-400 transition-colors"
+               target="_blank" 
+               rel="noopener">
+              GitHub
+            </a>
+          </div>
+        </div>
+      </footer>
+    </article>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 mt-20">
+      <div class="max-w-4xl mx-auto px-4 py-8 text-center text-sm text-gray-500">
+        <p>© 2026 Maria Lobillo. Senior Software Engineer.</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,149 @@
+I"�<h1 id="strings-in-go">Strings in Go</h1>
+
+<p>Disclaimer: This article don’t pretend to teach you anything, it’s just part of my notes. If it could be helpful for somebody, great :)</p>
+
+<p>Strings are sequences of bytes. And thouse bytes are counted from zero to the lenght of the string minus one.</p>
+
+<pre><code class="language-Go">var str string = "Notes about string in Golang"
+var length int = len(str)
+</code></pre>
+
+<h2 id="index-operations">Index operations</h2>
+
+<p>We can get the byte in the string with a given index using this</p>
+
+<pre><code class="language-Go">var c byte = str[2]
+</code></pre>
+
+<h2 id="substrings">Substrings</h2>
+
+<p>We can get a piece from the string</p>
+
+<pre><code class="language-Go">var c string = str[3:7]
+fmt.Println(c)
+</code></pre>
+
+<h2 id="substring-shortcuts-taking-slices">Substring shortcuts, taking slices</h2>
+
+<p>If we want to get all bytes from zero until certain index</p>
+
+<pre><code class="language-Go">var c byte = str[:6]
+</code></pre>
+
+<p>If we want to get all bytes from certain index until the end of string</p>
+
+<pre><code class="language-Go">var c byte = str[6:]
+</code></pre>
+
+<h2 id="after-a-backslash">After a backslash</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>\a   U+0007 alert or bell
+\b   U+0008 backspace
+\f   U+000C form feed
+\n   U+000A line feed or newline
+\r   U+000D carriage return
+\t   U+0009 horizontal tab
+\v   U+000b vertical tab
+\\   U+005c backslash
+\'   U+0027 single quote  
+\"   U+0022 double quote  
+</code></pre></div></div>
+
+<h2 id="most-popular-string-functions">Most Popular String Functions</h2>
+
+<ol>
+  <li>Compare</li>
+</ol>
+
+<pre><code class="language-Go">fmt.Println(strings.Compare("A", "B"))  // A &lt; B =&gt; -1
+fmt.Println(strings.Compare("B", "A"))  // B &gt; A  =&gt; 1
+fmt.Println(strings.Compare("Japan", "Australia")) // J &gt; A =&gt; 1
+</code></pre>
+
+<ol>
+  <li>Contains</li>
+</ol>
+
+<pre><code class="language-Go">fmt.Println(strings.Contains("Australia", "Aus"))   // Any part of string =&gt; true
+fmt.Println(strings.Contains("Japan", "JAP")) // Case sensitive =&gt; false
+</code></pre>
+
+<ol>
+  <li>Count</li>
+</ol>
+
+<pre><code class="language-Go">fmt.Println(strings.Count("Australia", "a")) // =&gt; 2
+</code></pre>
+
+<ol>
+  <li>EqualFold</li>
+</ol>
+
+<pre><code class="language-Go">fmt.Println(strings.EqualFold("Australia", "aUSTRALIA")) // true
+fmt.Println(strings.EqualFold("Australia", "Australia")) // true
+fmt.Println(strings.EqualFold("Australia", "Aus")) // true
+</code></pre>
+
+<ol>
+  <li>Fields
+The Fields function breaks a string around each instance of one or more consecutive white space characters into an Array.</li>
+</ol>
+
+<pre><code class="language-Go">testString := "Australia is a country and continent surrounded by the Indian and Pacific oceans."
+testArray := strings.Fields(testString)
+for _, v := range testArray {    
+    fmt.Println(v)
+  } 
+</code></pre>
+<ol>
+  <li>HasPrefix</li>
+</ol>
+
+<pre><code class="language-Go">fmt.Println(strings.HasPrefix("Australia", "Aus")) // =&gt; true
+fmt.Println(strings.HasPrefix("Australia", "aus")) // =&gt; false
+</code></pre>
+
+<ol>
+  <li>HasSuffix</li>
+</ol>
+
+<pre><code class="language-Go">fmt.Println(strings.HasSuffix("Australia", "lia")) // =&gt; true
+fmt.Println(strings.HasSuffix("Australia", "A")) // =&gt; false
+</code></pre>
+
+<ol>
+  <li>Index</li>
+</ol>
+
+<p>The Index function enables searching particular text within a string.</p>
+
+<pre><code class="language-Go">fmt.Println(strings.Index("Australia", "Aus")) // =&gt; 0
+fmt.Println(strings.Index("Australia", "aus")) // =&gt; -1
+</code></pre>
+
+<ol>
+  <li>Join</li>
+</ol>
+
+<p>The Join function return a string from the elements of an slice.</p>
+
+<pre><code class="language-Go">textString := []string{"Australia", "Japan", "Canada"}
+fmt.Println(strings.Join(textString, "-")) // =&gt; Australia-Japan-Canada
+</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+  <li>String are immutable: once created, it is impossible to change the contents of a string.</li>
+  <li>Data type <code class="highlighter-rouge">rune</code> is equivalent to <code class="highlighter-rouge">int32</code>.</li>
+  <li>String literals are enclosed by double quotes.</li>
+</ul>
+
+<h2 id="resources">Resources</h2>
+
+<p><a href="https://www.golangprograms.com/golang/string-functions/">https://www.golangprograms.com/golang/string-functions/</a></p>
+
+<p><a href="https://golang.org/pkg/strings/">https://golang.org/pkg/strings/</a></p>
+
+<p><a href="https://golang.org/doc/effective_go.html">https://golang.org/doc/effective_go.html</a></p>
+:ET

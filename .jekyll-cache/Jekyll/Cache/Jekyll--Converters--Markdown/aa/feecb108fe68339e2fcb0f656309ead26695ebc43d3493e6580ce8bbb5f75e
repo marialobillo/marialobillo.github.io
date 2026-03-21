@@ -1,0 +1,2 @@
+I"Q<p>I am using factories for testing concerts, the concerts could be published or unpublished, and depend on that users can see them on the list or not, pretty simple. ( I’m following the Adam Wathan about TDD and Laravel.) So I’m going to use the Factory States for published concerts and unpublished, and use those on my tests.</p>
+:ET

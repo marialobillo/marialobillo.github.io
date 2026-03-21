@@ -1,0 +1,60 @@
+<h3 id="post-1--borrador-listo-en-inglés-puedes-publicar-tal-cual">Post #1 — borrador listo (en inglés, puedes publicar tal cual)</h3>
+
+<p><strong>Title:</strong> Shipping a compact Catalog Service: TDD, pragmatic TS, and AWS App Runner</p>
+
+<p><strong>Context</strong></p>
+
+<p>I’m building a small “reference” service to show how I work as a senior full-stack engineer: clean layering, tests-first, pragmatic TypeScript, and a simple deploy path.</p>
+
+<p><strong>What I tried</strong></p>
+
+<p>I sketched a thin domain (<code class="highlighter-rouge">Product</code> rules), an application layer with ports, and infrastructure via NestJS + Postgres. I started from tests: first unit tests for domain rules, then e2e against a real DB.</p>
+
+<p><strong>What worked</strong></p>
+
+<ul>
+  <li>Keeping domain pure made unit tests fast and focused.</li>
+  <li>Using Zod at the boundary gave me runtime validation and compile-time types via <code class="highlighter-rouge">z.infer</code>.</li>
+  <li>A tiny <code class="highlighter-rouge">Result&lt;T,E&gt;</code> type clarified error handling without throwing everywhere.</li>
+</ul>
+
+<p><strong>Snippet (domain + DTO)</strong></p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// domain/product.ts</span>
+<span class="k">export</span> <span class="kd">type</span> <span class="nx">Brand</span><span class="o">&lt;</span><span class="nx">T</span><span class="p">,</span><span class="nx">B</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">T</span> <span class="o">&amp;</span> <span class="p">{</span> <span class="na">__brand</span><span class="p">:</span> <span class="nx">B</span> <span class="p">};</span>
+<span class="k">export</span> <span class="kd">type</span> <span class="nx">ProductId</span> <span class="o">=</span> <span class="nx">Brand</span><span class="o">&lt;</span><span class="kr">string</span><span class="p">,</span> <span class="dl">"</span><span class="s2">ProductId</span><span class="dl">"</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="kr">interface</span> <span class="nx">Product</span> <span class="p">{</span>
+  <span class="nl">id</span><span class="p">:</span> <span class="nx">ProductId</span><span class="p">;</span>
+  <span class="nl">name</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+  <span class="nl">price</span><span class="p">:</span> <span class="kr">number</span><span class="p">;</span> <span class="c1">// &gt;= 0</span>
+  <span class="nl">stock</span><span class="p">:</span> <span class="kr">number</span><span class="p">;</span> <span class="c1">// int, &gt;= 0</span>
+<span class="p">}</span>
+
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">createProduct</span><span class="p">(</span><span class="nx">dto</span><span class="p">:</span> <span class="nx">ProductDTO</span><span class="p">):</span> <span class="nx">Result</span><span class="o">&lt;</span><span class="nx">Product</span><span class="p">,</span><span class="dl">"</span><span class="s2">ValidationError</span><span class="dl">"</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">dto</span><span class="p">.</span><span class="nx">price</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">dto</span><span class="p">.</span><span class="nx">stock</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="nx">err</span><span class="p">(</span><span class="dl">"</span><span class="s2">ValidationError</span><span class="dl">"</span><span class="p">);</span>
+  <span class="k">return</span> <span class="nx">ok</span><span class="p">({</span> <span class="p">...</span><span class="nx">dto</span><span class="p">,</span> <span class="na">id</span><span class="p">:</span> <span class="nx">dto</span><span class="p">.</span><span class="nx">id</span> <span class="k">as</span> <span class="nx">ProductId</span> <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="c1">// infra/http/dto.ts</span>
+<span class="kd">const</span> <span class="nx">ProductSchema</span> <span class="o">=</span> <span class="nx">z</span><span class="p">.</span><span class="nx">object</span><span class="p">({</span>
+  <span class="na">id</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="kr">string</span><span class="p">().</span><span class="nx">uuid</span><span class="p">(),</span>
+  <span class="na">name</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="kr">string</span><span class="p">().</span><span class="nx">min</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+  <span class="na">price</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="kr">number</span><span class="p">().</span><span class="nx">nonnegative</span><span class="p">(),</span>
+  <span class="na">stock</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="kr">number</span><span class="p">().</span><span class="nx">int</span><span class="p">().</span><span class="nx">nonnegative</span><span class="p">(),</span>
+<span class="p">});</span>
+<span class="k">export</span> <span class="kd">type</span> <span class="nx">ProductDTO</span> <span class="o">=</span> <span class="nx">z</span><span class="p">.</span><span class="nx">infer</span><span class="o">&lt;</span><span class="k">typeof</span> <span class="nx">ProductSchema</span><span class="o">&gt;</span><span class="p">;</span>
+
+</code></pre></div></div>
+
+<p><strong>Takeaways</strong></p>
+
+<ul>
+  <li>“Small and solid” beats “big and unfinished”.</li>
+  <li>Zod + <code class="highlighter-rouge">z.infer</code> keeps runtime and compile-time aligned.</li>
+  <li>Tests first (unit → e2e) make refactors safer and faster.</li>
+</ul>
+
+<p><strong>What’s next</strong></p>
+
+<p>Wire e2e tests with Testcontainers/Postgres, add JSON logs with <code class="highlighter-rouge">requestId</code>, expose <code class="highlighter-rouge">/metrics</code> (p50/p95), and ship a first deploy to AWS App Runner.</p>

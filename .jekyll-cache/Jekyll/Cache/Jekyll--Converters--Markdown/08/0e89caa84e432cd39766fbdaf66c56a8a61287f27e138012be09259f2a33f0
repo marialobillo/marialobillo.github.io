@@ -1,0 +1,289 @@
+I"<div class="clearfix"></div>
+<div class="row">
+    <br />
+    <div class="jumbotron">
+        <h2 class="display-3">Posts</h2>
+    
+       <div>
+        
+            
+            
+                <p id="yDecember 2025">December 2025</p>
+                 
+            
+                <p>
+                    <a href="/2025-12-20/authorizatin-nestjs">
+                        Authorization in NestJS: Dynamic Permissions with CASL
+                    </a>
+                </p>
+        
+            
+            
+                <p id="ySeptember 2025">September 2025</p>
+                 
+            
+                <p>
+                    <a href="/2025-09-27/building-modular-monolith-nestjs">
+                        Making Architectural Decisions Under Real Constraints: Building a Scalable Intelligence Platform
+                    </a>
+                </p>
+        
+            
+            
+                <p id="yMay 2025">May 2025</p>
+                 
+            
+                <p>
+                    <a href="/shared-packages-patterns">
+                        Shared Packages in Monorepos: Patterns
+                    </a>
+                </p>
+        
+            
+            
+                <p id="yApril 2025">April 2025</p>
+                 
+            
+                <p>
+                    <a href="/shared-packages-implementation">
+                        Shared Packages in Monorepos: Implementation
+                    </a>
+                </p>
+        
+            
+            
+                <p>
+                    <a href="/shared-packages-problem">
+                        Shared Packages in Monorepos: The Problem
+                    </a>
+                </p>
+        
+            
+            
+                <p id="yMarch 2025">March 2025</p>
+                 
+            
+                <p>
+                    <a href="/2025-03-05/shipping-compact-catalog-service">
+                        Shipping Compact Catalog Service
+                    </a>
+                </p>
+        
+            
+            
+                <p id="yJuly 2024">July 2024</p>
+                 
+            
+                <p>
+                    <a href="/concurrency-nodejs">
+                        Concurrency in Node.js: Understanding and Implementing
+                    </a>
+                </p>
+        
+            
+            
+                <p id="yNovember 2023">November 2023</p>
+                 
+            
+                <p>
+                    <a href="/forke-my-first-repo">
+                        Forke my first repo
+                    </a>
+                </p>
+        
+            
+            
+                <p id="ySeptember 2023">September 2023</p>
+                 
+            
+                <p>
+                    <a href="/build-api-with-bun-and-elysia">
+                        Build API with Bun and Elysia
+                    </a>
+                </p>
+        
+            
+            
+                <p id="yAugust 2023">August 2023</p>
+                 
+            
+                <p>
+                    <a href="/refactoring-api-from-js-to-ts">
+                        Refactoring API from Javascript to Typescript
+                    </a>
+                </p>
+        
+            
+            
+                <p id="yJuly 2023">July 2023</p>
+                 
+            
+                <p>
+                    <a href="/race-conditions-nodejs">
+                        Race Conditions in Nodejs
+                    </a>
+                </p>
+        
+            
+            
+                <p id="yMay 2023">May 2023</p>
+                 
+            
+                <p>
+                    <a href="/bookmark-tailwind-css">
+                        Bookmark: Tailwind CSS Refresher
+                    </a>
+                </p>
+        
+            
+            
+                <p id="yOctober 2021">October 2021</p>
+                 
+            
+                <p>
+                    <a href="/i-want-to-learn-typescript">
+                        I want to learn Typescript
+                    </a>
+                </p>
+        
+            
+            
+                <p id="yAugust 2021">August 2021</p>
+                 
+            
+                <p>
+                    <a href="/factory-states-laravel">
+                        Factory States on Laravel 8
+                    </a>
+                </p>
+        
+            
+            
+                <p id="yJuly 2021">July 2021</p>
+                 
+            
+                <p>
+                    <a href="/switching-editor">
+                        I've been switching from VSCode to PHPStorm
+                    </a>
+                </p>
+        
+            
+            
+                <p>
+                    <a href="/fixing-a-laravel-project">
+                        SSH for Github and fixing a project
+                    </a>
+                </p>
+        
+            
+            
+                <p id="yFebruary 2021">February 2021</p>
+                 
+            
+                <p>
+                    <a href="/updating-stock-trade-app">
+                        Updating Stock Trade App
+                    </a>
+                </p>
+        
+            
+            
+                <p id="yJanuary 2021">January 2021</p>
+                 
+            
+                <p>
+                    <a href="/logs-using-winston">
+                        Logs for Expressjs using Winston
+                    </a>
+                </p>
+        
+            
+            
+                <p id="ySeptember 2020">September 2020</p>
+                 
+            
+                <p>
+                    <a href="/strings-in-go">
+                        Strings in Go
+                    </a>
+                </p>
+        
+            
+            
+                <p>
+                    <a href="/i-love-bootstrap-rails">
+                        I love Bootstrap and Rails together
+                    </a>
+                </p>
+        
+            
+            
+                <p id="yAugust 2020">August 2020</p>
+                 
+            
+                <p>
+                    <a href="/heroku-is-not-localhost">
+                        Heroku is not your localhost
+                    </a>
+                </p>
+        
+            
+            
+                <p>
+                    <a href="/ubuntu-debian">
+                        From Ubuntu to Debian
+                    </a>
+                </p>
+        
+            
+            
+                <p id="yJuly 2020">July 2020</p>
+                 
+            
+                <p>
+                    <a href="/cloudy-day">
+                        A cloudy day
+                    </a>
+                </p>
+        
+            
+            
+                <p>
+                    <a href="/sourcerer-io">
+                        Sourcerer.io, My Github account in Colors!!
+                    </a>
+                </p>
+        
+            
+            
+                <p>
+                    <a href="/the-summer-is-here">
+                        The summer is here.
+                    </a>
+                </p>
+        
+            
+            
+                <p>
+                    <a href="/updating-the-site">
+                        Updating the Site. Yes, again.
+                    </a>
+                </p>
+        
+            
+            
+                <p id="yJanuary 2020">January 2020</p>
+                 
+            
+                <p>
+                    <a href="/welcome-to-jekyll">
+                        Welcome to Jekyll!
+                    </a>
+                </p>
+        
+        </div>
+    </div>
+</div>
+
+:ET

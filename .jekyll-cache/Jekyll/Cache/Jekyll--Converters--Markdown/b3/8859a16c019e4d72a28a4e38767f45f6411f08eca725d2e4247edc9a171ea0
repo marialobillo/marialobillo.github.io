@@ -1,0 +1,70 @@
+I""<p>One of my favourites backend frameworks is Ruby on Rails. Because is simple, is powderfull, and on version 6 you can add your Javascript dependencies using yarn. So, so excited about it.</p>
+
+<p>These are the notes for adding Bootstrap to Rails project:</p>
+
+<ol>
+  <li>Type this on the console:</li>
+</ol>
+
+<pre>
+<code>
+yarn add bootstrap jquery popper.js
+</code>
+</pre>
+
+<ol>
+  <li>Your yourproject/config/webpack/environment.js file should look like this:</li>
+</ol>
+
+<pre>
+<code>
+const { environment } = require('@rails/webpacker')
+const webpack = require('webpack')
+environment.plugins.append("Provide", 
+    new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+        Popper: ['popper.js', 'default']
+    })
+)
+module.exports = environment
+</code>
+</pre>
+
+<ol>
+  <li>Now we are going to import Bootstrap on app/javascript/packs/application.js with the following line:</li>
+</ol>
+
+<pre>
+<code>
+import "bootstrap"
+</code>
+</pre>
+
+<ol>
+  <li>On your gemfile you can add two gem more, for ‘bootstrap’ and ‘jquery-rails’, for my were these lines:</li>
+</ol>
+
+<pre>
+<code>
+gem 'bootstrap', '~&gt; 4.5', '&gt;= 4.5.2'
+gem 'jquery-rails', '~&gt; 4.4'
+</code>
+</pre>
+
+<p>I recommend go to https://rubygems.org/ and pick up the current versions.</p>
+
+<ol>
+  <li>Probably it’s a good idea to re-start your rails server:</li>
+</ol>
+
+<pre>
+<code>
+rails s
+</code>
+</pre>
+
+<p>If you prefer video format, there is a great resource on Youtube.
+Here the <a href="https://www.youtube.com/watch?v=BIxd501hP-g&amp;ab_channel=ChrisLam">
+link</a>.</p>
+:ET

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Race Conditions in Nodejs | Maria Lobillo</title>
+    <meta name="description" content="Recently I’ve implemented a backend API project by FreeCodeCamp, which is url shortener. You can 
+see the project here
+" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Typography for blog posts */
+      .prose {
+        max-width: 65ch;
+        color: #e5e7eb;
+      }
+      .prose h1 {
+        font-size: 2.25rem;
+        font-weight: 700;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #f9fafb;
+      }
+      .prose h2 {
+        font-size: 1.875rem;
+        font-weight: 600;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #f9fafb;
+      }
+      .prose h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+        color: #f3f4f6;
+      }
+      .prose p {
+        margin-bottom: 1.25rem;
+        line-height: 1.75;
+      }
+      .prose strong {
+        font-weight: 600;
+        color: #f9fafb;
+      }
+      .prose a {
+        color: #60a5fa;
+        text-decoration: none;
+      }
+      .prose a:hover {
+        text-decoration: underline;
+      }
+      .prose ul, .prose ol {
+        margin: 1.25rem 0;
+        padding-left: 1.5rem;
+      }
+      .prose li {
+        margin-bottom: 0.5rem;
+      }
+      .prose code {
+        background: #1f2937;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-size: 0.875rem;
+        color: #f472b6;
+      }
+      .prose pre {
+        background: #1f2937;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        margin: 1.5rem 0;
+      }
+      .prose pre code {
+        background: transparent;
+        padding: 0;
+        color: #e5e7eb;
+      }
+      .prose blockquote {
+        border-left: 4px solid #3b82f6;
+        padding-left: 1rem;
+        margin: 1.5rem 0;
+        color: #9ca3af;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-900 text-gray-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="border-b border-gray-800">
+      <div class="max-w-4xl mx-auto px-4 py-6">
+        <div class="flex justify-between items-center">
+          <a href="/" class="text-xl font-semibold hover:text-blue-400 transition-colors">
+            Maria Lobillo
+          </a>
+          
+          <div class="hidden sm:flex space-x-6 text-sm">
+            <a href="/" class="hover:text-blue-400 transition-colors">Home</a>
+            <a href="/blog" class="hover:text-blue-400 transition-colors">Blog</a>
+            <a href="/about" class="hover:text-blue-400 transition-colors">About</a>
+          </div>
+
+          <div class="sm:hidden flex space-x-4 text-sm">
+            <a href="/" class="hover:text-blue-400">Home</a>
+            <a href="/blog" class="hover:text-blue-400">Blog</a>
+            <a href="/about" class="hover:text-blue-400">About</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Post Header -->
+    <article class="max-w-4xl mx-auto px-4 py-12">
+      <header class="mb-8 pb-8 border-b border-gray-800">
+        <h1 class="text-4xl sm:text-5xl font-bold mb-4 leading-tight">
+          Race Conditions in Nodejs
+        </h1>
+        
+        <div class="flex items-center space-x-4 text-sm text-gray-400">
+          <time datetime="2023-07-27T13:18:00+02:00">
+            July 27, 2023
+          </time>
+          
+          
+          <span>•</span>
+          <div class="flex flex-wrap gap-2">
+            
+          </div>
+          
+        </div>
+      </header>
+
+      <!-- Post Content -->
+      <div class="prose">
+        <p>Recently I’ve implemented a backend API project by FreeCodeCamp, which is url shortener. You can 
+see the project <a href="https://github.com/marialobillo/fcc-urlshortener">here</a></p>
+
+<p>The thing is even when we know Javascript in this case Nodejs is single-threaded we could have ‘Race 
+condition’ happening in your project. The reason for this is because we are using a database to store our data, ( well for this project we were using mongodb and redis ), and the database is not single-threaded. So, we could have several simultaneous requests to our application.</p>
+
+<p>I found two articles about race condition on Nodejs that I found very interesting and I wanted to share with you. One of them is the Luciano Mammino <a href="https://www.nodejsdesignpatterns.com/blog/node-js-race-conditions/">article</a>, which is very well explained, giving us an idea about race condition on nodejs could be posible, picturing the way that 2 transactions could go, a beautiful example about olives and grapes which one solution could be forcing to the second process to wait for the frist one to finish.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// source  -&gt; https://www.nodejsdesignpatterns.com/blog/node-js-race-conditions/</span>
+<span class="k">async</span> <span class="kd">function</span> <span class="nx">main</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">await</span> <span class="nx">sellGrapes</span><span class="p">()</span> <span class="c1">// &lt;- schedule the first transaction and wait for completion</span>
+  <span class="k">await</span> <span class="nx">sellOlives</span><span class="p">()</span> <span class="c1">// &lt;- when it's completed, we start the second transaction </span>
+                     <span class="c1">//    and wait for completion</span>
+  <span class="kd">const</span> <span class="nx">balance</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">loadBalance</span><span class="p">()</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`Final balance: </span><span class="p">${</span><span class="nx">balance</span><span class="p">}</span><span class="s2">`</span><span class="p">)</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>The second one is about a real case described Matilde Duboille <a href="https://blog.theodo.com/2019/09/handle-race-conditions-in-nodejs-using-mutex/">here</a>, talking how she solved a race condition problem using mutex. In the article is defining race condition, and putting us in context about the problem that she was facing.</p>
+
+<p>You can find the code that she used to solve the problem <a href="https://blog.theodo.com/2019/09/handle-race-conditions-in-nodejs-using-mutex/">here</a></p>
+
+<p>I hope you find this articles interesting and useful.</p>
+
+
+      </div>
+
+      <!-- Post Footer -->
+      <footer class="mt-12 pt-8 border-t border-gray-800">
+        <div class="flex justify-between items-center">
+          <a href="/blog" class="text-blue-400 hover:underline text-sm">
+            ← Back to Blog
+          </a>
+          
+          <div class="flex space-x-4 text-sm">
+            <a href="https://www.linkedin.com/in/maria-lobillo/" 
+               class="text-gray-400 hover:text-blue-400 transition-colors"
+               target="_blank" 
+               rel="noopener">
+              Share on LinkedIn
+            </a>
+            <a href="https://github.com/marialobillo" 
+               class="text-gray-400 hover:text-blue-400 transition-colors"
+               target="_blank" 
+               rel="noopener">
+              GitHub
+            </a>
+          </div>
+        </div>
+      </footer>
+    </article>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 mt-20">
+      <div class="max-w-4xl mx-auto px-4 py-8 text-center text-sm text-gray-500">
+        <p>© 2026 Maria Lobillo. Senior Software Engineer.</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,60 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>About Me</title>
-  <link rel="stylesheet" href="../../css/bootstrap.min.css">
-</head>
-<body>
-  <div class="container">
-    <header>
-     <!-- Menu -->
-  
-     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="sideNav">
-      <a class="navbar-brand" href="/">
-        Maria Lobillo-Santos
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse w-100 order-3 dual-collapse">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/about/">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/portfolio">Portfolio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/blog">Blog</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/contact">Contact</a>
-        </ul>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-900 text-gray-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="border-b border-gray-800">
+      <div class="max-w-4xl mx-auto px-4 py-6">
+        <div class="flex justify-between items-center">
+          <!-- Logo/Name -->
+          <a href="/" class="text-xl font-semibold hover:text-blue-400 transition-colors">
+            Maria Lobillo
+          </a>
+          
+          <!-- Menu -->
+          <div class="flex space-x-6 text-sm">
+            <a href="/" class="hover:text-blue-400 transition-colors">Home</a>
+            <a href="/blog" class="hover:text-blue-400 transition-colors">Blog</a>
+            <a href="/about" class="hover:text-blue-400 transition-colors">About</a>
+          </div>
+        </div>
       </div>
     </nav>
-  
-    <!-- Menu -->
-    </header>
-    <div class="row">
-        <div class="col-md-10">
-            <h2>About Me</h2>
-            <p class="meta"></p>
-        
-            <div class="post">
-            <p>Hi, my name is Maria I am a Full Stack Developer passionate for Javascript and clean code. I have experience with Node.js, React.js, Php, and .Net.</p>
 
-
-            </div>
-        </div>
-    </div>
-
-    <footer>
-      Footer
-    </footer>
+    <!-- Content -->
+    <main class="max-w-4xl mx-auto px-4 py-12">
+      <div class="max-w-3xl">
+  <!-- Header -->
+  <div class="mb-12">
+    <h1 class="text-4xl font-bold mb-4">About Me</h1>
+    <p class="text-xl text-gray-400">
+      Senior Backend Engineer with 9+ years building scalable, production-ready systems. Specialized in backend architecture, event-driven systems, and distributed applications with Node.js and TypeScript.
+    </p>
   </div>
-</body>
-</html>
 
+  <!-- Current Work -->
+  <div class="mb-12 pb-12 border-b border-gray-800">
+    <h2 class="text-2xl font-semibold mb-4">Current Work</h2>
+    <p class="text-gray-300">
+      <strong class="text-blue-400">Senior Backend Engineer</strong> - Building competitive intelligence platforms with focus on backend architecture and distributed systems. Working with NestJS, Kafka, PostgreSQL, and AWS to implement scalable, event-driven solutions.
+    </p>
+  </div>
+
+  <!-- Technical Expertise -->
+  <div class="mb-12 pb-12 border-b border-gray-800">
+    <h2 class="text-2xl font-semibold mb-6">Technical Expertise</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Primary Stack -->
+      <div class="bg-gray-800 p-6 rounded-lg">
+        <h3 class="text-lg font-semibold mb-3 text-blue-400">Primary Stack</h3>
+        <ul class="space-y-2 text-gray-300">
+          <li>• JavaScript/TypeScript</li>
+          <li>• Node.js, NestJS, Express</li>
+          <li>• React.js, Next.js</li>
+        </ul>
+      </div>
+
+      <!-- Architecture & Patterns -->
+      <div class="bg-gray-800 p-6 rounded-lg">
+        <h3 class="text-lg font-semibold mb-3 text-blue-400">Architecture &amp; Patterns</h3>
+        <ul class="space-y-2 text-gray-300">
+          <li>• Microservices, Event-Driven</li>
+          <li>• Clean Architecture, SOLID</li>
+          <li>• Message queues (Kafka, RabbitMQ)</li>
+          <li>• REST APIs, Authentication (OAuth, JWT)</li>
+        </ul>
+      </div>
+
+      <!-- Infrastructure -->
+      <div class="bg-gray-800 p-6 rounded-lg">
+        <h3 class="text-lg font-semibold mb-3 text-blue-400">Infrastructure</h3>
+        <ul class="space-y-2 text-gray-300">
+          <li>• AWS (Lambda, ECS, S3, RDS)</li>
+          <li>• Docker, Docker Compose</li>
+          <li>• PostgreSQL, Redis, MongoDB</li>
+          <li>• CI/CD pipelines</li>
+        </ul>
+      </div>
+
+      <!-- Currently Learning -->
+      <div class="bg-gray-800 p-6 rounded-lg border-2 border-blue-500/30">
+        <h3 class="text-lg font-semibold mb-3 text-blue-400">Currently Learning</h3>
+        <ul class="space-y-2 text-gray-300">
+          <li>• Python &amp; Go</li>
+          <li>• Advanced Kafka patterns</li>
+          <li>• System Design at scale</li>
+        </ul>
+      </div>
+  </div>
+
+  <!-- Technical Writing -->
+  <div class="mb-12 pb-12 border-b border-gray-800">
+    <h2 class="text-2xl font-semibold mb-4">Technical Writing</h2>
+    <p class="text-gray-300">
+      I write about software architecture, backend systems, and lessons learned building production systems at scale. Check out my <a href="/blog" class="text-blue-400 hover:underline">blog</a> for technical deep dives on topics like DDD patterns, event-driven architecture, and Node.js best practices.
+    </p>
+  </div>
+
+  <!-- Let's Connect -->
+  <div class="mb-12">
+    <h2 class="text-2xl font-semibold mb-6">Say hi!</h2>
+    <div class="flex flex-wrap gap-4">
+      <a href="https://www.linkedin.com/in/maria-lobillo/" class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors" target="_blank" rel="noopener">
+        <span class="mr-2">📧</span> LinkedIn
+      </a>
+      <a href="https://github.com/marialobillo" class="inline-flex items-center px-6 py-3 border border-gray-700 hover:border-blue-400 rounded-lg transition-colors" target="_blank" rel="noopener">
+        <span class="mr-2">💻</span> GitHub
+      </a>
+      <a href="/blog" class="inline-flex items-center px-6 py-3 border border-gray-700 hover:border-blue-400 rounded-lg transition-colors">
+        <span class="mr-2">📝</span> Blog
+      </a>
+    </div>
+  </div>
+
+</div>
+</div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 mt-20">
+      <div class="max-w-4xl mx-auto px-4 py-8 text-center text-sm text-gray-500">
+        <div class="flex justify-center space-x-6 mb-4">
+          <a href="https://www.linkedin.com/in/maria-lobillo/" class="hover:text-blue-400 transition-colors">LinkedIn</a>
+          <a href="https://github.com/marialobillo" class="hover:text-blue-400 transition-colors">GitHub</a>
+        </div>
+        <p>© 2026 Maria Lobillo. Senior Software Engineer.</p>
+      </div>
+    </footer>
+  </body>
+</html>

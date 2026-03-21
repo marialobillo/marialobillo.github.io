@@ -1,0 +1,42 @@
+I"w<p>On <a href="https://github.com/marialobillo/stock-trade">stock-trade</a> application I wanted to put all my logs on a file, there is a package, Winston, that make it very easy. So, for install the package, the project was already initialized, just typing this for installing the Winston package:</p>
+
+<p><code class="highlighter-rouge">npm install winston</code></p>
+
+<p>The easy way to use Winston package, you can import/require the package on index.js like this:</p>
+
+<p><code class="highlighter-rouge">const winston = require('winston')</code></p>
+
+<p>And then in order to use it you can type something like this:</p>
+
+<p><code class="highlighter-rouge">winston.info('Listening on port 3000')</code></p>
+
+<p>But we could go a little bit further, so we could make a module for logs in our utils directory like this, here the <a href="https://github.com/marialobillo/stock-trade">code</a> and export the module like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const winston = require('winston')
+
+module.exports = winston.createLogger({
+  transports: [
+      new winston.transports.Console({
+          level: 'debug',
+          handleExceptions: true,
+          format: winston.format.combine(
+              winston.format.colorize(),
+              winston.format.simple()
+          )
+      }),
+      new winston.transports.File({
+          level: 'info',
+          handleExceptions: true, 
+          format: winston.format.combine(
+              winston.format.simple()
+          ),
+          maxsize: 5120000, // 5 Mb
+          maxFiles: 5,
+          filename: `${__dirname}/../logs/application-logs.log`
+      })
+  ]
+})
+
+</code></pre></div></div>
+<p>Here we are setting up the logs for console and for files, our files are going to be max 5 and the size of the file will be 5 Mb, also we are setting up the directory where our files will be created.</p>
+:ET

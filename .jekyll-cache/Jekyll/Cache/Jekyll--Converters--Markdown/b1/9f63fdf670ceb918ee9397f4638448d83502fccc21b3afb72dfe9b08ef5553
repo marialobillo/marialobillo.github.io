@@ -1,0 +1,15 @@
+I"g<p>I love go for a walk in the morning and listening some podcasts. And I remember how excited I was listening Ryan Dahl talking about Deno on this podcast by ChangeLog:</p>
+
+<p><a href="https://changelog.com/podcast/443">Exploring Deno Land</a></p>
+
+<p>I thought it’s great to have more options a part from Nodejs, and improved version. But when I learned about Bun.sh in this video by Jarred Summer:</p>
+
+<p><a href="https://www.youtube.com/watch?v=eF48Ar-JjT8">SFNode Meetup: Bun with Jarred Sumner</a></p>
+
+<p>Here you can see how fast and incredible is bun.sh. Few days ago a lot of people were talking about on social media, so I decided to give it a try, and implementing a simple API with bun.sh and Elysia ( a similar framework to expressjs ). I would say everything is very intuitive, and easy to use because is very similar like we work on nodejs.</p>
+
+<p>So, here is the link of the project, for now there is only a couple end points, but I’m going to add more in the future:</p>
+
+<p><a href="https://github.com/marialobillo/stock-trade-api-bun-elysia/tree/main">Stock-Trade API with Bun.sh and Elysia</a></p>
+
+:ET

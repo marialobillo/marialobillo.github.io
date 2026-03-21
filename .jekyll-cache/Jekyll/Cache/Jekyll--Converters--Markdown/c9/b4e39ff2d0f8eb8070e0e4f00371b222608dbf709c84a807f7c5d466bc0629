@@ -1,0 +1,75 @@
+I"¿<p>In my latest exploration of Node.js, I delved into how this popular runtime handles concurrency. Building scalable APIs with Node.js has been an enlightening journey, and understanding concurrency is a crucial part of making your applications efficient and responsive.</p>
+
+<p>Even though Node.js operates on a single thread, its event-driven, non-blocking I/O model allows it to handle multiple operations simultaneously. This is achieved through several mechanisms:</p>
+
+<h2 id="event-loop">Event Loop</h2>
+<p>The event loop is the core of Node.jsâ€™s concurrency model. It continuously checks the call stack and the callback queue for tasks to execute. When the call stack is empty, the event loop moves tasks from the callback queue to the call stack.</p>
+
+<h2 id="callbacks">Callbacks</h2>
+<p>These are functions provided as arguments to other functions and executed when an asynchronous operation completes. This approach has been the traditional way to manage asynchronous operations in Node.js.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const fs = require('fs');
+
+fs.readFile('file.txt', 'utf8', (err, data) =&gt; {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  console.log(data);
+});
+</code></pre></div></div>
+
+<h2 id="promises">Promises</h2>
+<p>These modern constructs provide a cleaner and more manageable way to handle asynchronous code, making it easier to write and understand.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="no">fs</span> <span class="o">=</span> <span class="k">require</span><span class="p">(</span><span class="s1">'fs'</span><span class="p">)</span><span class="mf">.</span><span class="n">promises</span><span class="p">;</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="n">readFile</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="k">const</span> <span class="no">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">fs</span><span class="mf">.</span><span class="nb">readFile</span><span class="p">(</span><span class="s1">'file.txt'</span><span class="p">,</span> <span class="s1">'utf8'</span><span class="p">);</span>
+    <span class="n">console</span><span class="mf">.</span><span class="nb">log</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">console</span><span class="mf">.</span><span class="nf">error</span><span class="p">(</span><span class="n">err</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nb">readFile</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h2 id="worker-threads">Worker Threads</h2>
+<p>For tasks that are CPU-intensive and might block the event loop, the worker_threads module allows you to run code in parallel threads, thereby avoiding bottlenecks.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const { Worker } = require('worker_threads');
+
+const worker = new Worker('./worker.js');
+
+worker.on('message', (message) =&gt; {
+  console.log('Message from worker:', message);
+});
+
+worker.postMessage('Start');
+</code></pre></div></div>
+
+<h2 id="cluster">Cluster</h2>
+<p>To take advantage of multi-core processors, Node.js provides the cluster module, which enables you to create multiple processes that can share the same port, thus improving performance and scalability.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const cluster = require('cluster');
+const http = require('http');
+const numCPUs = require('os').cpus().length;
+
+if (cluster.isMaster) {
+  for (let i = 0; i &lt; numCPUs; i++) {
+    cluster.fork();
+  }
+
+  cluster.on('exit', (worker, code, signal) =&gt; {
+    console.log(`Worker ${worker.process.pid} died`);
+  });
+} else {
+  http.createServer((req, res) =&gt; {
+    res.writeHead(200);
+    res.end('hello world\n');
+  }).listen(8000);
+}
+</code></pre></div></div>
+:ET

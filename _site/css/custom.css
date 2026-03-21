@@ -1,97 +1,100 @@
-html, body{
-    font-family: 'Noto Sans JP', sans-serif;
+body{
+    font-size: 1.2rem;
+    color: #6d6d6e;
+    background-color: #fff;
+}
+
+
+
+/* About Section */
+
+
+.navbar-brand{
+    color: #6d6d6e !important;
+    /* margin-right: 600px; */
+}
+
+
+.top-menu{
+    flex: 1;
+    justify-content: flex-end;
+}
+
+ul.top-menu li a{
+    color: #6d6d6e !important;
+}
+
+ul.top-menu li a:hover, ul.social li a:hover, a.navbar-brand:hover{
+    color: #db30b6 !important;
 }
 
 .hello{
-    min-height: 400px;
-    padding: 150px 50px;
-    margin-bottom:20px;
-    text-align: center;
-    font-weight: 400;
-    background-color: palegreen;
+    margin-top: 120px;
 }
 
-.intro{
-    font-family: 'Noto Sans JP', sans-serif;
-    padding: 30px 0px;
-    font-weight: 300;
-    font-size: 2.5em;
-    margin-bottom:200px;
+.description{
+    width: 70%;
+    margin: 10px auto;
 }
 
-.email{
-    
-    font-size: 1.8em;
-    font-weight: 100;
-    padding: 50px 0;
-    padding-left: 230px;
-    margin-bottom: 90px;
-    background-color: #eee;
+ul.social li a{
+    font-size: 2.1rem;
+    color: #6d6d6e !important;
+    margin: 20px;
 }
 
-.address{
-    border-bottom: solid 3px palegreen;
+ul.social{
+   display:flex;
+   align-items: center;
+    justify-content: center;
 }
 
-.projects-container, .project-description{
-    font-family: 'Noto Sans JP', sans-serif;
-    font-weight: 300;
-}
-
-.title{
-    font-family: 'Noto Sans JP', sans-serif;
-    font-weight: 300;
-    font-size: 2.2em;
+/* Projects Section */
+.projects, .resume, .contact{
+    width: 70%;
+    margin: auto;
+    margin-top: 120px;
 
 }
-.project{
-    margin: 100px auto;
+
+.section-title{
+    margin-bottom: 20px;
 }
 
-.project-title{
-    font-family: 'Noto Sans JP', sans-serif;
-    font-weight: 400; 
-    padding-bottom: 3px;
-    width:60%;
+.project-description{
+    font-size: 1rem;
 }
 
-.project-img{
-    padding-top:100px;
-    width: 400px;
+a.project-name, a.portfolio-box{
+    color: #db30b6 !important;
+    text-decoration: none !important;
 }
 
-.project-tech{
-    font-family: 'Noto Sans JP', sans-serif;
-    font-weight:100;
-    width:50%;
-    font-size:1em;
+a.portfolio-box project-name:hover{
+    cursor:pointer;
 }
 
-.project-code, .github-link{
-    width:50px;
+.container {
+    text-align: left;
 }
 
-.email-link{
-    width: 44px;
-    margin-top: 4px;
+.year-header {
+    font-size: 1em;
+    margin-left: 0;
 }
 
-.posts-link{
-    width:10px;
-    max-width: 15px;
-    height:10px;
+.post-item {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 1.5em;
+    padding: 10px 0;
 }
 
-.about-content{
-    font-family: 'Noto Sans JP', sans-serif;
-    font-weight: 100;
+.post-title {
+    font-weight: bold;
 }
 
-div > .about-content{
-    margin-bottom: 10px;
-    line-height: 2em;
-}
-
-a:hover{
-    text-decoration: none;
+.post-date {
+    color: gray;
+    margin-left: auto;
 }

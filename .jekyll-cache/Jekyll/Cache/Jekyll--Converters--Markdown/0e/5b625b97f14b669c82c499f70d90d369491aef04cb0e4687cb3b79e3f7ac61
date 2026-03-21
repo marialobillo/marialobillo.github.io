@@ -1,0 +1,26 @@
+I"�<p>Recently I’ve implemented a backend API project by FreeCodeCamp, which is url shortener. You can 
+see the project <a href="https://github.com/marialobillo/fcc-urlshortener">here</a></p>
+
+<p>The thing is even when we know Javascript in this case Nodejs is single-threaded we could have ‘Race 
+condition’ happening in your project. The reason for this is because we are using a database to store our data, ( well for this project we were using mongodb and redis ), and the database is not single-threaded. So, we could have several simultaneous requests to our application.</p>
+
+<p>I found two articles about race condition on Nodejs that I found very interesting and I wanted to share with you. One of them is the Luciano Mammino <a href="https://www.nodejsdesignpatterns.com/blog/node-js-race-conditions/">article</a>, which is very well explained, giving us an idea about race condition on nodejs could be posible, picturing the way that 2 transactions could go, a beautiful example about olives and grapes which one solution could be forcing to the second process to wait for the frist one to finish.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// source  -&gt; https://www.nodejsdesignpatterns.com/blog/node-js-race-conditions/</span>
+<span class="k">async</span> <span class="kd">function</span> <span class="nx">main</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">await</span> <span class="nx">sellGrapes</span><span class="p">()</span> <span class="c1">// &lt;- schedule the first transaction and wait for completion</span>
+  <span class="k">await</span> <span class="nx">sellOlives</span><span class="p">()</span> <span class="c1">// &lt;- when it's completed, we start the second transaction </span>
+                     <span class="c1">//    and wait for completion</span>
+  <span class="kd">const</span> <span class="nx">balance</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">loadBalance</span><span class="p">()</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`Final balance: </span><span class="p">${</span><span class="nx">balance</span><span class="p">}</span><span class="s2">`</span><span class="p">)</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>The second one is about a real case described Matilde Duboille <a href="https://blog.theodo.com/2019/09/handle-race-conditions-in-nodejs-using-mutex/">here</a>, talking how she solved a race condition problem using mutex. In the article is defining race condition, and putting us in context about the problem that she was facing.</p>
+
+<p>You can find the code that she used to solve the problem <a href="https://blog.theodo.com/2019/09/handle-race-conditions-in-nodejs-using-mutex/">here</a></p>
+
+<p>I hope you find this articles interesting and useful.</p>
+
+:ET

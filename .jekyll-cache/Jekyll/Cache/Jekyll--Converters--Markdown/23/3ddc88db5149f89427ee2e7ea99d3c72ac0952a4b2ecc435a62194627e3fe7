@@ -1,0 +1,2 @@
+I"/<p>On <a href="https://github.com/marialobillo/stock-trade">stock-trade</a> application I wanted to put all my logs on a file, there is a package, Winston, that make it very easy. So, for install the package, the project was already initialized, just typing this for installing the Winston package:</p>
+:ET

@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shared Packages in Monorepos: The Problem | Maria Lobillo</title>
+    <meta name="description" content="The Hidden Cost of Copy-Paste in Microservices
+" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Typography for blog posts */
+      .prose {
+        max-width: 65ch;
+        color: #e5e7eb;
+      }
+      .prose h1 {
+        font-size: 2.25rem;
+        font-weight: 700;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #f9fafb;
+      }
+      .prose h2 {
+        font-size: 1.875rem;
+        font-weight: 600;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #f9fafb;
+      }
+      .prose h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+        color: #f3f4f6;
+      }
+      .prose p {
+        margin-bottom: 1.25rem;
+        line-height: 1.75;
+      }
+      .prose strong {
+        font-weight: 600;
+        color: #f9fafb;
+      }
+      .prose a {
+        color: #60a5fa;
+        text-decoration: none;
+      }
+      .prose a:hover {
+        text-decoration: underline;
+      }
+      .prose ul, .prose ol {
+        margin: 1.25rem 0;
+        padding-left: 1.5rem;
+      }
+      .prose li {
+        margin-bottom: 0.5rem;
+      }
+      .prose code {
+        background: #1f2937;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-size: 0.875rem;
+        color: #f472b6;
+      }
+      .prose pre {
+        background: #1f2937;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        margin: 1.5rem 0;
+      }
+      .prose pre code {
+        background: transparent;
+        padding: 0;
+        color: #e5e7eb;
+      }
+      .prose blockquote {
+        border-left: 4px solid #3b82f6;
+        padding-left: 1rem;
+        margin: 1.5rem 0;
+        color: #9ca3af;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-900 text-gray-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="border-b border-gray-800">
+      <div class="max-w-4xl mx-auto px-4 py-6">
+        <div class="flex justify-between items-center">
+          <a href="/" class="text-xl font-semibold hover:text-blue-400 transition-colors">
+            Maria Lobillo
+          </a>
+          
+          <div class="hidden sm:flex space-x-6 text-sm">
+            <a href="/" class="hover:text-blue-400 transition-colors">Home</a>
+            <a href="/blog" class="hover:text-blue-400 transition-colors">Blog</a>
+            <a href="/about" class="hover:text-blue-400 transition-colors">About</a>
+          </div>
+
+          <div class="sm:hidden flex space-x-4 text-sm">
+            <a href="/" class="hover:text-blue-400">Home</a>
+            <a href="/blog" class="hover:text-blue-400">Blog</a>
+            <a href="/about" class="hover:text-blue-400">About</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Post Header -->
+    <article class="max-w-4xl mx-auto px-4 py-12">
+      <header class="mb-8 pb-8 border-b border-gray-800">
+        <h1 class="text-4xl sm:text-5xl font-bold mb-4 leading-tight">
+          Shared Packages in Monorepos: The Problem
+        </h1>
+        
+        <div class="flex items-center space-x-4 text-sm text-gray-400">
+          <time datetime="2025-04-12T21:00:00+02:00">
+            April 12, 2025
+          </time>
+          
+          
+          <span>•</span>
+          <div class="flex flex-wrap gap-2">
+            
+          </div>
+          
+        </div>
+      </header>
+
+      <!-- Post Content -->
+      <div class="prose">
+        <h1 id="the-hidden-cost-of-copy-paste-in-microservices">The Hidden Cost of Copy-Paste in Microservices</h1>
+
+<h2 id="the-3-am-production-bug">The 3 AM Production Bug</h2>
+
+<p>It’s 3:42 AM. My phone buzzes with a PagerDuty alert:</p>
+
+<blockquote>
+  <p><strong>CRITICAL: Kafka message delivery failure - 87% error rate</strong></p>
+</blockquote>
+
+<p>I grab my laptop, still half-asleep, and SSH into our production cluster. After 15 minutes of investigation, I find the culprit: a bug in our Kafka event publishing logic. A simple off-by-one error in the retry mechanism.</p>
+
+<p>“Easy fix,” I think. I write the patch in 5 minutes.</p>
+
+<p>Then reality hits me.</p>
+
+<p>This bug exists in <strong>five different microservices</strong>. Each service has its own copy of the Kafka client code, copy-pasted months ago when we were moving fast and “breaking things.”</p>
+
+<p>My “5-minute fix” now requires:</p>
+<ul>
+  <li>Opening 5 separate pull requests</li>
+  <li>Waiting for 5 different code reviews (different team members own each service)</li>
+  <li>Running 5 separate CI pipelines</li>
+  <li>Deploying 5 services independently</li>
+  <li>Monitoring 5 rollouts</li>
+</ul>
+
+<p><strong>Total time: 2.5 days.</strong></p>
+
+<p><strong>Time to actually fix the bug: 5 minutes.</strong></p>
+
+<p>This is the hidden tax of code duplication in microservices. And we’re all paying it.</p>
+
+<hr />
+
+<h2 id="how-we-got-here">How We Got Here</h2>
+
+<p>Six months ago, our team started building RadarKit, a distributed content monitoring platform. We were excited about microservices:</p>
+
+<ul>
+  <li>Independent deployment ✅</li>
+  <li>Technology flexibility ✅</li>
+  <li>Team autonomy ✅</li>
+  <li>Fault isolation ✅</li>
+</ul>
+
+<p>We split our monolith into services:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>radarkit/
+├── auth-service/
+├── sources-service/
+├── scraper-service/
+├── alerts-service/
+└── notification-service/
+</code></pre></div></div>
+
+<p>Everything was great. Until it wasn’t.</p>
+
+<hr />
+
+<h2 id="the-copy-paste-disease">The Copy-Paste Disease</h2>
+
+<p>It started innocently. Our first two services needed to log events. Simple, right?</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// auth-service/src/utils/logger.ts</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">Logger</span> <span class="p">{</span>
+  <span class="nx">log</span><span class="p">(</span><span class="nx">level</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">message</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">meta</span><span class="p">?:</span> <span class="kr">any</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+      <span class="na">timestamp</span><span class="p">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">toISOString</span><span class="p">(),</span>
+      <span class="nx">level</span><span class="p">,</span>
+      <span class="nx">message</span><span class="p">,</span>
+      <span class="na">service</span><span class="p">:</span> <span class="dl">'</span><span class="s1">auth-service</span><span class="dl">'</span><span class="p">,</span>
+      <span class="p">...</span><span class="nx">meta</span>
+    <span class="p">}));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Works perfectly. Then <code class="highlighter-rouge">sources-service</code> needed logging. Rather than setting up a shared package (which seemed like “premature optimization”), we just… copied the file.</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// sources-service/src/utils/logger.ts</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">Logger</span> <span class="p">{</span>
+  <span class="nx">log</span><span class="p">(</span><span class="nx">level</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">message</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">meta</span><span class="p">?:</span> <span class="kr">any</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+      <span class="na">timestamp</span><span class="p">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">toISOString</span><span class="p">(),</span>
+      <span class="nx">level</span><span class="p">,</span>
+      <span class="nx">message</span><span class="p">,</span>
+      <span class="na">service</span><span class="p">:</span> <span class="dl">'</span><span class="s1">sources-service</span><span class="dl">'</span><span class="p">,</span>  <span class="c1">// Just changed the service name</span>
+      <span class="p">...</span><span class="nx">meta</span>
+    <span class="p">}));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Two weeks later, we needed Kafka integration. Same pattern:</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// auth-service/src/kafka/client.ts</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">KafkaClient</span> <span class="p">{</span>
+  <span class="k">async</span> <span class="nx">publish</span><span class="p">(</span><span class="nx">topic</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">message</span><span class="p">:</span> <span class="kr">any</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 150 lines of Kafka connection, retry logic, error handling</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// sources-service/src/kafka/client.ts</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">KafkaClient</span> <span class="p">{</span>
+  <span class="k">async</span> <span class="nx">publish</span><span class="p">(</span><span class="nx">topic</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">message</span><span class="p">:</span> <span class="kr">any</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Same 150 lines, copy-pasted</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// scraper-service/src/kafka/client.ts</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">KafkaClient</span> <span class="p">{</span>
+  <span class="k">async</span> <span class="nx">publish</span><span class="p">(</span><span class="nx">topic</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">message</span><span class="p">:</span> <span class="kr">any</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// You get the idea...</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>By month three, we had:</p>
+<ul>
+  <li><strong>3 copies</strong> of logging code</li>
+  <li><strong>5 copies</strong> of Kafka client</li>
+  <li><strong>4 copies</strong> of validation utilities</li>
+  <li><strong>5 copies</strong> of database helpers</li>
+  <li><strong>Countless copies</strong> of shared types</li>
+</ul>
+
+<hr />
+
+<h2 id="when-reality-caught-up">When Reality Caught Up</h2>
+
+<h3 id="problem-1-the-version-drift">Problem 1: The Version Drift</h3>
+
+<p>Three months in, I noticed something odd. Each service was logging differently:</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// auth-service logs:</span>
+<span class="p">{</span><span class="dl">"</span><span class="s2">timestamp</span><span class="dl">"</span><span class="p">:</span><span class="dl">"</span><span class="s2">2025-01-15T10:00:00Z</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">level</span><span class="dl">"</span><span class="p">:</span><span class="dl">"</span><span class="s2">info</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">message</span><span class="dl">"</span><span class="p">:</span><span class="dl">"</span><span class="s2">User logged in</span><span class="dl">"</span><span class="p">}</span>
+
+<span class="c1">// sources-service logs:</span>
+<span class="p">{</span><span class="dl">"</span><span class="s2">time</span><span class="dl">"</span><span class="p">:</span><span class="dl">"</span><span class="s2">2025-01-15T10:00:00Z</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">severity</span><span class="dl">"</span><span class="p">:</span><span class="dl">"</span><span class="s2">INFO</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">msg</span><span class="dl">"</span><span class="p">:</span><span class="dl">"</span><span class="s2">Source created</span><span class="dl">"</span><span class="p">}</span>
+
+<span class="c1">// scraper-service logs:</span>
+<span class="p">{</span><span class="dl">"</span><span class="s2">@timestamp</span><span class="dl">"</span><span class="p">:</span><span class="dl">"</span><span class="s2">2025-01-15T10:00:00Z</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">log.level</span><span class="dl">"</span><span class="p">:</span><span class="dl">"</span><span class="s2">info</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">event.original</span><span class="dl">"</span><span class="p">:</span><span class="dl">"</span><span class="s2">Scraping started</span><span class="dl">"</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>Why? Because each team had “improved” their copy independently. We now had three different logging formats, making centralized log analysis impossible.</p>
+
+<h3 id="problem-2-the-bug-multiplication">Problem 2: The Bug Multiplication</h3>
+
+<p>Remember that 3 AM bug? Here’s what the original code looked like:</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Buggy retry logic (in 5 services)</span>
+<span class="k">async</span> <span class="nx">publishWithRetry</span><span class="p">(</span><span class="nx">topic</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">message</span><span class="p">:</span> <span class="kr">any</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">maxRetries</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="kd">let</span> <span class="nx">attempt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  
+  <span class="k">while</span> <span class="p">(</span><span class="nx">attempt</span> <span class="o">&lt;</span> <span class="nx">maxRetries</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// 🐛 Bug: should be &lt;=</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">kafka</span><span class="p">.</span><span class="nx">send</span><span class="p">({</span> <span class="nx">topic</span><span class="p">,</span> <span class="na">messages</span><span class="p">:</span> <span class="p">[</span><span class="nx">message</span><span class="p">]</span> <span class="p">});</span>
+      <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">attempt</span><span class="o">++</span><span class="p">;</span>
+      <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">sleep</span><span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="nx">attempt</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  
+  <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Max retries exceeded</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The bug was subtle: <code class="highlighter-rouge">attempt &lt; maxRetries</code> meant we only tried 2 times, not 3.</p>
+
+<p>When I discovered this in <code class="highlighter-rouge">auth-service</code>, I had to search for the same pattern across all services:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git <span class="nb">grep</span> <span class="nt">-n</span> <span class="s2">"attempt &lt; maxRetries"</span> services/
+services/auth-service/src/kafka/client.ts:45:  <span class="k">while</span> <span class="o">(</span>attempt &lt; maxRetries<span class="o">)</span> <span class="o">{</span>
+services/sources-service/src/kafka/client.ts:52:  <span class="k">while</span> <span class="o">(</span>attempt &lt; maxRetries<span class="o">)</span> <span class="o">{</span>
+services/scraper-service/src/kafka/publisher.ts:38:  <span class="k">while</span> <span class="o">(</span>attempt &lt; maxRetries<span class="o">)</span> <span class="o">{</span>
+services/alerts-service/src/events/publisher.ts:41:  <span class="k">while</span> <span class="o">(</span>attempt &lt; maxRetries<span class="o">)</span> <span class="o">{</span>
+services/notification-service/src/kafka/producer.ts:29:  <span class="k">while</span> <span class="o">(</span>attempt &lt; maxRetries<span class="o">)</span> <span class="o">{</span>
+</code></pre></div></div>
+
+<p>Five files. Five PRs. Five reviews. Five deploys.</p>
+
+<h3 id="problem-3-the-feature-inconsistency">Problem 3: The Feature Inconsistency</h3>
+
+<p>We needed to add distributed tracing. The conversation in Slack:</p>
+
+<blockquote>
+  <p><strong>Me:</strong> “Adding trace IDs to Kafka events for distributed tracing”</p>
+
+  <p><strong>Sarah (Backend Dev):</strong> “Oh, I already did that in sources-service last week!”</p>
+
+  <p><strong>Me:</strong> “…it’s not in auth-service”</p>
+
+  <p><strong>Tom (Backend Dev):</strong> “I added it to scraper-service yesterday, different implementation though”</p>
+</blockquote>
+
+<p>We had three different tracing implementations, none compatible with each other. Our tracing tool showed broken traces because services used different correlation ID formats.</p>
+
+<h3 id="problem-4-the-onboarding-nightmare">Problem 4: The Onboarding Nightmare</h3>
+
+<p>New developer joins the team:</p>
+
+<blockquote>
+  <p><strong>New Dev:</strong> “Where’s the standard way to publish Kafka events?”</p>
+
+  <p><strong>Me:</strong> “Well… check auth-service, but actually sources-service has a better implementation, oh wait, scraper-service has the latest retry logic…”</p>
+
+  <p><strong>New Dev:</strong> “So… there’s no standard?”</p>
+
+  <p><strong>Me:</strong> “…not exactly.”</p>
+</blockquote>
+
+<hr />
+
+<h2 id="the-real-cost">The Real Cost</h2>
+
+<p>Let’s put numbers on this:</p>
+
+<h3 id="time-waste">Time Waste</h3>
+
+<p>Over 3 months:</p>
+<ul>
+  <li><strong>47 hours</strong> spent on duplicating fixes across services</li>
+  <li><strong>23 hours</strong> debugging inconsistencies between service implementations</li>
+  <li><strong>18 hours</strong> in meetings discussing “which implementation is the source of truth”</li>
+  <li><strong>12 hours</strong> onboarding new developers on “the patterns” (which weren’t actually consistent)</li>
+</ul>
+
+<p><strong>Total: 100 hours = 2.5 weeks of engineering time</strong></p>
+
+<h3 id="bug-multiplication">Bug Multiplication</h3>
+
+<p>When we audited our codebase:</p>
+<ul>
+  <li><strong>3 critical bugs</strong> existed in multiple services</li>
+  <li><strong>12 minor bugs</strong> had been fixed in some services but not others</li>
+  <li><strong>5 security patches</strong> needed to be applied 5 times</li>
+</ul>
+
+<h3 id="technical-debt">Technical Debt</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cloc services/<span class="k">*</span>/src/kafka/
+<span class="c"># Kafka client implementation</span>
+Auth Service:     312 lines
+Sources Service:  298 lines
+Scraper Service:  334 lines
+Alerts Service:   301 lines
+Notification:     289 lines
+<span class="nt">-----------------------------------</span>
+Total:          1,534 lines
+
+<span class="c"># 80% similar code = ~1,200 lines of pure duplication</span>
+</code></pre></div></div>
+
+<p><strong>1,200 lines of code that should have been 300 lines in one place.</strong></p>
+
+<hr />
+
+<h2 id="the-copy-paste-cascade">The Copy-Paste Cascade</h2>
+
+<p>The worst part? It gets worse over time:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Month 1: "Let's just copy this logger, it's only 50 lines"
+           ↓
+Month 2: "Let's just copy the Kafka client, it's already copied"
+           ↓
+Month 3: "Let's just copy the database helpers, everything else is copied"
+           ↓
+Month 4: "Let's just copy..." 
+</code></pre></div></div>
+
+<p>It becomes the norm. Each copy makes the next copy feel justified. The technical debt compounds.</p>
+
+<hr />
+
+<h2 id="the-breaking-point">The Breaking Point</h2>
+
+<p>The final straw came during a security audit. We discovered a critical vulnerability in our JWT token validation:</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Vulnerable code (in 3 services)</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">verifyToken</span> <span class="o">=</span> <span class="p">(</span><span class="nx">token</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">jwt</span><span class="p">.</span><span class="nx">verify</span><span class="p">(</span><span class="nx">token</span><span class="p">,</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">JWT_SECRET</span><span class="p">);</span>
+  <span class="c1">// 🚨 No algorithm verification - allows "none" algorithm attack</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The fix was simple:</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">const</span> <span class="nx">verifyToken</span> <span class="o">=</span> <span class="p">(</span><span class="nx">token</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">jwt</span><span class="p">.</span><span class="nx">verify</span><span class="p">(</span><span class="nx">token</span><span class="p">,</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">JWT_SECRET</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">algorithms</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">HS256</span><span class="dl">'</span><span class="p">]</span>  <span class="c1">// Explicitly specify allowed algorithms</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>But we had to:</p>
+<ol>
+  <li>Fix it in auth-service</li>
+  <li>Fix it in sources-service</li>
+  <li>Fix it in alerts-service</li>
+  <li>Deploy all three within a tight window</li>
+  <li>Hope we didn’t miss it in another service</li>
+</ol>
+
+<p><strong>A one-line security fix became a multi-day, high-stakes deployment.</strong></p>
+
+<p>That’s when we knew we had to change something fundamental.</p>
+
+<hr />
+
+<h2 id="the-hidden-questions">The Hidden Questions</h2>
+
+<p>After this incident, I started asking myself:</p>
+
+<ul>
+  <li>Why are we copy-pasting code in microservices when we spent years learning DRY in monoliths?</li>
+  <li>How do companies like Google, Netflix, and Uber manage thousands of microservices without this problem?</li>
+  <li>Is there a way to share code without losing the benefits of microservices?</li>
+</ul>
+
+<p>The answer surprised me. <strong>Yes, there is a better way.</strong></p>
+
+<p>Companies like Google don’t have this problem because they use <strong>shared packages</strong>. Not shared libraries that couple services together. Not going back to a monolith. But properly designed, versioned, shared packages in a monorepo.</p>
+
+<hr />
+
+<h2 id="whats-coming-next">What’s Coming Next</h2>
+
+<p>In the next post, I’ll show you:</p>
+
+<ul>
+  <li>How we restructured RadarKit to use shared packages</li>
+  <li>The exact setup that eliminated 80% of our code duplication</li>
+  <li>How we now deploy fixes to all services in minutes, not days</li>
+  <li>The monorepo pattern that keeps microservices independent while sharing code</li>
+</ul>
+
+<p>We went from:</p>
+<ul>
+  <li><strong>5 PRs per bug fix</strong> → <strong>1 PR</strong></li>
+  <li><strong>2-3 days per infrastructure change</strong> → <strong>30 minutes</strong></li>
+  <li><strong>Inconsistent behavior</strong> → <strong>Guaranteed consistency</strong></li>
+  <li><strong>Onboarding confusion</strong> → <strong>Clear patterns</strong></li>
+</ul>
+
+<p>All while keeping our microservices <strong>completely independent</strong> in production.</p>
+
+<hr />
+
+<h2 id="your-turn">Your Turn</h2>
+
+<p>Have you experienced the copy-paste cascade in your microservices? How many copies of your logging code exist right now?</p>
+
+<p>Count them:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Try this in your codebase</span>
+git <span class="nb">grep</span> <span class="nt">-l</span> <span class="s2">"class Logger"</span> services/
+</code></pre></div></div>
+
+<p>Drop the number in the comments. I bet it’s more than you think.</p>
+
+<p><strong>Next post:</strong> “The Solution - How to Build Shared Packages That Don’t Suck”</p>
+
+<hr />
+
+<p><em>This is Part 1 of a 3-part series on building maintainable microservices. I’m María, Senior Backend Developer building RadarKit, a distributed content monitoring platform. Follow along as we solve real problems with real solutions.</em></p>
+
+<p><strong>Series:</strong></p>
+<ul>
+  <li>Part 1: The Problem (you are here)</li>
+  <li>Part 2: The Solution - Coming next week</li>
+  <li>Part 3: Best Practices - Coming soon</li>
+</ul>
+
+<hr />
+
+<p><em>Found this helpful? Follow me on [Twitter/LinkedIn] for more posts on distributed systems, microservices, and lessons learned building production systems.</em></p>
+
+      </div>
+
+      <!-- Post Footer -->
+      <footer class="mt-12 pt-8 border-t border-gray-800">
+        <div class="flex justify-between items-center">
+          <a href="/blog" class="text-blue-400 hover:underline text-sm">
+            ← Back to Blog
+          </a>
+          
+          <div class="flex space-x-4 text-sm">
+            <a href="https://www.linkedin.com/in/maria-lobillo/" 
+               class="text-gray-400 hover:text-blue-400 transition-colors"
+               target="_blank" 
+               rel="noopener">
+              Share on LinkedIn
+            </a>
+            <a href="https://github.com/marialobillo" 
+               class="text-gray-400 hover:text-blue-400 transition-colors"
+               target="_blank" 
+               rel="noopener">
+              GitHub
+            </a>
+          </div>
+        </div>
+      </footer>
+    </article>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 mt-20">
+      <div class="max-w-4xl mx-auto px-4 py-8 text-center text-sm text-gray-500">
+        <p>© 2026 Maria Lobillo. Senior Software Engineer.</p>
+      </div>
+    </footer>
+  </body>
+</html>

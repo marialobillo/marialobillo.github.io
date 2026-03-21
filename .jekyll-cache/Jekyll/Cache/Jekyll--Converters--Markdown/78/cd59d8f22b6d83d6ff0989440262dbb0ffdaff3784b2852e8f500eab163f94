@@ -1,0 +1,174 @@
+I"s,<p>When you’re starting a new backend project, one of the first questions you face is: <strong>monolith or microservices?</strong> It’s tempting to reach for the latest patterns, but the right answer depends entirely on your constraints.</p>
+
+<p>Recently, I had to make this decision for a competitive intelligence platform that monitors signals from competitors—pricing changes, product releases, job postings, API updates, and more. Here’s how we navigated the decision, what we chose, and why.</p>
+
+<h2 id="the-project-context">The Project Context</h2>
+
+<p>The platform needs to:</p>
+<ul>
+  <li>Monitor 9+ different types of signals from various sources (web scraping, APIs, feeds)</li>
+  <li>Process them asynchronously and send notifications</li>
+  <li>Scale incrementally as we add more signal types</li>
+  <li>Support a small team initially (2-3 devs), growing to 5+ soon</li>
+</ul>
+
+<p><strong>The challenge:</strong> We needed to ship features quickly while building something maintainable and scalable. The team would grow, and we couldn’t afford to accumulate tech debt that would slow us down in 6 months.</p>
+
+<h2 id="the-architectural-question">The Architectural Question</h2>
+
+<p>Starting fresh gives you options—too many options, sometimes. We had three paths:</p>
+
+<ol>
+  <li><strong>Microservices from day one</strong></li>
+  <li><strong>Simple monolithic API</strong> (Express + PostgreSQL)</li>
+  <li><strong>Modular monolith</strong> with clear boundaries</li>
+</ol>
+
+<p>Each had merit. None was obviously “correct.”</p>
+
+<h2 id="option-1-microservices-from-day-one">Option 1: Microservices from Day One</h2>
+
+<p><strong>The case for it:</strong></p>
+<ul>
+  <li>Each signal type (pricing, releases, jobs, etc.) could be its own service</li>
+  <li>Independent scaling: CPU-heavy scraping services separate from I/O-bound APIs</li>
+  <li>Clear team ownership as we grow</li>
+  <li>Modern, “the way it’s done”</li>
+</ul>
+
+<p><strong>Why we didn’t choose it:</strong></p>
+<ul>
+  <li><strong>Operational overhead is real.</strong> You need service discovery, API gateways, distributed tracing, separate deployments. With a 2-person team initially, this eats development time.</li>
+  <li><strong>Premature boundaries.</strong> We’re still learning the domain. Microservices force you to commit to boundaries early—get them wrong and you’re doing cross-service calls constantly.</li>
+  <li><strong>Overkill for MVP.</strong> We need to validate product-market fit first, not prove we can orchestrate 15 services.</li>
+</ul>
+
+<p><strong>The lesson here:</strong> Microservices solve problems you don’t have yet. When you have them, you’ll know.</p>
+
+<h2 id="option-2-simple-express-monolith">Option 2: Simple Express Monolith</h2>
+
+<p><strong>The case for it:</strong></p>
+<ul>
+  <li><strong>Ship fast.</strong> No architectural overhead, just start coding.</li>
+  <li>Minimal infrastructure: one server, one database.</li>
+  <li>Easy debugging: everything’s in one place.</li>
+</ul>
+
+<p><strong>Why we didn’t choose it:</strong></p>
+<ul>
+  <li><strong>Boundaries erode fast.</strong> Without structure, you end up with tangled dependencies. “Just one quick import” turns into spaghetti.</li>
+  <li><strong>Hard to extract later.</strong> When you do need to scale a specific module, you’re doing surgery on a codebase with no clear seams.</li>
+  <li><strong>Team coordination becomes painful.</strong> As the team grows, everyone’s touching the same files.</li>
+</ul>
+
+<p><strong>The lesson:</strong> Fast now, slow later. We’d be refactoring in 6 months when we should be shipping features.</p>
+
+<h2 id="what-we-chose-modular-monolith-with-ddd-lite">What We Chose: Modular Monolith with DDD-Lite</h2>
+
+<p>We went with a <strong>modular monolith</strong>—a single deployable application, but organized into isolated modules (bounded contexts in DDD terms) that communicate through events.</p>
+
+<p><strong>Why this made sense:</strong></p>
+
+<h3 id="1-single-deployment-clear-boundaries">1. Single Deployment, Clear Boundaries</h3>
+<p>We get the operational simplicity of a monolith (one deploy, one server, one log stream) with the organizational benefits of microservices (modules own their domain, communicate via contracts).</p>
+
+<h3 id="2-event-driven-from-the-start">2. Event-Driven from the Start</h3>
+<p>Even though all modules are in the same process, they communicate through Kafka events. When the <code class="highlighter-rouge">monitoring</code> module detects a pricing change, it publishes a <code class="highlighter-rouge">PricingChangedEvent</code>. The <code class="highlighter-rouge">notifications</code> module subscribes and sends alerts.</p>
+
+<p><strong>Why Kafka in a monolith?</strong> Two reasons:</p>
+<ul>
+  <li><strong>Decoupling:</strong> Modules don’t call each other directly. This keeps boundaries clean and makes extraction trivial later.</li>
+  <li><strong>Async by default:</strong> Long-running tasks (scraping, notifications) don’t block request handlers.</li>
+</ul>
+
+<h3 id="3-extractable-by-design">3. Extractable by Design</h3>
+<p>When we eventually need to scale the scraping module independently (it’s CPU-bound), we can extract it to a separate service with zero changes to the event contracts. The rest of the system won’t even notice.</p>
+
+<h3 id="4-team-friendly">4. Team-Friendly</h3>
+<p>As the team grows, devs can own entire bounded contexts without stepping on each other’s toes. Clear module boundaries = fewer merge conflicts, clearer PRs.</p>
+
+<h2 id="the-structure">The Structure</h2>
+
+<p>The codebase is organized around bounded contexts—each representing a distinct area of the domain:</p>
+
+<ul>
+  <li><strong>Monitoring:</strong> Detects competitor signals (pricing, releases, jobs, etc.)</li>
+  <li><strong>Notifications:</strong> Handles alerting via email, Slack, webhooks</li>
+  <li><strong>Competitors:</strong> Manages competitor data and sources</li>
+</ul>
+
+<p>Each context follows a layered architecture: domain logic, application use cases, infrastructure adapters. Modules communicate exclusively through domain events published to Kafka—no direct function calls across boundaries.</p>
+
+<p>This structure means we can reason about each module independently. When you’re working on the pricing detector, you don’t need to understand how notifications work. You just publish a <code class="highlighter-rouge">PricingChangedEvent</code> and move on.</p>
+
+<h2 id="implementation-decisions">Implementation Decisions</h2>
+
+<p>Beyond the high-level architecture, a few specific choices shaped how we work:</p>
+
+<p><strong>Shared domain patterns.</strong> We built base classes for common patterns—<code class="highlighter-rouge">DomainEvent</code> for all events, <code class="highlighter-rouge">Entity</code> for domain objects with identity, <code class="highlighter-rouge">Result</code> for explicit error handling. This enforces consistency: every module speaks the same language.</p>
+
+<p>Initially, this felt like over-engineering. But it’s paid off: code reviews are easier, new team members onboard faster, and refactoring is safer because contracts are explicit.</p>
+
+<p><strong>Event-first communication.</strong> Modules publish domain events to Kafka rather than calling each other’s functions. This felt heavyweight at first—”why not just call the notification service?”—but it’s made the codebase more resilient. If the notifications module is slow or crashes, it doesn’t block signal detection. Events queue up and get processed when the service recovers.</p>
+
+<p><strong>Local development with Docker.</strong> We use Docker Compose so new developers can run <code class="highlighter-rouge">docker-compose up</code> and have PostgreSQL and Kafka running locally. No “works on my machine” issues, no manual installation steps.</p>
+
+<h2 id="trade-offs-we-accepted">Trade-offs We Accepted</h2>
+
+<p>Every decision has costs. Here’s what we’re living with:</p>
+
+<p><strong>1. More boilerplate than raw Express</strong><br />
+NestJS is opinionated. You write more files (module, controller, service, repository) than you would with Express routes. But this structure pays off as the codebase grows.</p>
+
+<p><strong>2. Kafka adds infrastructure complexity</strong><br />
+Running Kafka locally is heavier than “just use function calls.” But the decoupling and async-first design are worth it.</p>
+
+<p><strong>3. Discipline required</strong><br />
+Maintaining module boundaries takes effort. Without code reviews that enforce “no cross-module imports,” the architecture degrades. We need to stay vigilant.</p>
+
+<p><strong>4. Not optimized for heavy CPU workloads yet</strong><br />
+If scraping becomes a bottleneck, we’ll need to extract it. But we’ll cross that bridge when we have the data to justify it.</p>
+
+<h2 id="reflection-would-i-make-the-same-decision-again">Reflection: Would I Make the Same Decision Again?</h2>
+
+<p><strong>Yes, given the same constraints.</strong></p>
+
+<p>If we had:</p>
+<ul>
+  <li>A 10-person team from day one → Maybe microservices</li>
+  <li>Simple CRUD with no async processing → Maybe simpler monolith</li>
+  <li>A team experienced with distributed systems → Maybe microservices</li>
+</ul>
+
+<p>But with a small team, rapid feature development needs, and domain we’re still learning, <strong>modular monolith was the pragmatic choice.</strong></p>
+
+<h2 id="what-surprised-me">What Surprised Me</h2>
+
+<p><strong>The value of shared domain patterns.</strong> I initially thought <code class="highlighter-rouge">DomainEvent</code>, <code class="highlighter-rouge">Entity</code>, <code class="highlighter-rouge">Result</code> were over-engineering. But they’ve enforced consistency across all modules and made code reviews easier. Everyone speaks the same language.</p>
+
+<p><strong>How easy Docker Compose makes onboarding.</strong> Seeing new devs run <code class="highlighter-rouge">npm run docker:up</code> and have a working environment in 2 minutes is worth the upfront setup.</p>
+
+<h2 id="what-id-change">What I’d Change</h2>
+
+<p><strong>Start with fewer signals.</strong> We planned for 9 signals from the start. In hindsight, implementing 2-3 end-to-end first would’ve validated the architecture faster and reduced scope.</p>
+
+<p><strong>More upfront schema design.</strong> We’re iterating on database schemas as we go. Some upfront design sessions would’ve saved refactor time.</p>
+
+<h2 id="key-lesson">Key Lesson</h2>
+
+<p><strong>Architecture decisions should serve your constraints, not textbook ideals.</strong></p>
+
+<p>There’s no “best” architecture—only trade-offs. Microservices aren’t inherently better than monoliths. DDD isn’t always the answer. The right choice depends on:</p>
+<ul>
+  <li>Team size and experience</li>
+  <li>Time to market pressure</li>
+  <li>Domain complexity</li>
+  <li>Operational maturity</li>
+</ul>
+
+<p>Start with the simplest thing that could work, but build in seams so you can evolve. A well-structured monolith beats a poorly executed microservices architecture every time.</p>
+
+<hr />
+
+<p><strong>Building something similar? I’d love to hear how you approached the architecture decision.</strong> Connect with me on <a href="https://www.linkedin.com/in/maria-lobillo/">LinkedIn</a>.</p>
+:ET

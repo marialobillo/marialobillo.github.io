@@ -1,0 +1,2 @@
+I"P<p>It was my fault, I was trying to connect my backend and my frontend Stock trade app, and It wasn’t working. When you try to deploy your app to Heroku there are some changes that you need to do. Everything looked perfect, no errors on my Heroku logs, but my Frontend was pointing out a different url, something on my localhost.</p>
+:ET
