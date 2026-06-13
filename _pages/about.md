@@ -30,9 +30,9 @@ permalink: /about/
       <div class="bg-gray-800 p-6 rounded-lg">
         <h3 class="text-lg font-semibold mb-3 text-blue-400">Primary Stack</h3>
         <ul class="space-y-2 text-gray-300">
-          <li>• JavaScript/TypeScript</li>
-          <li>• Node.js, NestJS, Express</li>
-          <li>• React.js, Next.js</li>
+          <li>• Python, Javascript/Typescript</li>
+          <li>• Node.js, NestJS, Express, FastAPI</li>
+          <li>• React, Nextjs</li>
         </ul>
       </div>
 
@@ -62,7 +62,6 @@ permalink: /about/
       <div class="bg-gray-800 p-6 rounded-lg border-2 border-blue-500/30">
         <h3 class="text-lg font-semibold mb-3 text-blue-400">Currently Learning</h3>
         <ul class="space-y-2 text-gray-300">
-          <li>• Python & Go</li>
           <li>• Advanced Kafka patterns</li>
           <li>• System Design at scale</li>
         </ul>
