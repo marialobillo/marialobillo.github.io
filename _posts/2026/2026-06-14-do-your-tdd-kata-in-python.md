@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Do your TDD Kata in Python"
-date: 2026-01-07
+date: 2026-06-14
 categories: [testing, tdd, python]
 tags: [testing, tdd, kata, python, summer, sunday, self-growing]
 ---
