@@ -90,6 +90,25 @@
         font-style: italic;
       }
     </style>
+    <script>
+      document.addEventListener('click', function (e) {
+        var img = e.target.closest('.prose img');
+        if (!img) return;
+        var overlay = document.createElement('div');
+        overlay.className = 'lightbox-overlay';
+        var big = document.createElement('img');
+        big.src = img.src; big.alt = img.alt;
+        overlay.appendChild(big);
+        overlay.addEventListener('click', function () { overlay.remove(); });
+        document.body.appendChild(overlay);
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          var o = document.querySelector('.lightbox-overlay');
+          if (o) o.remove();
+        }
+      });
+    </script>
   </head>
   <body class="bg-gray-900 text-gray-100 min-h-screen">
     <!-- Navigation -->
