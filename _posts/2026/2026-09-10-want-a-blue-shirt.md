@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "I want a blue shirt in size M, to the cart using Agent"
-date: 2026-06-14
+date: 2026-09-10
 categories: [testing, tdd, python]
 tags: [ai-agent, llm, python, cart, rag, tool-calling, fastapi, ai]
 ---
