@@ -22,7 +22,7 @@ Two instances. I start a second consumer, same group, nothing else changed. A co
 ![Two consumers, Kafka splits the partitions](/images/posts/two-instances.png)
 *Two consumers, same group. Kafka splits the partitions on its own: 0, 2, 4 to one, 1, 3, 5 to the other.*
 
-<!-- <img src="{{site.baseurl}}/images/posts/resources-users.png" alt="user resources" /> -->
+<img src="{{site.baseurl}}/images/posts/two-instances.png" alt="user resources" />
 
 Kill one. I ctrl+C one of them. For a second or two nobody is reading those three partitions. Then rpk shows the survivor holding all 6 again, lag back to 0. No message lost. That’s the failover, also for free.
 
