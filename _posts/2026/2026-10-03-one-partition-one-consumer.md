@@ -19,12 +19,14 @@ One instance. I start one consumer. rpk group describe calc shows it owns all 6 
 
 Two instances. I start a second consumer, same group, nothing else changed. A couple of seconds later rpk shows two members: one has partitions 0, 2, 4, the other 1, 3, 5. I didn’t write a single line of code to split anything. Kafka did it. That’s the part the sentence never makes you feel: the split is automatic.
 
-![Two consumers, Kafka splits the partitions](/images/posts/rebalance-two-members.png)
+![Two consumers, Kafka splits the partitions](/images/posts/two-instances.png)
 *Two consumers, same group. Kafka splits the partitions on its own: 0, 2, 4 to one, 1, 3, 5 to the other.*
+
+<!-- <img src="{{site.baseurl}}/images/posts/resources-users.png" alt="user resources" /> -->
 
 Kill one. I ctrl+C one of them. For a second or two nobody is reading those three partitions. Then rpk shows the survivor holding all 6 again, lag back to 0. No message lost. That’s the failover, also for free.
 
-![One consumer took all six partitions back](/images/posts/rebalance-one-member.png)
+![One consumer took all six partitions back](/images/posts/kill-one-instance.png)
 *One consumer left. It took all 6 partitions back, lag still 0. Nothing lost.*
 
 ## Why this matters:
