@@ -1,10 +1,43 @@
-I"a<div class="clearfix"></div>
+I".#<div class="clearfix"></div>
 <div class="row">
     <br />
     <div class="jumbotron">
         <h2 class="display-3">Posts</h2>
     
        <div>
+        
+            
+            
+                <p id="yOctober 2026">October 2026</p>
+                 
+            
+                <p>
+                    <a href="/2026-10-03/one-partition-one-consumer">
+                        One partition, one consumer: watching Kafka share the work
+                    </a>
+                </p>
+        
+            
+            
+                <p id="ySeptember 2026">September 2026</p>
+                 
+            
+                <p>
+                    <a href="/2026-09-10/want-a-blue-shirt">
+                        I want a blue shirt in size M, to the cart using Agent
+                    </a>
+                </p>
+        
+            
+            
+                <p id="yJune 2026">June 2026</p>
+                 
+            
+                <p>
+                    <a href="/2026-06-14/do-your-tdd-kata-in-python">
+                        Do your TDD Kata in Python
+                    </a>
+                </p>
         
             
             
