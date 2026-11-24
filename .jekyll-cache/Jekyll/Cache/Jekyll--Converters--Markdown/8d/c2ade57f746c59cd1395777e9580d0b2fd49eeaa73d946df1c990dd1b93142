@@ -1,0 +1,10 @@
+I"ù<div class="max-w-3xl">
+  <!-- Header -->
+  <div class="mb-12">
+    <h1 class="text-4xl font-bold mb-4">About Me</h1>
+    <p>Senior backend engineer with 10 years of experience, mostly with Node.js and TypeScript. I've worked on a real-money iGaming platform and on early-stage products in e-commerce, AI and media.</p> <p>I like the parts of a system that must not fail: queues, retries, anything that touches money. That's why I'm spending this time on Go, Kafka and payments.
+    </p>
+  </div>
+
+</div>
+:ET

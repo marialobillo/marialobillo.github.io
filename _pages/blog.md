@@ -4,10 +4,6 @@ title: Blog
 permalink: /blog/
 ---
 
-<div class="space-y-2 mb-8">
-  <h1 class="text-4xl font-bold">Technical Blog</h1>
-  <p class="text-gray-400 text-lg">Writing about software architecture, backend systems, and building scalable applications.</p>
-</div>
 
 <div class="border-t border-gray-800 pt-8"></div>
 
@@ -21,15 +17,9 @@ permalink: /blog/
   </h2>
   <div class="text-sm text-gray-500 mb-3">
     {{ post.date | date: "%B %d, %Y" }}
-    {% if post.tags %}
-      <span class="mx-2">•</span>
-      {% for tag in post.tags %}
-        <span class="text-blue-400">#{{ tag }}</span>{% unless forloop.last %} {% endunless %}
-      {% endfor %}
-    {% endif %}
   </div>
-  <p class="text-gray-400 mb-3">{{ post.excerpt | strip_html | truncatewords: 40 }}</p>
-  <a href="{{ post.url }}" class="text-blue-400 hover:underline text-sm inline-block">Read more →</a>
+  <p class="text-gray-400 mb-3">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
+  
 </article>
 {% endfor %}
 </div>

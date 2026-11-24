@@ -1,48 +1,46 @@
 ---
 layout: default
-title: Home
+title: Blog
 permalink: /
 ---
 
-<div class="flex flex-col items-center space-y-6 text-center">
-  <!-- Profile Picture -->
-  <img src="/images/picture.jpg" alt="Maria Lobillo" class="rounded-full w-32 h-32 object-cover shadow-lg" />
-  
-  <h1 class="text-4xl font-bold">Hi there 👋</h1>
-  
-  <div class="max-w-2xl space-y-5 text-lg">
-    <p>
-      <strong>Senior Software Engineer</strong> with 9+ years of experience building scalable web applications and distributed systems. 
-      Expert in JavaScript, TypeScript, Node.js, and React.js.
-    </p>
-    
-    <p>
-      🛠️ I've spent the last few years shipping production-ready code across the stack, working closely with product and 
-      design teams. Currently focused on backend architecture, event-driven systems, and building platforms that scale.
-    </p>
 
-    <p>
-      One key achievement: re-architected an event-driven service using Redis and RabbitMQ for one of the largest 
-      iGaming platforms (10,000+ daily users), achieving <strong>99.999% availability</strong> in line with SLA targets.
-    </p>
-    
-    <p class="text-blue-400 italic text-xl">"Code should tell a story."</p>
-    
-    <div class="text-left space-y-2 text-base bg-gray-800 p-6 rounded-lg">
-      <p>💻 <strong>Languages:</strong> JavaScript, TypeScript, Python</p>
-      <p>🔧 <strong>Stack:</strong> Node.js, React, Next.js, NestJS, Expressjs</p>
-      <p>☁️ <strong>Cloud & Tools:</strong> AWS, Docker, CI/CD, Git</p>
-      <p>🏗️ <strong>Focus:</strong> Microservices, Event-Driven Architecture, DDD, Clean Code</p>
-      <p>📊 <strong>Methodologies:</strong> Agile, SCRUM, TDD</p>
-    </div>
+<div class="border-t border-gray-800 pt-8"></div>
+
+<div class="space-y-12 mt-8">
+{% for post in site.posts limit:10 %}
+<article class="pb-8 border-b border-gray-800 last:border-0">
+  <h2 class="text-2xl font-semibold mb-2">
+    <a href="{{ post.url }}" class="hover:text-blue-400 transition-colors">
+      {{ post.title }}
+    </a>
+  </h2>
+  <div class="text-sm text-gray-500 mb-3">
+    {{ post.date | date: "%B %d, %Y" }}
   </div>
+  <p class="text-gray-400 mb-3">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
   
-  <div class="pt-6 flex space-x-4">
-    <a href="/blog" class="inline-block px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors">
-      Read My Blog →
-    </a>
-    <a href="/about" class="inline-block px-6 py-3 border border-gray-700 hover:border-blue-400 rounded-lg transition-colors">
-      About Me
-    </a>
+</article>
+{% endfor %}
+</div>
+
+<div class="border-t border-gray-800 mt-12 pt-12">
+  <h2 class="text-2xl font-semibold mb-6">Archive by Year</h2>
+  
+  {% assign postsByYear = site.posts | group_by_exp: "post", "post.date | date: '%Y'" | sort: "name" | reverse %}
+  {% for year in postsByYear %}
+  <div class="mb-8">
+    <h3 class="text-xl font-semibold mb-3 text-blue-400">{{ year.name }}</h3>
+    <ul class="space-y-2 text-gray-400">
+    {% for post in year.items %}
+      <li class="flex justify-between items-baseline">
+        <a href="{{ post.url }}" class="hover:text-blue-400 transition-colors">
+          {{ post.title }}
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">{{ post.date | date: "%b %d" }}</span>
+      </li>
+    {% endfor %}
+    </ul>
   </div>
+  {% endfor %}
 </div>

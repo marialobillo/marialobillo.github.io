@@ -1,2 +1,0 @@
-I"£<p>Iâ€™ve been refactoring my old project <a href="https://github.com/marialobillo/stock-trade">stock-trade</a> ( this is the 2nd time refactoring this project ) the first version of the project was written in Javascript, and using Postgresql as database. For the second version I decided to use a better structure (lib and resources folders), and I also decided to use mongodb as database, that was a huge change.</p>
-:ET
