@@ -1,0 +1,180 @@
+/* Personal site: warm sand palette, system sans for text, Paper Mono for
+   labels, dates and navigation. Light/dark automatic. */
+
+:root {
+  color-scheme: light dark;
+
+  /* Palette "arena" (sand + terracotta). Format: light-dark(light, dark) */
+  --bg: light-dark(#f0f3e0, #181b12);
+  --text: light-dark(#252a1b, #e8edd6);
+  --muted: light-dark(#5e6547, #a5ad8c);
+  --accent: light-dark(#55761c, #b9d66e);
+  --line: light-dark(#dde3c6, #2c3122);
+  --code-bg: light-dark(#e7ecd2, #20241a);;
+
+  /* Layout and type: change these to resize the whole site */
+  --page-width: 52rem;   /* overall column */
+  --text-width: 40rem;   /* paragraphs, so lines stay readable */
+  --font-size: 1.1875rem;
+
+  --mono: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* Other palettes to try: replace the six color lines above with one of these.
+
+   rosa (blush pink + raspberry)
+   --bg: light-dark(#f7e9e6, #1e1517);  --text: light-dark(#2d1f22, #f1e0e0);
+   --muted: light-dark(#745a5e, #b39a9d);  --accent: light-dark(#a8404f, #ee8f9e);
+   --line: light-dark(#e8d2cf, #36292c);  --code-bg: light-dark(#f0dcd8, #271c1e);
+
+   pistacho (soft pistachio + olive green)
+   --bg: light-dark(#f0f3e0, #181b12);  --text: light-dark(#252a1b, #e8edd6);
+   --muted: light-dark(#5e6547, #a5ad8c);  --accent: light-dark(#55761c, #b9d66e);
+   --line: light-dark(#dde3c6, #2c3122);  --code-bg: light-dark(#e7ecd2, #20241a);
+
+   naranja (apricot + burnt orange)
+   --bg: light-dark(#faeedd, #1c1510);  --text: light-dark(#2e2218, #f3e5d1);
+   --muted: light-dark(#745c3f, #b09a7c);  --accent: light-dark(#ad480d, #f2a266);
+   --line: light-dark(#ecdcc2, #352a1f);  --code-bg: light-dark(#f2e3cc, #261d15);
+*/
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { background: var(--bg); color: var(--text); }
+
+body {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+  font: var(--font-size)/1.7 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+body > main { flex: 1; }
+
+::selection { background: var(--accent); color: var(--bg); }
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+a:hover { color: var(--accent); text-decoration-thickness: 2px; }
+
+/* Header */
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: .5rem 1rem;
+  padding-bottom: 5rem;
+}
+.site-name { font-weight: 500; text-decoration: none; }
+.site-name:hover { color: var(--text); }
+.site-nav {
+  display: flex;
+  gap: 1.75rem;
+  font-family: var(--mono);
+  font-size: .8125rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.site-nav a { color: var(--muted); text-decoration: none; }
+.site-nav a:hover { color: var(--accent); }
+.site-nav a[aria-current] { color: var(--text); }
+
+/* Headings and text */
+h1, h2, h3 { line-height: 1.25; font-weight: 500; margin: 2.5rem 0 .875rem; }
+h1 { font-size: 2rem; margin-top: 0; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+p, ul, ol, pre, blockquote, table { margin: 0 0 1.5rem; }
+p, ul, ol, blockquote { max-width: var(--text-width); }
+
+.hero {
+  max-width: 46rem;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.15;
+  font-weight: 500;
+  letter-spacing: -.015em;
+  margin: 0 0 4rem;
+}
+.section { margin-top: 4rem; }
+.label {
+  font-family: var(--mono);
+  font-size: .8125rem;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 1.25rem;
+}
+.muted { color: var(--muted); }
+
+/* Term / description rows (Now) and post list (Writing) share one grid */
+.terms, .post-list { list-style: none; padding: 0; margin: 0 0 1.5rem; max-width: none; }
+.terms li, .post-list li { display: flex; gap: 2rem; padding: .4rem 0; }
+.terms .term,
+.post-list time {
+  flex: 0 0 8rem;
+  font-family: var(--mono);
+  font-size: .9375rem;
+}
+.terms .term { font-weight: 500; }
+.terms .desc { color: var(--muted); }
+.post-list time { color: var(--muted); }
+.post-list a { text-decoration: none; }   /* titles never underlined; hover only changes color */
+
+/* Inside posts */
+code {
+  font-family: var(--mono);
+  font-size: .9em;
+  background: var(--code-bg);
+  padding: .1em .35em;
+  border-radius: 4px;
+}
+pre {
+  background: var(--code-bg);
+  padding: 1.25rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  line-height: 1.55;
+}
+pre code { background: none; padding: 0; font-size: .9rem; }
+img { max-width: 100%; height: auto; }
+blockquote {
+  margin-left: 0;
+  padding-left: 1.25rem;
+  border-left: 2px solid var(--accent);
+  color: var(--muted);
+}
+table { border-collapse: collapse; display: block; overflow-x: auto; }
+th, td { border-bottom: 1px solid var(--line); padding: .5rem .875rem; text-align: left; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
+
+/* Footer */
+.site-footer {
+  margin-top: 6rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: .5rem 1.5rem;
+  font-family: var(--mono);
+  font-size: .8125rem;
+  color: var(--muted);
+}
+.site-footer nav { display: flex; gap: 1.5rem; }
+.site-footer a { color: inherit; text-decoration: none; }
+.site-footer a:hover { color: var(--accent); }
+
+@media (max-width: 40rem) {
+  body { padding: 1.5rem 1.25rem; }
+  .terms li, .post-list li { flex-direction: column; gap: 0; }
+}

@@ -1,0 +1,427 @@
+I".><div class="space-y-2 mb-8">
+  <h1 class="text-4xl font-bold">Technical Blog</h1>
+  <p class="text-gray-400 text-lg">Writing about software architecture, backend systems, and building scalable applications.</p>
+</div>
+
+<div class="border-t border-gray-800 pt-8"></div>
+
+<div class="space-y-12 mt-8">
+
+<article class="pb-8 border-b border-gray-800 last:border-0">
+  <h2 class="text-2xl font-semibold mb-2">
+    <a href="/2026-10-03/one-partition-one-consumer" class="hover:text-blue-400 transition-colors">
+      One partition, one consumer: watching Kafka share the work
+    </a>
+  </h2>
+  <div class="text-sm text-gray-500 mb-3">
+    October 03, 2026
+    
+  </div>
+  <p class="text-gray-400 mb-3">One partition, one consumer: watching Kafka share the work
+</p>
+  
+</article>
+
+<article class="pb-8 border-b border-gray-800 last:border-0">
+  <h2 class="text-2xl font-semibold mb-2">
+    <a href="/2026-09-10/want-a-blue-shirt" class="hover:text-blue-400 transition-colors">
+      I want a blue shirt in size M, to the cart using Agent
+    </a>
+  </h2>
+  <div class="text-sm text-gray-500 mb-3">
+    September 10, 2026
+    
+  </div>
+  <p class="text-gray-400 mb-3">From “I want a blue shirt in size M” to a real order line
+</p>
+  
+</article>
+
+<article class="pb-8 border-b border-gray-800 last:border-0">
+  <h2 class="text-2xl font-semibold mb-2">
+    <a href="/2026-06-14/do-your-tdd-kata-in-python" class="hover:text-blue-400 transition-colors">
+      Do your TDD Kata in Python
+    </a>
+  </h2>
+  <div class="text-sm text-gray-500 mb-3">
+    June 14, 2026
+    
+  </div>
+  <p class="text-gray-400 mb-3">It is a sunday in June, the fresh air is dancing through the house. That particular moment of the day that everything is calm and easy, and you feel in peace, and you could feel just in love with the...</p>
+  
+</article>
+
+<article class="pb-8 border-b border-gray-800 last:border-0">
+  <h2 class="text-2xl font-semibold mb-2">
+    <a href="/2026-01-07/jwt-refresh-tokens-redis-blacklist-nestjs" class="hover:text-blue-400 transition-colors">
+      JWT Refresh Tokens with Redis Blacklist in NestJS
+    </a>
+  </h2>
+  <div class="text-sm text-gray-500 mb-3">
+    January 07, 2026
+    
+  </div>
+  <p class="text-gray-400 mb-3">While building the auth layer for a document management platform I was working on, 
+I ran into a question that sounds simple 
+but isn’t: what actually happens when a user logs out?
+</p>
+  
+</article>
+
+<article class="pb-8 border-b border-gray-800 last:border-0">
+  <h2 class="text-2xl font-semibold mb-2">
+    <a href="/2025-12-20/authorization-nestjs" class="hover:text-blue-400 transition-colors">
+      Authorization in NestJS: Dynamic Permissions with CASL
+    </a>
+  </h2>
+  <div class="text-sm text-gray-500 mb-3">
+    December 20, 2025
+    
+  </div>
+  <p class="text-gray-400 mb-3">Last year I was working on an application that needed an auth system with role-based access control (RBAC). You know, the typical scenario: you have an app and you want to put it in production, so you need login/register and...</p>
+  
+</article>
+
+<article class="pb-8 border-b border-gray-800 last:border-0">
+  <h2 class="text-2xl font-semibold mb-2">
+    <a href="/2025-09-27/building-modular-monolith-nestjs" class="hover:text-blue-400 transition-colors">
+      Making Architectural Decisions Under Real Constraints: Building a Scalable Intelligence Platform
+    </a>
+  </h2>
+  <div class="text-sm text-gray-500 mb-3">
+    September 27, 2025
+    
+  </div>
+  <p class="text-gray-400 mb-3">When you’re starting a new backend project, one of the first questions you face is: monolith or microservices? It’s tempting to reach for the latest patterns, but the right answer depends entirely on your constraints.
+</p>
+  
+</article>
+
+<article class="pb-8 border-b border-gray-800 last:border-0">
+  <h2 class="text-2xl font-semibold mb-2">
+    <a href="/shared-packages-patterns" class="hover:text-blue-400 transition-colors">
+      Shared Packages in Monorepos: Patterns
+    </a>
+  </h2>
+  <div class="text-sm text-gray-500 mb-3">
+    May 17, 2025
+    
+  </div>
+  <p class="text-gray-400 mb-3">Shared Packages Best Practices: Lessons from Production
+</p>
+  
+</article>
+
+<article class="pb-8 border-b border-gray-800 last:border-0">
+  <h2 class="text-2xl font-semibold mb-2">
+    <a href="/shared-packages-implementation" class="hover:text-blue-400 transition-colors">
+      Shared Packages in Monorepos: Implementation
+    </a>
+  </h2>
+  <div class="text-sm text-gray-500 mb-3">
+    April 19, 2025
+    
+  </div>
+  <p class="text-gray-400 mb-3">Shared Packages: The Solution to Microservices Code Duplication
+</p>
+  
+</article>
+
+<article class="pb-8 border-b border-gray-800 last:border-0">
+  <h2 class="text-2xl font-semibold mb-2">
+    <a href="/shared-packages-problem" class="hover:text-blue-400 transition-colors">
+      Shared Packages in Monorepos: The Problem
+    </a>
+  </h2>
+  <div class="text-sm text-gray-500 mb-3">
+    April 12, 2025
+    
+  </div>
+  <p class="text-gray-400 mb-3">The Hidden Cost of Copy-Paste in Microservices
+</p>
+  
+</article>
+
+<article class="pb-8 border-b border-gray-800 last:border-0">
+  <h2 class="text-2xl font-semibold mb-2">
+    <a href="/2025-03-05/shipping-compact-catalog-service" class="hover:text-blue-400 transition-colors">
+      Shipping Compact Catalog Service
+    </a>
+  </h2>
+  <div class="text-sm text-gray-500 mb-3">
+    March 05, 2025
+    
+  </div>
+  <p class="text-gray-400 mb-3">Post #1 — borrador listo (en inglés, puedes publicar tal cual)
+</p>
+  
+</article>
+
+</div>
+
+<div class="border-t border-gray-800 mt-12 pt-12">
+  <h2 class="text-2xl font-semibold mb-6">Archive by Year</h2>
+  
+  
+  
+  <div class="mb-8">
+    <h3 class="text-xl font-semibold mb-3 text-blue-400">2026</h3>
+    <ul class="space-y-2 text-gray-400">
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/2026-10-03/one-partition-one-consumer" class="hover:text-blue-400 transition-colors">
+          One partition, one consumer: watching Kafka share the work
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Oct 03</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/2026-09-10/want-a-blue-shirt" class="hover:text-blue-400 transition-colors">
+          I want a blue shirt in size M, to the cart using Agent
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Sep 10</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/2026-06-14/do-your-tdd-kata-in-python" class="hover:text-blue-400 transition-colors">
+          Do your TDD Kata in Python
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Jun 14</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/2026-01-07/jwt-refresh-tokens-redis-blacklist-nestjs" class="hover:text-blue-400 transition-colors">
+          JWT Refresh Tokens with Redis Blacklist in NestJS
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Jan 07</span>
+      </li>
+    
+    </ul>
+  </div>
+  
+  <div class="mb-8">
+    <h3 class="text-xl font-semibold mb-3 text-blue-400">2025</h3>
+    <ul class="space-y-2 text-gray-400">
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/2025-12-20/authorization-nestjs" class="hover:text-blue-400 transition-colors">
+          Authorization in NestJS: Dynamic Permissions with CASL
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Dec 20</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/2025-09-27/building-modular-monolith-nestjs" class="hover:text-blue-400 transition-colors">
+          Making Architectural Decisions Under Real Constraints: Building a Scalable Intelligence Platform
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Sep 27</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/shared-packages-patterns" class="hover:text-blue-400 transition-colors">
+          Shared Packages in Monorepos: Patterns
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">May 17</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/shared-packages-implementation" class="hover:text-blue-400 transition-colors">
+          Shared Packages in Monorepos: Implementation
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Apr 19</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/shared-packages-problem" class="hover:text-blue-400 transition-colors">
+          Shared Packages in Monorepos: The Problem
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Apr 12</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/2025-03-05/shipping-compact-catalog-service" class="hover:text-blue-400 transition-colors">
+          Shipping Compact Catalog Service
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Mar 05</span>
+      </li>
+    
+    </ul>
+  </div>
+  
+  <div class="mb-8">
+    <h3 class="text-xl font-semibold mb-3 text-blue-400">2024</h3>
+    <ul class="space-y-2 text-gray-400">
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/concurrency-nodejs" class="hover:text-blue-400 transition-colors">
+          Concurrency in Node.js: Understanding and Implementing
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Jul 27</span>
+      </li>
+    
+    </ul>
+  </div>
+  
+  <div class="mb-8">
+    <h3 class="text-xl font-semibold mb-3 text-blue-400">2023</h3>
+    <ul class="space-y-2 text-gray-400">
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/forke-my-first-repo" class="hover:text-blue-400 transition-colors">
+          Forke my first repo
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Nov 11</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/build-api-with-bun-and-elysia" class="hover:text-blue-400 transition-colors">
+          Build API with Bun and Elysia
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Sep 15</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/refactoring-api-from-js-to-ts" class="hover:text-blue-400 transition-colors">
+          Refactoring API from Javascript to Typescript
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Aug 31</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/race-conditions-nodejs" class="hover:text-blue-400 transition-colors">
+          Race Conditions in Nodejs
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Jul 27</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/bookmark-tailwind-css" class="hover:text-blue-400 transition-colors">
+          Bookmark: Tailwind CSS Refresher
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">May 25</span>
+      </li>
+    
+    </ul>
+  </div>
+  
+  <div class="mb-8">
+    <h3 class="text-xl font-semibold mb-3 text-blue-400">2021</h3>
+    <ul class="space-y-2 text-gray-400">
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/i-want-to-learn-typescript" class="hover:text-blue-400 transition-colors">
+          I want to learn Typescript
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Oct 14</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/factory-states-laravel" class="hover:text-blue-400 transition-colors">
+          Factory States on Laravel 8
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Aug 18</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/switching-editor" class="hover:text-blue-400 transition-colors">
+          I've been switching from VSCode to PHPStorm
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Jul 03</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/fixing-a-laravel-project" class="hover:text-blue-400 transition-colors">
+          SSH for Github and fixing a project
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Jul 02</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/updating-stock-trade-app" class="hover:text-blue-400 transition-colors">
+          Updating Stock Trade App
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Feb 13</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/logs-using-winston" class="hover:text-blue-400 transition-colors">
+          Logs for Expressjs using Winston
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Jan 11</span>
+      </li>
+    
+    </ul>
+  </div>
+  
+  <div class="mb-8">
+    <h3 class="text-xl font-semibold mb-3 text-blue-400">2020</h3>
+    <ul class="space-y-2 text-gray-400">
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/strings-in-go" class="hover:text-blue-400 transition-colors">
+          Strings in Go
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Sep 14</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/i-love-bootstrap-rails" class="hover:text-blue-400 transition-colors">
+          I love Bootstrap and Rails together
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Sep 12</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/heroku-is-not-localhost" class="hover:text-blue-400 transition-colors">
+          Heroku is not your localhost
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Aug 29</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/ubuntu-debian" class="hover:text-blue-400 transition-colors">
+          From Ubuntu to Debian
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Aug 02</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/cloudy-day" class="hover:text-blue-400 transition-colors">
+          A cloudy day
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Jul 22</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/sourcerer-io" class="hover:text-blue-400 transition-colors">
+          Sourcerer.io, My Github account in Colors!!
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Jul 11</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/the-summer-is-here" class="hover:text-blue-400 transition-colors">
+          The summer is here.
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Jul 07</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/updating-the-site" class="hover:text-blue-400 transition-colors">
+          Updating the Site. Yes, again.
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Jul 03</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/welcome-to-jekyll" class="hover:text-blue-400 transition-colors">
+          Welcome to Jekyll!
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Jan 19</span>
+      </li>
+    
+    </ul>
+  </div>
+  
+</div>
+:ET

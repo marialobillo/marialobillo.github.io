@@ -1,0 +1,107 @@
+I"�<p>It is a sunday in June, the fresh air is dancing through the house. That particular moment of the day that everything is calm and easy, and you feel in peace, and you could feel just in love with the moment, but that it is too deep for this post. So, I have been doing TDD Katas with Python and here is one of the simplest and one I like the most, because it was the first one and I rushed too much, for sure, the first time you do something you make a lot of mistakes.</p>
+
+<p>I am not going to explain here what TDD is, or the RED-GREEN-REFACTOR is not a song or a new joke from the space.</p>
+
+<h2 id="the-kata-add-two-numbers">The Kata: Add two numbers</h2>
+
+<p>Let’s start with a minimal setup, we are going to use pytest for tests:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mkdir</span> <span class="n">add_two_numbers_kata</span>
+<span class="n">cd</span> <span class="n">add_two_numbers_kata</span>
+<span class="n">uv</span> <span class="n">init</span>
+<span class="n">uv</span> <span class="n">add</span> <span class="o">--</span><span class="n">dev</span> <span class="n">pytest</span>
+</code></pre></div></div>
+
+<p>And add the following lines:</p>
+
+<pre><code class="language-pyproject.toml```">
+</code></pre>
+<p>[tool.pytest.ini_options]
+pythonpath = [“src”]</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+The structure for your project:
+
+</code></pre></div></div>
+<p>❯ tree
+.
+├── README.md
+├── main.py
+├── pyproject.toml
+├── src
+│   └── calculator.py
+├── tests
+│   └── test_calculator.py
+└── uv.lock</p>
+
+<p>4 directories, 8 files</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+## Step 1: RED, is going to fail (don't panic)
+
+```tests/test_calculator.py```
+
+</code></pre></div></div>
+<p>from calculator import add</p>
+
+<p>def test_add_two_positive_numbers():
+    assert add(2, 3) == 5</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>To run the test we could go with:
+
+</code></pre></div></div>
+<p>pytest -v (with source .venv/bin/activate)</p>
+
+<p>uv run pytest -v (no uv venv running)</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+The test is asking for a module/funcion that does not exist yet, so we are good.
+
+```E   ModuleNotFoundError: No module named 'calculator'```
+
+## Step 2: Green, minimal code to make your test pass
+
+```src/calculator.py```
+
+</code></pre></div></div>
+<p>def add(a, b):
+    return 5</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+After that your test will be green.
+
+At this moment, we could add some refactor but it is better to do it later.
+
+
+## Step 3: RED, add a new test that add different numbers
+
+Ok, how to decide which test to write? What I do, each test should show the code something it didn't know yet.
+
+</code></pre></div></div>
+<p>def test_add_different_numbers():
+    assert add(1,3) == 4</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This test fails because our code is static and only working for ```2 + 3 = 5```
+
+## Step 4: GREEN, make the add return the sum of two numbers
+
+Our calculator.py looks something like this now to make pass the test:
+
+</code></pre></div></div>
+<p>def add(a, b):
+    return a + b</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+For this example I am avoiding the REFACTOR part, because it is too simple. But we should refactor to make our code more readable or avoid repetition or other things we are not discussing in this post.
+
+Just for adding some edge cases to work on this example we could write more tests:
+
+</code></pre></div></div>
+<p>def test_add_zero():
+    assert add(0, 7) == 7</p>
+
+<p>def test_add_floats():
+    assert add(1.5, 2.5) == 4.0</p>
+
+<p>def test_add_negative_numbers():
+    assert add(-5, -3) == -8
+```</p>
+<h2 id="reflection">Reflection</h2>
+
+<p>I wanted to start adding TDD to my projects, so start practicing these kind of katas sounded like the way to learn and put all the pieces together, like feeling comfortable in a new pair of shoes. What surprised me the most it was the tiny steps I take during the process of the Red-Green-Refactor. You don’t write a full implementation and then test it; you write one assertion, then the smallest possible code to make it pass, and only then ask “what should this code learn next?”. It’s a slower rhythm than I was used to, but you stop carrying the mental load of “did I think about all the cases?”.</p>
+
+<p>I have been using TDD on some of my projects like my <a href="https://github.com/marialobillo/mini-langfuse">mini-langfuse SDK</a></p>
+:ET

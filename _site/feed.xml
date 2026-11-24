@@ -1,4 +1,199 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2026-03-21T17:49:59+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Maria Lobillo-Santos</title><subtitle>My name is Maria Lobillo-Santos, I am a Full Stack Developer.I love sharing the insights and skills I pick up along the way.</subtitle><entry><title type="html">JWT Refresh Tokens with Redis Blacklist in NestJS</title><link href="http://localhost:4000/2026-01-07/jwt-refresh-tokens-redis-blacklist-nestjs" rel="alternate" type="text/html" title="JWT Refresh Tokens with Redis Blacklist in NestJS" /><published>2026-01-07T00:00:00+01:00</published><updated>2026-01-07T00:00:00+01:00</updated><id>http://localhost:4000/2026-01-07/jwt-refresh-tokens-redis-blacklist-nestjs</id><content type="html" xml:base="http://localhost:4000/2026-01-07/jwt-refresh-tokens-redis-blacklist-nestjs"><![CDATA[<p>While building the auth layer for a document management platform I was working on, 
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2026-11-24T17:28:08+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Maria Lobillo-Santos</title><subtitle>My name is Maria Lobillo-Santos, I am a Full Stack Developer.I love sharing the insights and skills I pick up along the way.</subtitle><entry><title type="html">One partition, one consumer: watching Kafka share the work</title><link href="http://localhost:4000/2026-10-03/one-partition-one-consumer" rel="alternate" type="text/html" title="One partition, one consumer: watching Kafka share the work" /><published>2026-10-03T00:00:00+02:00</published><updated>2026-10-03T00:00:00+02:00</updated><id>http://localhost:4000/2026-10-03/one-partition-one-consumer</id><content type="html" xml:base="http://localhost:4000/2026-10-03/one-partition-one-consumer"><![CDATA[<h1 id="one-partition-one-consumer-watching-kafka-share-the-work">One partition, one consumer: watching Kafka share the work</h1>
+
+<p>I’ve read the same sentence about Kafka a hundred times: “a consumer group splits the partitions between its consumers, and rebalances when one joins or leaves.” I believed it. But I had never watched it happen. So I stopped reading and ran it.</p>
+
+<p>Quick context: my topic orderbook.raw has 6 partitions, and the key of every message is the trading symbol, so every BTCUSDT update always lands on the same partition. My calc service reads that topic as a consumer group called calc.</p>
+
+<h2 id="then-three-small-steps">Then three small steps.</h2>
+
+<p>One instance. I start one consumer. rpk group describe calc shows it owns all 6 partitions. One process doing all the work. Fine for now.</p>
+
+<p>Two instances. I start a second consumer, same group, nothing else changed. A couple of seconds later rpk shows two members: one has partitions 0, 2, 4, the other 1, 3, 5. I didn’t write a single line of code to split anything. Kafka did it. That’s the part the sentence never makes you feel: the split is automatic.</p>
+
+<p><img class="zoomable" src="/images/posts/two-instances.png" alt="Two consumers, same group. Kafka splits the partitions on its own: 0, 2, 4 to one, 1, 3, 5 to the other" /></p>
+
+<p>Kill one. I ctrl+C one of them. For a second or two nobody is reading those three partitions. Then rpk shows the survivor holding all 6 again, lag back to 0. No message lost. That’s the failover, also for free.</p>
+
+<p><img class="zoomable" src="/images/posts/kill-one-instance.png" alt="One consumer left. It took all 6 partitions back, lag still 0. Nothing lost" /></p>
+
+<h2 id="why-this-matters">Why this matters:</h2>
+
+<p>A detail I didn’t expect. Look at the offsets: partitions 0, 1 and 4 are empty, only 2, 3 and 5 carry data. I have 6 partitions, but my symbols only hash into 3 of them. That’s the catch nobody tells you: the partition count sets the ceiling for how far you can scale, but your keys decide whether you actually reach it. If I doubled my consumers right now, three of them would sit idle — not because Kafka failed, but because my keys don’t spread wide enough yet. More symbols, or a better spread, would fix it. Good thing to know before you pay for six machines.</p>
+
+<p>This is how you scale out. More load? Add consumers, up to the number of partitions. With 6 partitions, 6 consumers is the ceiling — a 7th just sits idle, because there is no partition left to give it. So the partition count isn’t a small detail, it’s your scaling ceiling, and you decide it when you create the topic.
+The key does more than balance load. Because the symbol is the key, BTCUSDT always goes to the same partition, so always to the same consumer. That means the order book I keep in memory for BTC lives in exactly one instance. It’s never duplicated, never split across two processes fighting over it. Partitioning by symbol spreads the work and keeps each symbol’s state in one place.</p>
+
+<p>One honest note: I didn’t hit a fire here. Nothing broke. I set this up on purpose, to see the mechanism and to check that my partition key really does what I claimed. I think that’s worth doing before production, not after.</p>
+
+<h2 id="and-the-cost-side-because-nothing-is-free">And the cost side, because nothing is free:</h2>
+
+<p>The rebalance isn’t instant. For a moment during the handoff, some partitions aren’t being read. At my volume (~5 msg/s per symbol) that’s nothing, but it’s real.
+When a consumer inherits a new partition, it inherits a symbol whose book it doesn’t have in memory yet. That’s exactly where my STALE/resync step earns its place: the new owner pulls a fresh snapshot and rebuilds before it trusts the data. Rebalancing and resync are the same story from two sides.</p>
+
+<p>What I’d watch in production: consumer lag per partition, and how often a resync happens. Frequent resyncs would tell me something upstream is wrong — a slow consumer, a bad network — long before the output looked off.</p>
+
+<p>That’s it. No drama. Just the thing moving, finally, in front of me.</p>]]></content><author><name></name></author><category term="kafka" /><category term="partitions" /><category term="python" /><category term="kafka" /><category term="python" /><category term="fastapi" /><category term="consumer" /><category term="group" /><category term="instances" /><category term="rpk" /><category term="symbol" /><summary type="html"><![CDATA[One partition, one consumer: watching Kafka share the work]]></summary></entry><entry><title type="html">I want a blue shirt in size M, to the cart using Agent</title><link href="http://localhost:4000/2026-09-10/want-a-blue-shirt" rel="alternate" type="text/html" title="I want a blue shirt in size M, to the cart using Agent" /><published>2026-09-10T00:00:00+02:00</published><updated>2026-09-10T00:00:00+02:00</updated><id>http://localhost:4000/2026-09-10/want-a-blue-shirt</id><content type="html" xml:base="http://localhost:4000/2026-09-10/want-a-blue-shirt"><![CDATA[<h1 id="from-i-want-a-blue-shirt-in-size-m-to-a-real-order-line">From “I want a blue shirt in size M” to a real order line</h1>
+
+<p>Most checkout flows assume the user already knows exactly what they want in
+the catalog’s own terms: an exact size, an exact color, a SKU. But nobody
+actually thinks that way. People write (or say) things like <em>“I want a blue
+shirt in size M and a pair of jeans, size 32”</em> — natural language, with
+ambiguity, no product IDs attached.</p>
+
+<p>That gap between how people talk and how a catalog is modeled is a small but
+real problem, and a good case study for tool calling: turning free text into
+structured data a system can actually act on, without making anything up.</p>
+
+<h2 id="the-hard-part-isnt-just-ask-an-llm">The hard part isn’t “just ask an LLM”</h2>
+
+<p>Asking a model to “extract the products from this text” and trusting it to
+return something parseable is fragile — the output format can drift, it can
+invent a product that isn’t in your catalog, or be ambiguous about which
+catalog line it actually means.</p>
+
+<p>The more reliable approach is forcing the model to call a function with a
+strict schema — tool calling with a forced <code class="highlighter-rouge">tool_choice</code>, not a suggestion.
+The tool receives the real catalog as part of the context, and the schema
+requires each extracted line to include:</p>
+
+<ul>
+  <li>the original text fragment it came from (traceability)</li>
+  <li>the quantity</li>
+  <li>the <code class="highlighter-rouge">product_id</code> that matches the catalog — or an explicit <code class="highlighter-rouge">null</code> if there
+is no confident match, instead of the model inventing an ID that doesn’t
+exist</li>
+</ul>
+
+<p>That explicit <code class="highlighter-rouge">null</code> is the piece that matters most: it forces the model to
+admit uncertainty instead of hallucinating a product. An order line with no
+match can be surfaced to the user for manual confirmation, instead of
+silently slipping something wrong into the cart.</p>
+
+<h2 id="an-architecture-decision-not-just-a-prompt">An architecture decision, not just a prompt</h2>
+
+<p>The order extractor is defined as an interface (<code class="highlighter-rouge">OrderExtractor</code>) in the
+domain layer, with zero dependency on which LLM provider sits behind it.
+Each provider (Anthropic, OpenRouter, or a deterministic “fake” extractor
+for tests and cost-free demos) implements that same interface separately.</p>
+
+<p>The practical result: swapping models means adding one new file, not
+touching business logic. The cart, order confirmation, stock checks — none
+of it knows or cares which model is extracting the lines. That separation is
+what makes it trivial to try the system with a free model before deciding
+whether a better one is worth paying for, instead of a rewrite.</p>
+
+<h2 id="try-it">Try it</h2>
+
+<p>The repo runs out of the box with a deterministic extractor (no API key, no
+cost), so anyone can clone it and see it work immediately. Switching to a
+real model with actual tool calling is a single environment variable.</p>
+
+<p>[https://github.com/marialobillo/shop-agent-demo]</p>]]></content><author><name></name></author><category term="testing" /><category term="tdd" /><category term="python" /><category term="ai-agent" /><category term="llm" /><category term="python" /><category term="cart" /><category term="rag" /><category term="tool-calling" /><category term="fastapi" /><category term="ai" /><summary type="html"><![CDATA[From “I want a blue shirt in size M” to a real order line]]></summary></entry><entry><title type="html">Do your TDD Kata in Python</title><link href="http://localhost:4000/2026-06-14/do-your-tdd-kata-in-python" rel="alternate" type="text/html" title="Do your TDD Kata in Python" /><published>2026-06-14T00:00:00+02:00</published><updated>2026-06-14T00:00:00+02:00</updated><id>http://localhost:4000/2026-06-14/do-your-tdd-kata-in-python</id><content type="html" xml:base="http://localhost:4000/2026-06-14/do-your-tdd-kata-in-python"><![CDATA[<p>It is a sunday in June, the fresh air is dancing through the house. That particular moment of the day that everything is calm and easy, and you feel in peace, and you could feel just in love with the moment, but that it is too deep for this post. So, I have been doing TDD Katas with Python and here is one of the simplest and one I like the most, because it was the first one and I rushed too much, for sure, the first time you do something you make a lot of mistakes.</p>
+
+<p>I am not going to explain here what TDD is, or the RED-GREEN-REFACTOR is not a song or a new joke from the space.</p>
+
+<h2 id="the-kata-add-two-numbers">The Kata: Add two numbers</h2>
+
+<p>Let’s start with a minimal setup, we are going to use pytest for tests:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mkdir</span> <span class="n">add_two_numbers_kata</span>
+<span class="n">cd</span> <span class="n">add_two_numbers_kata</span>
+<span class="n">uv</span> <span class="n">init</span>
+<span class="n">uv</span> <span class="n">add</span> <span class="o">--</span><span class="n">dev</span> <span class="n">pytest</span>
+</code></pre></div></div>
+
+<p>And add the following lines:</p>
+
+<pre><code class="language-pyproject.toml```">
+</code></pre>
+<p>[tool.pytest.ini_options]
+pythonpath = [“src”]</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+The structure for your project:
+
+</code></pre></div></div>
+<p>❯ tree
+.
+├── README.md
+├── main.py
+├── pyproject.toml
+├── src
+│   └── calculator.py
+├── tests
+│   └── test_calculator.py
+└── uv.lock</p>
+
+<p>4 directories, 8 files</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+## Step 1: RED, is going to fail (don't panic)
+
+```tests/test_calculator.py```
+
+</code></pre></div></div>
+<p>from calculator import add</p>
+
+<p>def test_add_two_positive_numbers():
+    assert add(2, 3) == 5</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>To run the test we could go with:
+
+</code></pre></div></div>
+<p>pytest -v (with source .venv/bin/activate)</p>
+
+<p>uv run pytest -v (no uv venv running)</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+The test is asking for a module/funcion that does not exist yet, so we are good.
+
+```E   ModuleNotFoundError: No module named 'calculator'```
+
+## Step 2: Green, minimal code to make your test pass
+
+```src/calculator.py```
+
+</code></pre></div></div>
+<p>def add(a, b):
+    return 5</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+After that your test will be green.
+
+At this moment, we could add some refactor but it is better to do it later.
+
+
+## Step 3: RED, add a new test that add different numbers
+
+Ok, how to decide which test to write? What I do, each test should show the code something it didn't know yet.
+
+</code></pre></div></div>
+<p>def test_add_different_numbers():
+    assert add(1,3) == 4</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This test fails because our code is static and only working for ```2 + 3 = 5```
+
+## Step 4: GREEN, make the add return the sum of two numbers
+
+Our calculator.py looks something like this now to make pass the test:
+
+</code></pre></div></div>
+<p>def add(a, b):
+    return a + b</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+For this example I am avoiding the REFACTOR part, because it is too simple. But we should refactor to make our code more readable or avoid repetition or other things we are not discussing in this post.
+
+Just for adding some edge cases to work on this example we could write more tests:
+
+</code></pre></div></div>
+<p>def test_add_zero():
+    assert add(0, 7) == 7</p>
+
+<p>def test_add_floats():
+    assert add(1.5, 2.5) == 4.0</p>
+
+<p>def test_add_negative_numbers():
+    assert add(-5, -3) == -8
+```</p>
+<h2 id="reflection">Reflection</h2>
+
+<p>I wanted to start adding TDD to my projects, so start practicing these kind of katas sounded like the way to learn and put all the pieces together, like feeling comfortable in a new pair of shoes. What surprised me the most it was the tiny steps I take during the process of the Red-Green-Refactor. You don’t write a full implementation and then test it; you write one assertion, then the smallest possible code to make it pass, and only then ask “what should this code learn next?”. It’s a slower rhythm than I was used to, but you stop carrying the mental load of “did I think about all the cases?”.</p>
+
+<p>I have been using TDD on some of my projects like my <a href="https://github.com/marialobillo/mini-langfuse">mini-langfuse SDK</a></p>]]></content><author><name></name></author><category term="testing" /><category term="tdd" /><category term="python" /><category term="testing" /><category term="tdd" /><category term="kata" /><category term="python" /><category term="summer" /><category term="sunday" /><category term="self-growing" /><summary type="html"><![CDATA[It is a sunday in June, the fresh air is dancing through the house. That particular moment of the day that everything is calm and easy, and you feel in peace, and you could feel just in love with the moment, but that it is too deep for this post. So, I have been doing TDD Katas with Python and here is one of the simplest and one I like the most, because it was the first one and I rushed too much, for sure, the first time you do something you make a lot of mistakes.]]></summary></entry><entry><title type="html">JWT Refresh Tokens with Redis Blacklist in NestJS</title><link href="http://localhost:4000/2026-01-07/jwt-refresh-tokens-redis-blacklist-nestjs" rel="alternate" type="text/html" title="JWT Refresh Tokens with Redis Blacklist in NestJS" /><published>2026-01-07T00:00:00+01:00</published><updated>2026-01-07T00:00:00+01:00</updated><id>http://localhost:4000/2026-01-07/jwt-refresh-tokens-redis-blacklist-nestjs</id><content type="html" xml:base="http://localhost:4000/2026-01-07/jwt-refresh-tokens-redis-blacklist-nestjs"><![CDATA[<p>While building the auth layer for a document management platform I was working on, 
 I ran into a question that sounds simple 
 but isn’t: what actually happens when a user logs out?</p>
 
@@ -2046,109 +2241,4 @@ git <span class="nb">grep</span> <span class="nt">-l</span> <span class="s2">"cl
 
 <p><strong>What’s next</strong></p>
 
-<p>Wire e2e tests with Testcontainers/Postgres, add JSON logs with <code class="highlighter-rouge">requestId</code>, expose <code class="highlighter-rouge">/metrics</code> (p50/p95), and ship a first deploy to AWS App Runner.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[Post #1 — borrador listo (en inglés, puedes publicar tal cual)]]></summary></entry><entry><title type="html">Concurrency in Node.js: Understanding and Implementing</title><link href="http://localhost:4000/concurrency-nodejs" rel="alternate" type="text/html" title="Concurrency in Node.js: Understanding and Implementing" /><published>2024-07-27T13:18:00+02:00</published><updated>2024-07-27T13:18:00+02:00</updated><id>http://localhost:4000/concurrency-in-nodejs</id><content type="html" xml:base="http://localhost:4000/concurrency-nodejs"><![CDATA[<p>In my latest exploration of Node.js, I delved into how this popular runtime handles concurrency. Building scalable APIs with Node.js has been an enlightening journey, and understanding concurrency is a crucial part of making your applications efficient and responsive.</p>
-
-<p>Even though Node.js operates on a single thread, its event-driven, non-blocking I/O model allows it to handle multiple operations simultaneously. This is achieved through several mechanisms:</p>
-
-<h2 id="event-loop">Event Loop</h2>
-<p>The event loop is the core of Node.js’s concurrency model. It continuously checks the call stack and the callback queue for tasks to execute. When the call stack is empty, the event loop moves tasks from the callback queue to the call stack.</p>
-
-<h2 id="callbacks">Callbacks</h2>
-<p>These are functions provided as arguments to other functions and executed when an asynchronous operation completes. This approach has been the traditional way to manage asynchronous operations in Node.js.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const fs = require('fs');
-
-fs.readFile('file.txt', 'utf8', (err, data) =&gt; {
-  if (err) {
-    console.error(err);
-    return;
-  }
-  console.log(data);
-});
-</code></pre></div></div>
-
-<h2 id="promises">Promises</h2>
-<p>These modern constructs provide a cleaner and more manageable way to handle asynchronous code, making it easier to write and understand.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="no">fs</span> <span class="o">=</span> <span class="k">require</span><span class="p">(</span><span class="s1">'fs'</span><span class="p">)</span><span class="mf">.</span><span class="n">promises</span><span class="p">;</span>
-
-<span class="k">async</span> <span class="k">function</span> <span class="n">readFile</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">try</span> <span class="p">{</span>
-    <span class="k">const</span> <span class="no">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">fs</span><span class="mf">.</span><span class="nb">readFile</span><span class="p">(</span><span class="s1">'file.txt'</span><span class="p">,</span> <span class="s1">'utf8'</span><span class="p">);</span>
-    <span class="n">console</span><span class="mf">.</span><span class="nb">log</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">console</span><span class="mf">.</span><span class="nf">error</span><span class="p">(</span><span class="n">err</span><span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="nb">readFile</span><span class="p">();</span>
-</code></pre></div></div>
-
-<h2 id="worker-threads">Worker Threads</h2>
-<p>For tasks that are CPU-intensive and might block the event loop, the worker_threads module allows you to run code in parallel threads, thereby avoiding bottlenecks.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const { Worker } = require('worker_threads');
-
-const worker = new Worker('./worker.js');
-
-worker.on('message', (message) =&gt; {
-  console.log('Message from worker:', message);
-});
-
-worker.postMessage('Start');
-</code></pre></div></div>
-
-<h2 id="cluster">Cluster</h2>
-<p>To take advantage of multi-core processors, Node.js provides the cluster module, which enables you to create multiple processes that can share the same port, thus improving performance and scalability.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const cluster = require('cluster');
-const http = require('http');
-const numCPUs = require('os').cpus().length;
-
-if (cluster.isMaster) {
-  for (let i = 0; i &lt; numCPUs; i++) {
-    cluster.fork();
-  }
-
-  cluster.on('exit', (worker, code, signal) =&gt; {
-    console.log(`Worker ${worker.process.pid} died`);
-  });
-} else {
-  http.createServer((req, res) =&gt; {
-    res.writeHead(200);
-    res.end('hello world\n');
-  }).listen(8000);
-}
-</code></pre></div></div>]]></content><author><name></name></author><category term="nodejs" /><category term="javascript" /><category term="concurrency" /><summary type="html"><![CDATA[In my latest exploration of Node.js, I delved into how this popular runtime handles concurrency. Building scalable APIs with Node.js has been an enlightening journey, and understanding concurrency is a crucial part of making your applications efficient and responsive.]]></summary></entry><entry><title type="html">Forke my first repo</title><link href="http://localhost:4000/forke-my-first-repo" rel="alternate" type="text/html" title="Forke my first repo" /><published>2023-11-11T10:07:00+01:00</published><updated>2023-11-11T10:07:00+01:00</updated><id>http://localhost:4000/forke-my-first-repo</id><content type="html" xml:base="http://localhost:4000/forke-my-first-repo"><![CDATA[<p>Yesterday I forked my first repo with the intention to contribute to Open Source. Yes, Open Source was always on my list but I’d never took the decision to jump on it. So, someone mentioned and why not? I thought. Since I started to learning code I’ve been using a lot of open source projects, are really awesome and I’m very grateful for that. And I think is a great way to work on something and everyone could use it.</p>
-
-<p>So, I found this tutorial on “How to contribut to Nodejs”:</p>
-
-<p><a href="https://blog.risingstack.com/contributing-to-the-node-js-core/">Contributing to the nodejs Core</a></p>
-
-<p>On there basicaly you are going to fork the project, do the setup and building the binsaries. For sure, we don’t forget the tests.</p>
-
-<p>Not going to lie I felt a bit intimidated, but I decided to give it a try. I followed the steps and I was able to build the binaries. I was so happy (it takes a bit), I know is not a big deal but for me was a big step for me. I’m going to keep working on it, and I hope I can contribute to the project, crossing fingers :).</p>
-
-<p>Of course, I started reading the guide lines to contribute to the project:</p>
-
-<p><a href="https://github.com/nodejs/node/blob/314c8f95c5b2f1d54cf465ae442f884fc4e342e6/CONTRIBUTING.md">Nodejs Contributing Guide</a></p>
-
-<p>If you go to the <a href="https://github.com/nodejs/node/issues">Issues</a> section and you dn’t know where to start, you can filter by “good first issue” and you will find a lot of issues to work on. I’m going to start with one of those.</p>
-
-<p>I found some resources helping how to contribute to Open Source, there is an article by Jennifer Bland telling her story contributing to Nodejs Repo which is very inspiring, and she also has some youtube videos. The whole article is <a href="https://www.freecodecamp.org/news/contributing-to-open-source-is-not-hard-here-is-my-journey-to-contributing-to-nodejs-d10760e31194/">here</a></p>
-
-<p>And another resource that I found and I think is very useful is this one, is a youtube video which is an interview to Michael Dawson, <a href="https://www.youtube.com/watch?v=5WtkRoGtbx4">here</a>. There is a lot resource out there, but I think this is a good start.</p>
-
-<p>Acording to Michael Dawson, a good place to start is checking out the <a href="https://nodejs.org/calendar">calendar</a>. This way we can know what is going on. And also, we can check the <a href="https://www.youtube.com/@nodejs-foundation/streams">Youtube Nodejs Lives</a> in order to find old meetings what we could interested in.</p>]]></content><author><name></name></author><category term="open-source" /><category term="programming" /><category term="nodejs" /><category term="github" /><category term="contribute" /><category term="javascript" /><summary type="html"><![CDATA[Yesterday I forked my first repo with the intention to contribute to Open Source. Yes, Open Source was always on my list but I’d never took the decision to jump on it. So, someone mentioned and why not? I thought. Since I started to learning code I’ve been using a lot of open source projects, are really awesome and I’m very grateful for that. And I think is a great way to work on something and everyone could use it.]]></summary></entry><entry><title type="html">Build API with Bun and Elysia</title><link href="http://localhost:4000/build-api-with-bun-and-elysia" rel="alternate" type="text/html" title="Build API with Bun and Elysia" /><published>2023-09-15T20:06:00+02:00</published><updated>2023-09-15T20:06:00+02:00</updated><id>http://localhost:4000/build-api-with-bun-and-elysia</id><content type="html" xml:base="http://localhost:4000/build-api-with-bun-and-elysia"><![CDATA[<p>I love go for a walk in the morning and listening some podcasts. And I remember how excited I was listening Ryan Dahl talking about Deno on this podcast by ChangeLog:</p>
-
-<p><a href="https://changelog.com/podcast/443">Exploring Deno Land</a></p>
-
-<p>I thought it’s great to have more options a part from Nodejs, and improved version. But when I learned about Bun.sh in this video by Jarred Summer:</p>
-
-<p><a href="https://www.youtube.com/watch?v=eF48Ar-JjT8">SFNode Meetup: Bun with Jarred Sumner</a></p>
-
-<p>Here you can see how fast and incredible is bun.sh. Few days ago a lot of people were talking about on social media, so I decided to give it a try, and implementing a simple API with bun.sh and Elysia ( a similar framework to expressjs ). I would say everything is very intuitive, and easy to use because is very similar like we work on nodejs.</p>
-
-<p>So, here is the link of the project, for now there is only a couple end points, but I’m going to add more in the future:</p>
-
-<p><a href="https://github.com/marialobillo/stock-trade-api-bun-elysia/tree/main">Stock-Trade API with Bun.sh and Elysia</a></p>]]></content><author><name></name></author><category term="programming" /><category term="api" /><category term="typescript" /><category term="bun" /><category term="bun.sh" /><category term="elysia" /><category term="mongodb" /><summary type="html"><![CDATA[I love go for a walk in the morning and listening some podcasts. And I remember how excited I was listening Ryan Dahl talking about Deno on this podcast by ChangeLog:]]></summary></entry></feed>
+<p>Wire e2e tests with Testcontainers/Postgres, add JSON logs with <code class="highlighter-rouge">requestId</code>, expose <code class="highlighter-rouge">/metrics</code> (p50/p95), and ship a first deploy to AWS App Runner.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[Post #1 — borrador listo (en inglés, puedes publicar tal cual)]]></summary></entry></feed>

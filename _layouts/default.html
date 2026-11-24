@@ -1,45 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ page.title | default: "Maria Lobillo | Senior Software Engineer" }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="bg-gray-900 text-gray-100 min-h-screen">
-    <!-- Navigation -->
-    <nav class="border-b border-gray-800">
-      <div class="max-w-4xl mx-auto px-4 py-6">
-        <div class="flex justify-between items-center">
-          <!-- Logo/Name -->
-          <a href="/" class="text-xl font-semibold hover:text-blue-400 transition-colors">
-            Maria Lobillo
-          </a>
-          
-          <!-- Menu -->
-          <div class="flex space-x-6 text-sm">
-            <a href="/" class="hover:text-blue-400 transition-colors">Home</a>
-            <a href="/blog" class="hover:text-blue-400 transition-colors">Blog</a>
-            <a href="/about" class="hover:text-blue-400 transition-colors">About</a>
-          </div>
-        </div>
-      </div>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>{% if page.url == "/" %}Maria Lobillo — Senior Backend Engineer{% else %}{{ page.title }} — Maria Lobillo{% endif %}</title>
+  <meta name="description" content="{{ page.description | default: 'Senior backend engineer. I write about the backend systems I build and what I learn from them.' }}">
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-name" href="/">Maria Lobillo</a>
+    <nav class="site-nav">
+      <a href="/blog/"{% if page.url == "/blog/" %} aria-current="page"{% endif %}>Blog</a>
+      <a href="/about/"{% if page.url == "/about/" %} aria-current="page"{% endif %}>About</a>
+      <a href="https://github.com/marialobillo">GitHub ↗</a>
     </nav>
+  </header>
 
-    <!-- Content -->
-    <main class="max-w-4xl mx-auto px-4 py-12">
-      {{ content }}
-    </main>
+  <main>
+    {{ content }}
+  </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-gray-800 mt-20">
-      <div class="max-w-4xl mx-auto px-4 py-8 text-center text-sm text-gray-500">
-        <div class="flex justify-center space-x-6 mb-4">
-          <a href="https://www.linkedin.com/in/maria-lobillo/" class="hover:text-blue-400 transition-colors">LinkedIn</a>
-          <a href="https://github.com/marialobillo" class="hover:text-blue-400 transition-colors">GitHub</a>
-        </div>
-        <p>© {{ 'now' | date: "%Y" }} Maria Lobillo. Senior Software Engineer.</p>
-      </div>
-    </footer>
-  </body>
+  <footer class="site-footer">
+    <span>© {{ 'now' | date: "%Y" }} Maria Lobillo</span>
+    <nav>
+      <a href="mailto:{{ site.email }}">Email</a>
+      <a href="https://www.linkedin.com/in/maria-lobillo/">LinkedIn</a>
+      <a href="https://github.com/marialobillo">GitHub</a>
+    </nav>
+  </footer>
+</body>
 </html>

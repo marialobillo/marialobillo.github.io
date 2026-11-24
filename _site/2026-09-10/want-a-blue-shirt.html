@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>I want a blue shirt in size M, to the cart using Agent — Maria Lobillo</title>
+  <meta name="description" content="Senior backend engineer. I write about the backend systems I build and what I learn from them.">
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-name" href="/">Maria Lobillo</a>
+    <nav class="site-nav">
+      <a href="/blog/">Blog</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/marialobillo">GitHub ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <article>
+  <header class="post-header">
+    <h1>I want a blue shirt in size M, to the cart using Agent</h1>
+    <p class="post-meta">
+      <time datetime="2026-09-10T00:00:00+02:00">2026-09-10</time>
+      <span>#ai-agent</span><span>#llm</span><span>#python</span><span>#cart</span><span>#rag</span><span>#tool-calling</span><span>#fastapi</span><span>#ai</span>
+    </p>
+  </header>
+
+  <div class="post-content">
+    <h1 id="from-i-want-a-blue-shirt-in-size-m-to-a-real-order-line">From “I want a blue shirt in size M” to a real order line</h1>
+
+<p>Most checkout flows assume the user already knows exactly what they want in
+the catalog’s own terms: an exact size, an exact color, a SKU. But nobody
+actually thinks that way. People write (or say) things like <em>“I want a blue
+shirt in size M and a pair of jeans, size 32”</em> — natural language, with
+ambiguity, no product IDs attached.</p>
+
+<p>That gap between how people talk and how a catalog is modeled is a small but
+real problem, and a good case study for tool calling: turning free text into
+structured data a system can actually act on, without making anything up.</p>
+
+<h2 id="the-hard-part-isnt-just-ask-an-llm">The hard part isn’t “just ask an LLM”</h2>
+
+<p>Asking a model to “extract the products from this text” and trusting it to
+return something parseable is fragile — the output format can drift, it can
+invent a product that isn’t in your catalog, or be ambiguous about which
+catalog line it actually means.</p>
+
+<p>The more reliable approach is forcing the model to call a function with a
+strict schema — tool calling with a forced <code class="highlighter-rouge">tool_choice</code>, not a suggestion.
+The tool receives the real catalog as part of the context, and the schema
+requires each extracted line to include:</p>
+
+<ul>
+  <li>the original text fragment it came from (traceability)</li>
+  <li>the quantity</li>
+  <li>the <code class="highlighter-rouge">product_id</code> that matches the catalog — or an explicit <code class="highlighter-rouge">null</code> if there
+is no confident match, instead of the model inventing an ID that doesn’t
+exist</li>
+</ul>
+
+<p>That explicit <code class="highlighter-rouge">null</code> is the piece that matters most: it forces the model to
+admit uncertainty instead of hallucinating a product. An order line with no
+match can be surfaced to the user for manual confirmation, instead of
+silently slipping something wrong into the cart.</p>
+
+<h2 id="an-architecture-decision-not-just-a-prompt">An architecture decision, not just a prompt</h2>
+
+<p>The order extractor is defined as an interface (<code class="highlighter-rouge">OrderExtractor</code>) in the
+domain layer, with zero dependency on which LLM provider sits behind it.
+Each provider (Anthropic, OpenRouter, or a deterministic “fake” extractor
+for tests and cost-free demos) implements that same interface separately.</p>
+
+<p>The practical result: swapping models means adding one new file, not
+touching business logic. The cart, order confirmation, stock checks — none
+of it knows or cares which model is extracting the lines. That separation is
+what makes it trivial to try the system with a free model before deciding
+whether a better one is worth paying for, instead of a rewrite.</p>
+
+<h2 id="try-it">Try it</h2>
+
+<p>The repo runs out of the box with a deterministic extractor (no API key, no
+cost), so anyone can clone it and see it work immediately. Switching to a
+real model with actual tool calling is a single environment variable.</p>
+
+<p>[https://github.com/marialobillo/shop-agent-demo]</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <a href="/blog/">← All posts</a>
+  </footer>
+</article>
+
+<script>
+  // Click an image in a post to see it full size. Click again or press Esc to close.
+  document.addEventListener('click', function (e) {
+    var img = e.target.closest('.post-content img');
+    if (!img) return;
+    var overlay = document.createElement('div');
+    overlay.className = 'lightbox-overlay';
+    var big = document.createElement('img');
+    big.src = img.src;
+    big.alt = img.alt;
+    overlay.appendChild(big);
+    overlay.addEventListener('click', function () { overlay.remove(); });
+    document.body.appendChild(overlay);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      var o = document.querySelector('.lightbox-overlay');
+      if (o) o.remove();
+    }
+  });
+</script>
+  </main>
+
+  <footer class="site-footer">
+    <span>© 2026 Maria Lobillo</span>
+    <nav>
+      <a href="mailto:maria.lobillo.santos@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/maria-lobillo/">LinkedIn</a>
+      <a href="https://github.com/marialobillo">GitHub</a>
+    </nav>
+  </footer>
+</body>
+</html>

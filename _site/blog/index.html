@@ -1,41 +1,69 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blog</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="bg-gray-900 text-gray-100 min-h-screen">
-    <!-- Navigation -->
-    <nav class="border-b border-gray-800">
-      <div class="max-w-4xl mx-auto px-4 py-6">
-        <div class="flex justify-between items-center">
-          <!-- Logo/Name -->
-          <a href="/" class="text-xl font-semibold hover:text-blue-400 transition-colors">
-            Maria Lobillo
-          </a>
-          
-          <!-- Menu -->
-          <div class="flex space-x-6 text-sm">
-            <a href="/" class="hover:text-blue-400 transition-colors">Home</a>
-            <a href="/blog" class="hover:text-blue-400 transition-colors">Blog</a>
-            <a href="/about" class="hover:text-blue-400 transition-colors">About</a>
-          </div>
-        </div>
-      </div>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Blog — Maria Lobillo</title>
+  <meta name="description" content="Senior backend engineer. I write about the backend systems I build and what I learn from them.">
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-name" href="/">Maria Lobillo</a>
+    <nav class="site-nav">
+      <a href="/blog/" aria-current="page">Blog</a>
+      <a href="/about/">About</a>
+      <a href="https://github.com/marialobillo">GitHub ↗</a>
     </nav>
+  </header>
 
-    <!-- Content -->
-    <main class="max-w-4xl mx-auto px-4 py-12">
-      <div class="space-y-2 mb-8">
-  <h1 class="text-4xl font-bold">Technical Blog</h1>
-  <p class="text-gray-400 text-lg">Writing about software architecture, backend systems, and building scalable applications.</p>
-</div>
-
-<div class="border-t border-gray-800 pt-8"></div>
+  <main>
+    <div class="border-t border-gray-800 pt-8"></div>
 
 <div class="space-y-12 mt-8">
+
+<article class="pb-8 border-b border-gray-800 last:border-0">
+  <h2 class="text-2xl font-semibold mb-2">
+    <a href="/2026-10-03/one-partition-one-consumer" class="hover:text-blue-400 transition-colors">
+      One partition, one consumer: watching Kafka share the work
+    </a>
+  </h2>
+  <div class="text-sm text-gray-500 mb-3">
+    October 03, 2026
+  </div>
+  <p class="text-gray-400 mb-3">One partition, one consumer: watching Kafka share the work
+</p>
+  
+</article>
+
+<article class="pb-8 border-b border-gray-800 last:border-0">
+  <h2 class="text-2xl font-semibold mb-2">
+    <a href="/2026-09-10/want-a-blue-shirt" class="hover:text-blue-400 transition-colors">
+      I want a blue shirt in size M, to the cart using Agent
+    </a>
+  </h2>
+  <div class="text-sm text-gray-500 mb-3">
+    September 10, 2026
+  </div>
+  <p class="text-gray-400 mb-3">From “I want a blue shirt in size M” to a real order line
+</p>
+  
+</article>
+
+<article class="pb-8 border-b border-gray-800 last:border-0">
+  <h2 class="text-2xl font-semibold mb-2">
+    <a href="/2026-06-14/do-your-tdd-kata-in-python" class="hover:text-blue-400 transition-colors">
+      Do your TDD Kata in Python
+    </a>
+  </h2>
+  <div class="text-sm text-gray-500 mb-3">
+    June 14, 2026
+  </div>
+  <p class="text-gray-400 mb-3">It is a sunday in June, the fresh air is dancing through the house. That particular moment of the day that everything is calm and...</p>
+  
+</article>
 
 <article class="pb-8 border-b border-gray-800 last:border-0">
   <h2 class="text-2xl font-semibold mb-2">
@@ -45,28 +73,9 @@
   </h2>
   <div class="text-sm text-gray-500 mb-3">
     January 07, 2026
-    
-      <span class="mx-2">•</span>
-      
-        <span class="text-blue-400">#jwt</span>
-      
-        <span class="text-blue-400">#redis</span>
-      
-        <span class="text-blue-400">#nestjs</span>
-      
-        <span class="text-blue-400">#auth</span>
-      
-        <span class="text-blue-400">#backend</span>
-      
-        <span class="text-blue-400">#typescript</span>
-      
-    
   </div>
-  <p class="text-gray-400 mb-3">While building the auth layer for a document management platform I was working on, 
-I ran into a question that sounds simple 
-but isn’t: what actually happens when a user logs out?
-</p>
-  <a href="/2026-01-07/jwt-refresh-tokens-redis-blacklist-nestjs" class="text-blue-400 hover:underline text-sm inline-block">Read more →</a>
+  <p class="text-gray-400 mb-3">While building the auth layer for a document management platform I was working on, I ran into a question that sounds simple but isn’t: what...</p>
+  
 </article>
 
 <article class="pb-8 border-b border-gray-800 last:border-0">
@@ -77,25 +86,9 @@ but isn’t: what actually happens when a user logs out?
   </h2>
   <div class="text-sm text-gray-500 mb-3">
     December 20, 2025
-    
-      <span class="mx-2">•</span>
-      
-        <span class="text-blue-400">#architecture</span>
-      
-        <span class="text-blue-400">#nodejs</span>
-      
-        <span class="text-blue-400">#nestjs</span>
-      
-        <span class="text-blue-400">#casl</span>
-      
-        <span class="text-blue-400">#authorization</span>
-      
-        <span class="text-blue-400">#permissions</span>
-      
-    
   </div>
-  <p class="text-gray-400 mb-3">Last year I was working on an application that needed an auth system with role-based access control (RBAC). You know, the typical scenario: you have an app and you want to put it in production, so you need login/register and...</p>
-  <a href="/2025-12-20/authorization-nestjs" class="text-blue-400 hover:underline text-sm inline-block">Read more →</a>
+  <p class="text-gray-400 mb-3">Last year I was working on an application that needed an auth system with role-based access control (RBAC). You know, the typical scenario: you have...</p>
+  
 </article>
 
 <article class="pb-8 border-b border-gray-800 last:border-0">
@@ -106,24 +99,9 @@ but isn’t: what actually happens when a user logs out?
   </h2>
   <div class="text-sm text-gray-500 mb-3">
     September 27, 2025
-    
-      <span class="mx-2">•</span>
-      
-        <span class="text-blue-400">#architecture</span>
-      
-        <span class="text-blue-400">#nodejs</span>
-      
-        <span class="text-blue-400">#nestjs</span>
-      
-        <span class="text-blue-400">#ddd</span>
-      
-        <span class="text-blue-400">#decision-making</span>
-      
-    
   </div>
-  <p class="text-gray-400 mb-3">When you’re starting a new backend project, one of the first questions you face is: monolith or microservices? It’s tempting to reach for the latest patterns, but the right answer depends entirely on your constraints.
-</p>
-  <a href="/2025-09-27/building-modular-monolith-nestjs" class="text-blue-400 hover:underline text-sm inline-block">Read more →</a>
+  <p class="text-gray-400 mb-3">When you’re starting a new backend project, one of the first questions you face is: monolith or microservices? It’s tempting to reach for the latest...</p>
+  
 </article>
 
 <article class="pb-8 border-b border-gray-800 last:border-0">
@@ -134,14 +112,10 @@ but isn’t: what actually happens when a user logs out?
   </h2>
   <div class="text-sm text-gray-500 mb-3">
     May 17, 2025
-    
-      <span class="mx-2">•</span>
-      
-    
   </div>
   <p class="text-gray-400 mb-3">Shared Packages Best Practices: Lessons from Production
 </p>
-  <a href="/shared-packages-patterns" class="text-blue-400 hover:underline text-sm inline-block">Read more →</a>
+  
 </article>
 
 <article class="pb-8 border-b border-gray-800 last:border-0">
@@ -152,14 +126,10 @@ but isn’t: what actually happens when a user logs out?
   </h2>
   <div class="text-sm text-gray-500 mb-3">
     April 19, 2025
-    
-      <span class="mx-2">•</span>
-      
-    
   </div>
   <p class="text-gray-400 mb-3">Shared Packages: The Solution to Microservices Code Duplication
 </p>
-  <a href="/shared-packages-implementation" class="text-blue-400 hover:underline text-sm inline-block">Read more →</a>
+  
 </article>
 
 <article class="pb-8 border-b border-gray-800 last:border-0">
@@ -170,14 +140,10 @@ but isn’t: what actually happens when a user logs out?
   </h2>
   <div class="text-sm text-gray-500 mb-3">
     April 12, 2025
-    
-      <span class="mx-2">•</span>
-      
-    
   </div>
   <p class="text-gray-400 mb-3">The Hidden Cost of Copy-Paste in Microservices
 </p>
-  <a href="/shared-packages-problem" class="text-blue-400 hover:underline text-sm inline-block">Read more →</a>
+  
 </article>
 
 <article class="pb-8 border-b border-gray-800 last:border-0">
@@ -188,67 +154,10 @@ but isn’t: what actually happens when a user logs out?
   </h2>
   <div class="text-sm text-gray-500 mb-3">
     March 05, 2025
-    
-      <span class="mx-2">•</span>
-      
-    
   </div>
   <p class="text-gray-400 mb-3">Post #1 — borrador listo (en inglés, puedes publicar tal cual)
 </p>
-  <a href="/2025-03-05/shipping-compact-catalog-service" class="text-blue-400 hover:underline text-sm inline-block">Read more →</a>
-</article>
-
-<article class="pb-8 border-b border-gray-800 last:border-0">
-  <h2 class="text-2xl font-semibold mb-2">
-    <a href="/concurrency-nodejs" class="hover:text-blue-400 transition-colors">
-      Concurrency in Node.js: Understanding and Implementing
-    </a>
-  </h2>
-  <div class="text-sm text-gray-500 mb-3">
-    July 27, 2024
-    
-      <span class="mx-2">•</span>
-      
-    
-  </div>
-  <p class="text-gray-400 mb-3">In my latest exploration of Node.js, I delved into how this popular runtime handles concurrency. Building scalable APIs with Node.js has been an enlightening journey, and understanding concurrency is a crucial part of making your applications efficient and responsive.
-</p>
-  <a href="/concurrency-nodejs" class="text-blue-400 hover:underline text-sm inline-block">Read more →</a>
-</article>
-
-<article class="pb-8 border-b border-gray-800 last:border-0">
-  <h2 class="text-2xl font-semibold mb-2">
-    <a href="/forke-my-first-repo" class="hover:text-blue-400 transition-colors">
-      Forke my first repo
-    </a>
-  </h2>
-  <div class="text-sm text-gray-500 mb-3">
-    November 11, 2023
-    
-      <span class="mx-2">•</span>
-      
-    
-  </div>
-  <p class="text-gray-400 mb-3">Yesterday I forked my first repo with the intention to contribute to Open Source. Yes, Open Source was always on my list but I’d never took the decision to jump on it. So, someone mentioned and why not? I thought....</p>
-  <a href="/forke-my-first-repo" class="text-blue-400 hover:underline text-sm inline-block">Read more →</a>
-</article>
-
-<article class="pb-8 border-b border-gray-800 last:border-0">
-  <h2 class="text-2xl font-semibold mb-2">
-    <a href="/build-api-with-bun-and-elysia" class="hover:text-blue-400 transition-colors">
-      Build API with Bun and Elysia
-    </a>
-  </h2>
-  <div class="text-sm text-gray-500 mb-3">
-    September 15, 2023
-    
-      <span class="mx-2">•</span>
-      
-    
-  </div>
-  <p class="text-gray-400 mb-3">I love go for a walk in the morning and listening some podcasts. And I remember how excited I was listening Ryan Dahl talking about Deno on this podcast by ChangeLog:
-</p>
-  <a href="/build-api-with-bun-and-elysia" class="text-blue-400 hover:underline text-sm inline-block">Read more →</a>
+  
 </article>
 
 </div>
@@ -261,6 +170,27 @@ but isn’t: what actually happens when a user logs out?
   <div class="mb-8">
     <h3 class="text-xl font-semibold mb-3 text-blue-400">2026</h3>
     <ul class="space-y-2 text-gray-400">
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/2026-10-03/one-partition-one-consumer" class="hover:text-blue-400 transition-colors">
+          One partition, one consumer: watching Kafka share the work
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Oct 03</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/2026-09-10/want-a-blue-shirt" class="hover:text-blue-400 transition-colors">
+          I want a blue shirt in size M, to the cart using Agent
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Sep 10</span>
+      </li>
+    
+      <li class="flex justify-between items-baseline">
+        <a href="/2026-06-14/do-your-tdd-kata-in-python" class="hover:text-blue-400 transition-colors">
+          Do your TDD Kata in Python
+        </a>
+        <span class="text-sm text-gray-600 ml-4 flex-shrink-0">Jun 14</span>
+      </li>
     
       <li class="flex justify-between items-baseline">
         <a href="/2026-01-07/jwt-refresh-tokens-redis-blacklist-nestjs" class="hover:text-blue-400 transition-colors">
@@ -498,17 +428,15 @@ but isn’t: what actually happens when a user logs out?
   
 </div>
 
-    </main>
+  </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-gray-800 mt-20">
-      <div class="max-w-4xl mx-auto px-4 py-8 text-center text-sm text-gray-500">
-        <div class="flex justify-center space-x-6 mb-4">
-          <a href="https://www.linkedin.com/in/maria-lobillo/" class="hover:text-blue-400 transition-colors">LinkedIn</a>
-          <a href="https://github.com/marialobillo" class="hover:text-blue-400 transition-colors">GitHub</a>
-        </div>
-        <p>© 2026 Maria Lobillo. Senior Software Engineer.</p>
-      </div>
-    </footer>
-  </body>
+  <footer class="site-footer">
+    <span>© 2026 Maria Lobillo</span>
+    <nav>
+      <a href="mailto:maria.lobillo.santos@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/maria-lobillo/">LinkedIn</a>
+      <a href="https://github.com/marialobillo">GitHub</a>
+    </nav>
+  </footer>
+</body>
 </html>
