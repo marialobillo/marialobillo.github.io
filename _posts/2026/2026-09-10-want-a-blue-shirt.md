@@ -6,8 +6,6 @@ categories: [testing, tdd, python]
 tags: [ai-agent, llm, python, cart, rag, tool-calling, fastapi, ai]
 ---
 
-# From "I want a blue shirt in size M" to a real order line
-
 Most checkout flows assume the user already knows exactly what they want in
 the catalog's own terms: an exact size, an exact color, a SKU. But nobody
 actually thinks that way. People write (or say) things like *"I want a blue

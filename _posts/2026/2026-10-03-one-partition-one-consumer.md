@@ -6,9 +6,6 @@ categories: [kafka, partitions, python]
 tags: [kafka, python, fastapi, consumer, group, instances, rpk, symbol]
 ---
 
-
-# One partition, one consumer: watching Kafka share the work
-
 I’ve read the same sentence about Kafka a hundred times: “a consumer group splits the partitions between its consumers, and rebalances when one joins or leaves.” I believed it. But I had never watched it happen. So I stopped reading and ran it.
 
 Quick context: my topic orderbook.raw has 6 partitions, and the key of every message is the trading symbol, so every BTCUSDT update always lands on the same partition. My calc service reads that topic as a consumer group called calc.
